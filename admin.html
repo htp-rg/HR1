@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Human REsources 1</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-top">
+      <img src="admin-avatar.png" alt="admin" class="admin-image">
+      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+    </div>
+    <div class="sidebar-content">
+      <ul class="sidebar-menu">
+        <li><a href="dashboard.html">Dashboard</a></li>
 
+        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+        <ul id="Recruitment" style="display:none;">
+          <li><a href="Jobposting.html">Job Posting</a></li>
+          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+          <li><a href="Create.html">Create Job Posting</a></li>
+        </ul>
+
+        <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+        <ul id="ApplicantManagement" style="display:none;">
+          <li><a href="Application.html">Application Tracking</a></li>
+          <li><a href="interviews.html">Interviews & Assessments</a></li>
+          <li><a href="selection.html">Selection Offer</a></li>
+        </ul>
+
+        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+        <ul id="NewHiredOnBoard" style="display:none;">
+          <li><a href="Documentation.html">Documentation</a></li>
+          <li><a href="Orientation.html">Orentation & Training</a></li>
+          <li><a href="Assignment.html">Role Assignment</a></li>
+        </ul>
+
+        <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+        <ul id="SocialRecognitionProgram" style="display:none;">
+          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+          <li><a href="Employee.html">Employee engagement programs</a></li>
+        </ul>
+
+        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+        <ul id="Performance management" style="display:none;">
+          <li><a href="Goal.html">Goal setting</a></li>
+          <li><a href="Feedback.html">Feedback cycles</a></li>
+          <li><a href="Review.html">Performance reviews</a></li>
+        </ul>
+
+        <li><a href="users.html">Users</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+    </div>
+
+    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+  </div>
+
+  <div class="main-content">
+    <div class="content-box">
+      <img src="bcp.png" alt="Welcome Image">
+      <h1>WELCOME TO HUMAN RESOURCES 1</h1>
+      <p>This system provides a structured approach to managing key human resources functions.</p>
+      <p>This combined system simplifies HR and services management, enhancing efficiency and employee satisfaction. Some of the key features include automated time and attendance tracking, electronic timesheet submission, automated expense claim and reimbursement processing, online leave management, and optimized shift scheduling. These features eliminate manual work, enhance accuracy, and improve transparency. It increases operational efficiency and data accuracy, enhances employee experience and self-service, improves decision-making with real-time analytics and reports, and supports scalability and compliance with labor laws and company policies.</p>
+    </div>
+  </div>
+
+  <script>
+    function confirmLogout() {
+      return confirm("Are you sure you want to log out?");
+    }
+
+    function toggleSubMenu(id) {
+      const submenu = document.getElementById(id);
+      if (submenu.style.display === 'none') {
+        submenu.style.display = 'block';
+      } else {
+        submenu.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
