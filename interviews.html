@@ -64,7 +64,7 @@
             margin-bottom: 10px;
         }
 
-       
+        
         .calendar {
             width: 100%;
             border-collapse: collapse;
@@ -95,7 +95,7 @@
             background-color: #fff;
         }
         .calendar .available:hover {
-                background-color: #f8f8f8;
+            background-color: #f8f8f8;
         }
         .calendar .scheduled {
             background-color: #ffeeba;
@@ -127,7 +127,7 @@
             color: #555;
         }
 
-    
+        
         .schedule-form {
             background-color: #f8f8f8;
             padding: 20px;
@@ -141,7 +141,7 @@
             margin-bottom: 20px;
         }
 
-       
+        
         .evaluator-feedback {
             display: flex;
             justify-content: space-between;
@@ -157,7 +157,7 @@
             margin-bottom: 5px;
         }
 
-      
+        
         .scorecard {
             margin-bottom: 15px;
         }
@@ -216,7 +216,7 @@
             .schedule-form h2{
                 font-size: 18px;
             }
-            .back-button {
+             .back-button {
             background: #e74c3c;
             color: white;
             border: none;
@@ -234,64 +234,64 @@
         .back-button:hover {
             background: #c0392b;
         }
-    }
+        }
     </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="sidebar-top">
-      <img src="admin-avatar.png" alt="admin" class="admin-image">
-      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orentation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
-    <div class="sidebar-content">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard.html">Dashboard</a></li>
-
-        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-        <ul id="Recruitment" style="display:none;">
-          <li><a href="Jobposting.html">Job Posting</a></li>
-          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-          <li><a href="Create.html">Create Job Posting</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-        <ul id="ApplicantManagement" style="display:none;">
-          <li><a href="Application.html">Application Tracking</a></li>
-          <li><a href="interviews.html">Interviews & Assessments</a></li>
-          <li><a href="selection.html">Selection Offer</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-        <ul id="NewHiredOnBoard" style="display:none;">
-          <li><a href="Documentation.html">Documentation</a></li>
-          <li><a href="Orientation.html">Orentation & Training</a></li>
-          <li><a href="Assignment.html">Role Assignment</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-        <ul id="SocialRecognitionProgram" style="display:none;">
-          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-          <li><a href="Employee.html">Employee engagement programs</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-        <ul id="Performancemanagement" style="display:none;">
-          <li><a href="Goal.html">Goal setting</a></li>
-          <li><a href="Feedback.html">Feedback cycles</a></li>
-          <li><a href="Review.html">Performance reviews</a></li>
-        </ul>
-
-        <li><a href="users.html">Users</a></li>
-        <li><a href="settings.html">Settings</a></li>
-      </ul>
-    </div>
-
-    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
-  </div>
 
 <div class="main-content">
-    <a href="admin.html" class="back-button">Back</a>
+     <a href="admin.html" class="back-button">Back</a>
     <div class="container">
         <h1>Interview Scheduling</h1>
 
@@ -311,63 +311,63 @@
             <tbody>
                 <tr>
                     <th>9:00 AM</th>
-                    <td class="available" data-date="2024-07-29" data-time="09:00"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="available" data-date="2024-07-29" data-time="09:00">Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interview</td>
                 </tr>
                 <tr>
                     <th>10:00 AM</th>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interview</td>
                 </tr>
                 <tr>
                     <th>11:00 AM</th>
                     <td class="no-interview"></td>
-                    <td class="available" data-date="2024-07-30" data-time="11:00"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="available" data-date="2024-07-30" data-time="11:00">Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interview</td>
                 </tr>
                 <tr>
                     <th>1:00 PM</th>
-                    <td class="available" data-date="2024-08-03" data-time="13:00"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="available" data-date="2024-08-03" data-time="13:00">Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interviews</td>
                 </tr>
                 <tr>
                     <th>2:00 PM</th>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interviews</td>
                 </tr>
                 <tr>
                     <th>3:00 PM</th>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview"></td>
-                    <td class="available" data-date="2024-08-01" data-time="15:00"></td>
-                    <td class="no-interview"></td>
-                    <td class="no-interview">No Interview</td>
-                    <td class="sunday"></td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="available" data-date="2024-08-01" data-time="15:00">Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="no-interview">No Slots Available</td>
+                    <td class="sunday">No Interviews</td>
                 </tr>
             </tbody>
         </table>
@@ -439,11 +439,21 @@
     </div>
 
     <script>
+        function confirmLogout() {
+        return confirm("Are you sure you want to log out?");
+    }
+         function toggleSubMenu(id) {
+        const submenu = document.getElementById(id);
+        if (submenu.style.display === 'none') {
+            submenu.style.display = 'block';
+        } else {
+            submenu.style.display = 'none';
+        }
+    }
         const scheduleForm = document.getElementById('scheduleForm');
         const calendar = document.querySelector('.calendar');
         const interviewDateInput = document.getElementById('interviewDate');
         const interviewTimeSelect = document.getElementById('interviewTime');
-        const timeSlots = ["09:00", "11:00", "13:00", "15:00"];
         const bookedSlots = new Set();
 
         function populateTimeSlots(selectedDate) {
@@ -455,7 +465,7 @@
             }
 
             let validSlots = [];
-            if (selectedDate === "2024-07-29") {
+             if (selectedDate === "2024-07-29") {
                 validSlots = ["09:00"];
             } else if (selectedDate === "2024-07-30") {
                 validSlots = ["11:00"];
@@ -465,7 +475,6 @@
             else if (selectedDate === "2024-08-03"){
                 validSlots = ["13:00"]
             }
-            
 
             validSlots.forEach(slot => {
                 const slotKey = `${selectedDate}-${slot}`;
@@ -494,7 +503,6 @@
                 const dateObj = new Date(selectedDate);
                 const day = dateObj.getDay();
 
-
                 if (day === 0){
                     alert("No interviews on Sundays.");
                     return;
@@ -506,73 +514,7 @@
             }
         });
 
-        function generateRandomDate(start, end) {
-            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-        }
 
-        function scheduleRandomInterview() {
-            const startDate = new Date(2024, 6, 29);
-            const endDate = new Date(2024, 8, 2);
-            let randomDate = generateRandomDate(startDate, endDate);
-            const day = randomDate.getDay();
-
-            while (day === 0) {
-                randomDate = generateRandomDate(startDate, endDate);
-            }
-            const formattedDate = randomDate.toISOString().split('T')[0];
-
-            let validTimes = [];
-             if (formattedDate === "2024-07-29") {
-                validTimes = ["09:00"];
-            } else if (formattedDate === "2024-07-30") {
-                validTimes = ["11:00"];
-            } else if (formattedDate === "2024-08-01"){
-                validTimes = ["15:00"]
-            }
-            else if (formattedDate === "2024-08-03"){
-                validTimes = ["13:00"]
-            }
-            const randomTimeIndex = Math.floor(Math.random() * validTimes.length);
-            const randomTime = validTimes[randomTimeIndex];
-
-            const candidateName = "Random Candidate";
-            const jobTitle = "Software Engineer";
-            const evaluator1 = "John Doe";
-            const evaluator2 = "Jane Smith";
-            const communicationScore = Math.floor(Math.random() * 5) + 1;
-            const technicalScore = Math.floor(Math.random() * 5) + 1;
-            const problemSolvingScore = Math.floor(Math.random() * 5) + 1;
-            const cultureFitScore = Math.floor(Math.random() * 5) + 1;
-            const additionalComments = "Good candidate.";
-
-            document.getElementById('candidateName').value = candidateName;
-            document.getElementById('jobTitle').value = jobTitle;
-            document.getElementById('evaluator1').value = evaluator1;
-            document.getElementById('evaluator2').value = evaluator2;
-            document.getElementById('interviewDate').value = formattedDate;
-            document.getElementById('interviewTime').value = randomTime;
-            document.querySelector('input[name="communicationScore"]').value = communicationScore;
-            document.querySelector('input[name="technicalScore"]').value = technicalScore;
-            document.querySelector('input[name="problemSolvingScore"]').value = problemSolvingScore;
-            document.querySelector('input[name="cultureFitScore"]').value = cultureFitScore;
-            document.getElementById('additionalComments').value = additionalComments;
-
-
-            const slotKey = `${formattedDate}-${randomTime}`;
-            bookedSlots.add(slotKey);
-            const selectedCell = document.querySelector(`[data-date="${formattedDate}"][data-time="${randomTime}"]`);
-            if (selectedCell) {
-                selectedCell.classList.remove('available');
-                selectedCell.classList.add('scheduled');
-                selectedCell.innerHTML = `<span class="slot-info">Booked by ${candidateName}</span>`;
-            }
-            populateTimeSlots(formattedDate);
-            alert(`Random interview scheduled for ${candidateName} on ${formattedDate} at ${randomTime}!`);
-            scheduleForm.reset();
-            errorDiv.textContent = '';
-
-        }
-        scheduleRandomInterview();
 
         scheduleForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -581,7 +523,7 @@
             const jobTitle = document.getElementById('jobTitle').value;
             const interviewDate = document.getElementById('interviewDate').value;
             const interviewTime = document.getElementById('interviewTime').value;
-            const evaluator1 = document.getElementById('evaluator1').value;
+             const evaluator1 = document.getElementById('evaluator1').value;
             const evaluator2 = document.getElementById('evaluator2').value;
             const communicationScore = document.querySelector('input[name="communicationScore"]').value;
             const technicalScore = document.querySelector('input[name="technicalScore"]').value;
@@ -629,4 +571,3 @@
     </script>
 </body>
 </html>
-
