@@ -6,6 +6,7 @@
     <title>Sourcing Candidates</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ... your existing styles ... */
         .dashboard-section {
             background: #fff;
             border-radius: 8px;
@@ -304,7 +305,7 @@
                     <span class="close-button" onclick="closeViewCandidateModal()">&times;</span>
                     <h2>Candidate Details</h2>
                     <div id="viewCandidateDetails">
-                    </div>
+                        </div>
                 </div>
             </div>
 
@@ -354,13 +355,14 @@
             }
         }
 
-       
+        // Modal functions for Add Candidate
         function openAddCandidateModal() {
             document.getElementById('addCandidateModal').style.display = 'block';
         }
 
         function closeAddCandidateModal() {
             document.getElementById('addCandidateModal').style.display = 'none';
+            document.getElementById('addCandidateForm').reset(); // Clear the form
         }
 
         document.getElementById('addCandidateForm').addEventListener('submit', function(event) {
@@ -374,60 +376,101 @@
             addCandidateToTable(candidateName, email, source, skills);
         });
 
+        let candidates = []; 
+        let nextCandidateId = 1;
+
         function addCandidateToTable(name, email, source, skills) {
-            const newRow = document.getElementById('candidateTableBody').insertRow();
-            newRow.innerHTML = `
-                <td><span class="math-inline">\{name\}</td\>
-<td\></span>{email}</td>
-                <td><span class="math-inline">\{source\}</td\>
-<td\></span>{skills}</td>
-                <td class="action-buttons">
-                    <button onclick="openViewCandidateModal('TEMP_ID')">View</button>
-                    <button onclick="openEditCandidateModal('TEMP_ID')">Edit</button>
-                    <button onclick="openDeleteCandidateModal('TEMP_ID', '${name}')">Delete</button>
-                </td>
-            `;
-            
+            const newCandidate = {
+                id: `CANDIDATE-${nextCandidateId++}`,
+                name: name,
+                email: email,
+                source: source,
+                skills: skills
+            };
+            candidates.push(newCandidate);
+            renderCandidateTable();
         }
 
-      
+        function renderCandidateTable() {
+            const tableBody = document.getElementById('candidateTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+            candidates.forEach(candidate => {
+                const newRow = tableBody.insertRow();
+                newRow.innerHTML = `
+                    <td><span class="math-inline">\{candidate\.name\}</td\>
+<td\></span>{candidate.email}</td>
+                    <td><span class="math-inline">\{candidate\.source\}</td\>
+<td\></span>{candidate.skills}</td>
+                    <td class="action-buttons">
+                        <button onclick="openViewCandidateModal('<span class="math-inline">\{candidate\.id\}'\)"\>View</button\>
+<button onclick\="openEditCandidateModal\('</span>{candidate.id}')">Edit</button>
+                        <button onclick="openDeleteCandidateModal('<span class="math-inline">\{candidate\.id\}', '</span>{candidate.name}')">Delete</button>
+                    </td>
+                `;
+            });
+        }
+
+       
         function openViewCandidateModal(candidateId) {
-            const detailsContainer = document.getElementById('viewCandidateDetails');
-            detailsContainer.innerHTML = `<p>Candidate ID: ${candidateId}</p><p>Details will be loaded here...</p>`;
-            document.getElementById('viewCandidateModal').style.display = 'block';
+            const candidate = candidates.find(c => c.id === candidateId);
+            if (candidate) {
+                const detailsContainer = document.getElementById('viewCandidateDetails');
+                detailsContainer.innerHTML = `
+                    <p><strong>Candidate ID:</strong> ${candidate.id}</p>
+                    <p><strong>Name:</strong> ${candidate.name}</p>
+                    <p><strong>Email:</strong> ${candidate.email}</p>
+                    <p><strong>Source:</strong> ${candidate.source}</p>
+                    <p><strong>Skills:</strong> ${candidate.skills}</p>
+                    `;
+                document.getElementById('viewCandidateModal').style.display = 'block';
+            }
         }
         function closeViewCandidateModal() {
             document.getElementById('viewCandidateModal').style.display = 'none';
         }
 
-       
+        
+        let currentEditCandidateId = null;
+
         function openEditCandidateModal(candidateId) {
-            document.getElementById('editCandidateId').value = candidateId;
-            document.getElementById('editCandidateName').value = 'Alice Wonderland'; // Example data
-            document.getElementById('editEmail').value = 'alice.wonder@example.com';
-            document.getElementById('editSource').value = 'LinkedIn';
-            document.getElementById('editSkills').value = 'Java, Spring, SQL';
-            document.getElementById('editCandidateModal').style.display = 'block';
+            currentEditCandidateId = candidateId;
+            const candidate = candidates.find(c => c.id === candidateId);
+            if (candidate) {
+                document.getElementById('editCandidateId').value = candidateId;
+                document.getElementById('editCandidateName').value = candidate.name;
+                document.getElementById('editEmail').value = candidate.email;
+                document.getElementById('editSource').value = candidate.source;
+                document.getElementById('editSkills').value = candidate.skills;
+                document.getElementById('editCandidateModal').style.display = 'block';
+            }
         }
 
         function closeEditCandidateModal() {
             document.getElementById('editCandidateModal').style.display = 'none';
+            document.getElementById('editCandidateForm').reset(); 
+            currentEditCandidateId = null;
         }
 
         document.getElementById('editCandidateForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const candidateId = document.getElementById('editCandidateId').value;
-            const candidateName = document.getElementById('editCandidateName').value;
-            const email = document.getElementById('editEmail').value;
-            const source = document.getElementById('editSource').value;
-            const skills = document.getElementById('editSkills').value;
-            console.log('Saving changes for candidate ID:', candidateId, { candidateName, email, source, skills });
-            closeEditCandidateModal();
-         
+            if (currentEditCandidateId) {
+                const candidateIndex = candidates.findIndex(cconst candidateIndex = candidates.findIndex(c => c.id === currentEditCandidateId);
+                if (candidateIndex !== -1) {
+                    candidates[candidateIndex].name = document.getElementById('editCandidateName').value;
+                    candidates[candidateIndex].email = document.getElementById('editEmail').value;
+                    candidates[candidateIndex].source = document.getElementById('editSource').value;
+                    candidates[candidateIndex].skills = document.getElementById('editSkills').value;
+                    renderCandidateTable();
+                }
+                closeEditCandidateModal();
+            }
         });
 
-        
+       
+        let currentDeleteCandidateId = null;
+
         function openDeleteCandidateModal(candidateId, candidateName) {
+            currentDeleteCandidateId = candidateId;
             document.getElementById('deleteCandidateIdHidden').innerText = candidateId;
             document.getElementById('deleteCandidateName').innerText = candidateName;
             document.getElementById('deleteCandidateModal').style.display = 'block';
@@ -435,23 +478,20 @@
 
         function closeDeleteCandidateModal() {
             document.getElementById('deleteCandidateModal').style.display = 'none';
+            currentDeleteCandidateId = null;
         }
 
         function deleteCandidate() {
-            const candidateIdToDelete = document.getElementById('deleteCandidateIdHidden').innerText;
-            const candidateNameToDelete = documentconst candidateNameToDelete = document.getElementById('deleteCandidateName').innerText;
-            console.log(`Deleting candidate with ID: ${candidateIdToDelete} (${candidateNameToDelete})`);
-            closeDeleteCandidateModal();
-           
-            const rowToDelete = document.querySelector(`#candidateTableBody tr:nth-child(${parseInt(candidateIdToDelete.split('-')[2])})`);
-            if (rowToDelete) {
-                rowToDelete.remove();
+            if (currentDeleteCandidateId) {
+                candidates = candidates.filter(c => c.id !== currentDeleteCandidateId);
+                renderCandidateTable();
+                closeDeleteCandidateModal();
             }
         }
 
-       
+    
         function addInitialCandidates() {
-            const initialCandidates = [
+            const initialCandidatesData = [
                 { name: 'Alice Wang', email: 'alice.wang@gmail.com', source: 'LinkedIn', skills: 'Java, Spring, SQL' },
                 { name: 'Bob Fernandez', email: 'bob.fernandez@gmail.com', source: 'Indeed', skills: 'Project Management, Construction' },
                 { name: 'Charlie Veras', email: 'charlie.veras@gmail.com', source: 'Internal Database', skills: 'Communication, Leadership' },
@@ -459,22 +499,13 @@
                 { name: 'Eve Harrington', email: 'eve.harrington@gmail.com', source: 'Company Website', skills: 'Customer Service, Sales' },
                 { name: 'Frank Martin', email: 'frank@gmail.com', source: 'Monster', skills: 'Electrical Engineering, Robotics' },
                 { name: 'Greta Garbo', email: 'greta@gmail.com', source: 'Referral', skills: 'Public Relations, Media' },
-                { name: 'Hans Solo', email: 'hans@gmail.com', source: 'LinkedIn', skills: 'Pilot, Negotiation, Problem-solving' }
+                { name: 'Hans Solo', email: 'hans@gmail.com', source: 'LinkedIn', skills: 'Pilot, Negotiation, Problem-solving' },
+                { name: 'Leia Organa', email: 'leia@gmail.com', source: 'Internal Database', skills: 'Leadership, Diplomacy' },
+                { name: 'Luke Skywalker', email: 'luke@gmail.com', source: 'Referral', skills: 'Problem-solving, Teamwork' }
             ];
 
-            initialCandidates.forEach((candidate, index) => {
-                const newRow = document.getElementById('candidateTableBody').insertRow();
-                newRow.innerHTML = `
-                    <td>${candidate.name}</td>
-                    <td>${candidate.email}</td>
-                    <td>${candidate.source}</td>
-                    <td>${candidate.skills}</td>
-                    <td class="action-buttons">
-                        <button onclick="openViewCandidateModal('IC-${index + 1}')">View</button>
-                        <button onclick="openEditCandidateModal('IC-${index + 1}')">Edit</button>
-                        <button onclick="openDeleteCandidateModal('IC-${index + 1}', '${candidate.name}')">Delete</button>
-                    </td>
-                `;
+            initialCandidatesData.forEach(candidate => {
+                addCandidateToTable(candidate.name, candidate.email, candidate.source, candidate.skills);
             });
         }
 
