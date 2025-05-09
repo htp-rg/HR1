@@ -1,164 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Role Assignment</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Assignment</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
 
-    <style>
-        }
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: Navy;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"], input[type="date"], select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-        input[type="text"]:focus, input[type="date"]:focus, select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            margin: 5px;
-        }
-        button.primary {
-            background-color: #007bff;
-            color: white;
-        }
-        button.primary:hover {
-            background-color: #0056b3;
-        }
-        button.secondary {
-            background-color: #e0e0e0;
-            color: #333;
-        }
-        button.secondary:hover {
-            background-color: #ccc;
-        }
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-        }
-        tbody tr:hover {
-            background-color: #f5f5f5;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-        }
-        .modal-content {
-            background-color: white;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            animation: fadeIn 0.3s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .modal-header h2 {
-            margin: 0;
-            color: #333;
-        }
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .close-button:hover, .close-button:focus {
-            color: #000;
-            text-decoration: none;
-        }
-        .modal-body {
-            margin-bottom: 20px;
-        }
-        .modal-footer {
-            text-align: right;
-        }
-        .modal-footer button {
-            margin-left: 10px;
-        }
-        .error-message {
-            color: red;
-            margin-top: 10px;
-            font-size: 14px;
-      
-             .back-button {
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidebar-top {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #444;
+        }
+
+        .sidebar-menu li:hover {
+            background-color: #4CAF50;
+        }
+
+        .sidebar-menu li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+            padding-left: 20px;
+            display: none;
+        }
+
+        .sidebar-menu ul li {
+            padding: 8px 0;
+            border-bottom: none;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            display: flex; /* Added to contain the back button and the container */
+            flex-direction: column; /* Stack items vertically by default */
+            min-height: calc(100vh - 40px); /* Ensure main content takes up full height minus padding */
+            box-sizing: border-box; /* Include padding in height calculation */
+            position: relative; /* Needed for absolute positioning of back button */
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: Navy;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], input[type="date"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="date"]:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button.primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: #0056b3;
+        }
+
+        button.secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        button.secondary:hover {
+            background-color: #ccc;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover, .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .modal-footer button {
+            margin-left: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .back-button {
             background: #e74c3c;
             color: white;
             border: none;
@@ -166,9 +263,9 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            position: absolute;
-            right: 30px;
-            top: 30px;
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
             z-index: 20;
             text-decoration: none;
         }
@@ -176,388 +273,390 @@
         .back-button:hover {
             background: #c0392b;
         }
-    </style>
+
+    </style>
 </head>
-<body 
-    <div class="sidebar">
-        <div class="sidebar-top">
-            <img src="admin-avatar.png" alt="admin" class="admin-image">
-            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-                <ul id="Recruitment" style="display:none;">
-                    <li><a href="Jobposting.html">Job Posting</a></li>
-                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-                    <li><a href="Create.html">Create Job Posting</a></li>
-                </ul>
-                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-                <ul id="ApplicantManagement" style="display:none;">
-                    <li><a href="Application.html">Application Tracking</a></li>
-                    <li><a href="interviews.html">Interviews & Assessments</a></li>
-                    <li><a href="selection.html">Selection Offer</a></li>
-                </ul>
-                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-                <ul id="NewHiredOnBoard" style="display:none;">
-                    <li><a href="Documentation.html">Documentation</a></li>
-                    <li><a href="Orientation.html">Orientation & Training</a></li>
-                    <li><a href="Assignment.html">Role Assignment</a></li>
-                </ul>
-                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-                <ul id="SocialRecognitionProgram" style="display:none;">
-                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-                    <li><a href="Employee.html">Employee engagement programs</a></li>
-                </ul>
-                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-                <ul id="Performancemanagement" style="display:none;">
-                    <li><a href="Goal.html">Goal setting</a></li>
-                    <li><a href="Feedback.html">Feedback cycles</a></li>
-                    <li><a href="Review.html">Performance reviews</a></li>
-                </ul>
-                <li><a href="users.html">Users</a></li>
-                <li><a href="settings.html">Settings</a></li>
-            </ul>
-        </div>
-        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
-    </div>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+    </div>
 
-    <div class="main-content">
-        <a href="admin.html" class="back-button">Back</a>
-        <div class="container">
-            <h1>Role Assignment</h1>
-            <div class="table-container">
-                <table id="roleAssignmentTable">
-                    <thead>
-                        <tr>
-                            <th>Employee Name</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Manager</th>
-                            <th>KPIs</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>Sales</td>
-                            <td>Sales Representative</td>
-                            <td>Jane Smith</td>
-                            <td>Sales Target, Customer Satisfaction</td>
-                           <td>
-                                <button class="action-btn view-btn" data-id="1">View</button>
-                                <button class="action-btn edit-btn" data-id="1">Edit</button>
-                                <button class="action-btn delete-btn" data-id="1">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>Marketing</td>
-                            <td>Marketing Manager</td>
-                            <td>Michael Brown</td>
-                            <td>Campaign Success Rate, Brand Awareness</td>
-                            <td>
-                                <button class="action-btn view-btn" data-id="2">View</button>
-                                <button class="action-btn edit-btn" data-id="2">Edit</button>
-                                <button class="action-btn delete-btn" data-id="2">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <button id="addRoleButton" class="primary">Add Role Assignment</button>
-        </div>
-    </div>
+    <div class="main-content">
+        <a href="admin.html" class="back-button">Back</a>
+        <div class="container">
+            <h1>Role Assignment</h1>
+            <div class="table-container">
+                <table id="roleAssignmentTable">
+                    <thead>
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th>Manager</th>
+                            <th>KPIs</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Sales</td>
+                            <td>Sales Representative</td>
+                            <td>Jane Smith</td>
+                            <td>Sales Target, Customer Satisfaction</td>
+                            <td>
+                                <button class="action-btn view-btn" data-id="1">View</button>
+                                <button class="action-btn edit-btn" data-id="1">Edit</button>
+                                <button class="action-btn delete-btn" data-id="1">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>Marketing</td>
+                            <td>Marketing Manager</td>
+                            <td>Michael Brown</td>
+                            <td>Campaign Success Rate, Brand Awareness</td>
+                            <td>
+                                <button class="action-btn view-btn" data-id="2">View</button>
+                                <button class="action-btn edit-btn" data-id="2">Edit</button>
+                                <button class="action-btn delete-btn" data-id="2">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button id="addRoleButton" class="primary">Add Role Assignment</button>
+        </div>
+    </div>
 
-    <div id="addEditRoleModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Add/Edit Role Assignment</h2>
-            <form id="addEditRoleForm">
-                <div class="form-group">
-                    <label for="employeeName">Employee Name:</label>
-                    <input type="text" id="employeeName" name="employeeName" required>
-                    <div id="employeeNameError" class="error-message"></div>
-                </div>
-                <div class="form-group">
-                    <label for="department">Department:</label>
-                    <select id="department" name="department" required>
-                        <option value="">Select Department</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="HR">HR</option>
-                        <option value="Finance">Finance</option>
-                        <option value="IT">IT</option>
-                    </select>
-                    <div id="departmentError" class="error-message"></div>
-                </div>
-                <div class="form-group">
-                    <label for="role">Role:</label>
-                    <input type="text" id="role" name="role" required>
-                    <div id="roleError" class="error-message"></div>
-                </div>
-                <div class="form-group">
-                    <label for="manager">Manager:</label>
-                    <input type="text" id="manager" name="manager" required>
-                    <div id="managerError" class="error-message"></div>
-                </div>
-                <div class="form-group">
-                    <label for="kpis">KPIs:</label>
-                    <input type="text" id="kpis" name="kpis" required>
-                    <div id="kpisError" class="error-message"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="secondary close-modal-btn">Cancel</button>
-                    <button type="submit" class="primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div id="addEditRoleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Add/Edit Role Assignment</h2>
+            <form id="addEditRoleForm">
+                <div class="form-group">
+                    <label for="employeeName">Employee Name:</label>
+                    <input type="text" id="employeeName" name="employeeName" required>
+                    <div id="employeeNameError" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                        <option value="IT">IT</option>
+                    </select>
+                    <div id="departmentError" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <input type="text" id="role" name="role" required>
+                    <div id="roleError" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="manager">Manager:</label>
+                    <input type="text" id="manager" name="manager" required>
+                    <div id="managerError" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="kpis">KPIs:</label>
+                    <input type="text" id="kpis" name="kpis" required>
+                    <div id="kpisError" class="error-message"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary close-modal-btn">Cancel</button>
+                    <button type="submit" class="primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <div id="viewRoleModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>View Role Assignment</h2>
-            <div id="viewRoleDetails">
-                <p><strong>Employee Name:</strong> <span id="viewEmployeeName"></span></p>
-                <p><strong>Department:</strong> <span id="viewDepartment"></span></p>
-                <p><strong>Role:</strong> <span id="viewRole"></span></p>
-                <p><strong>Manager:</strong> <span id="viewManager"></span></p>
-                <p><strong>KPIs:</strong> <span id="viewKpis"></span></p>
-            </div>
-        </div>
-    </div>
+    <div id="viewRoleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>View Role Assignment</h2>
+            <div id="viewRoleDetails">
+                <p><strong>Employee Name:</strong> <span id="viewEmployeeName"></span></p>
+                <p><strong>Department:</strong> <span id="viewDepartment"></span></p>
+                <p><strong>Role:</strong> <span id="viewRole"></span></p>
+                <p><strong>Manager:</strong> <span id="viewManager"></span></p>
+                <p><strong>KPIs:</strong> <span id="viewKpis"></span></p>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function confirmLogout() {
-            return confirm("Are you sure you want to log out?");
-        }
+    <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
 
-        function toggleSubMenu(id) {
-            const submenu = document.getElementById(id);
-            if (submenu.style.display === 'none') {
-                submenu.style.display = 'block';
-            } else {
-                submenu.style.display = 'none';
-            }
-        }
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
 
-        const addRoleButton = document.getElementById('addRoleButton');
-        const addEditRoleModal = document.getElementById('addEditRoleModal');
-        const viewRoleModal = document.getElementById('viewRoleModal');
-        const closeButtons = document.querySelectorAll('.close-button');
-        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
-        const addEditRoleForm = document.getElementById('addEditRoleForm');
-        const roleAssignmentTable = document.getElementById('roleAssignmentTable');
-        const viewEmployeeNameEl = document.getElementById('viewEmployeeName');
-        const viewDepartmentEl = document.getElementById('viewDepartment');
-        const viewRoleEl = document.getElementById('viewRole');
-        const viewManagerEl = document.getElementById('viewManager');
-        const viewKpisEl = document.getElementById('viewKpis');
+        const addRoleButton = document.getElementById('addRoleButton');
+        const addEditRoleModal = document.getElementById('addEditRoleModal');
+        const viewRoleModal = document.getElementById('viewRoleModal');
+        const closeButtons = document.querySelectorAll('.close-button');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+        const addEditRoleForm = document.getElementById('addEditRoleForm');
+        const roleAssignmentTable = document.getElementById('roleAssignmentTable');
+        const viewEmployeeNameEl = document.getElementById('viewEmployeeName');
+        const viewDepartmentEl = document.getElementById('viewDepartment');
+        const viewRoleEl = document.getElementById('viewRole');
+        const viewManagerEl = document.getElementById('viewManager');
+        const viewKpisEl = document.getElementById('viewKpis');
 
-        let editingId = null;
-        let roleAssignments = [
-            { id: 1, employeeName: 'John Doe', department: 'Sales', role: 'Sales Representative', manager: 'Jane Smith', kpis: 'Sales Target, Customer Satisfaction' },
-            { id: 2, employeeName: 'Jane Smith', department: 'Marketing', role: 'Marketing Manager', manager: 'Michael Brown', kpis: 'Campaign Success Rate, Brand Awareness' },
-            { id: 3, employeeName: 'Michael Brown', department: 'HR', role: 'HR Manager', manager: 'Sarah Williams', kpis: 'Employee Satisfaction, Retention Rate' },
-            { id: 4, employeeName: 'Sarah Williams', department: 'Finance', role: 'Finance Analyst', manager: 'David Johnson', kpis: 'Budget Variance, Reporting Accuracy' },
-            { id: 5, employeeName: 'David Johnson', department: 'IT', role: 'IT Support Specialist', manager: 'Linda Miller', kpis: 'Ticket Resolution Time, System Uptime' },
-            { id: 6, employeeName: 'Linda Miller', department: 'Sales', role: 'Sales Manager', manager: 'John Doe', kpis: 'Team Sales Target, Customer Acquisition' },
-            { id: 7, employeeName: 'Robert Davis', department: 'Marketing', role: 'Marketing Specialist', manager: 'Jane Smith', kpis: 'Lead Generation, Content Engagement' },
-            { id: 8, employeeName: 'Jennifer Wilson', department: 'HR', role: 'Recruiter', manager: 'Michael Brown', kpis: 'Time to Hire, Quality of Hire' },
-            { id: 9, employeeName: 'Christopher Garcia', department: 'Finance', role: 'Accountant', manager: 'Sarah Williams', kpis: 'Financial Statement Accuracy, Audit Compliance' },
-            { id: 10, employeeName: 'Angela Rodriguez', department: 'IT', role: 'Network Administrator', manager: 'David Johnson', kpis: 'Network Security, Bandwidth Management' },
-            { id: 11, employeeName: 'Brian Martinez', department: 'Sales', role: 'Sales Associate', manager: 'Linda Miller', kpis: 'Individual Sales Target, Customer Retention' },
-            { id: 12, employeeName: 'Nicole Robinson', department: 'Marketing', role: 'Digital Marketing Specialist', manager: 'Robert Davis', kpis: 'Online Campaign Performance, Website Traffic' },
-            { id: 13, employeeName: 'Kevin Young', department: 'HR', role: 'HR Assistant', manager: 'Jennifer Wilson', kpis: 'Payroll Processing, Benefits Administration' },
-            { id: 14, employeeName: 'Michelle Hernandez', department: 'Finance', role: 'Financial Analyst', manager: 'Christopher Garcia', kpis: 'Investment Analysis, Risk Management' },
-            { id: 15, employeeName: 'Timothy Scott', department: 'IT', role: 'Help Desk Technician', manager: 'Angela Rodriguez', kpis: 'Help Desk Response Time, User Satisfaction' }
-        ];
+        let editingId = null;
+        let roleAssignments = [
+            { id: 1, employeeName: 'John Doe', department: 'Sales', role: 'Sales Representative', manager: 'Jane Smith', kpis: 'Sales Target, Customer Satisfaction' },
+            { id: 2, employeeName: 'Jane Smith', department: 'Marketing', role: 'Marketing Manager', manager: 'Michael Brown', kpis: 'Campaign Success Rate, Brand Awareness' },
+            { id: 3, employeeName: 'Michael Brown', department: 'HR', role: 'HR Manager', manager: 'Sarah Williams', kpis: 'Employee Satisfaction, Retention Rate' },
+            { id: 4, employeeName: 'Sarah Williams', department: 'Finance', role: 'Finance Analyst', manager: 'David Johnson', kpis: 'Budget Variance, Reporting Accuracy' },
+            { id: 5, employeeName: 'David Johnson', department: 'IT', role: 'IT Support Specialist', manager: 'Linda Miller', kpis: 'Ticket Resolution Time, System Uptime' },
+            { id: 6, employeeName: 'Linda Miller', department: 'Sales', role: 'Sales Manager', manager: 'John Doe', kpis: 'Team Sales Target, Customer Acquisition' },
+            { id: 7, employeeName: 'Robert Davis', department: 'Marketing', role: 'Marketing Specialist', manager: 'Jane Smith', kpis: 'Lead Generation, Content Engagement' },
+            { id: 8, employeeName: 'Jennifer Wilson', department: 'HR', role: 'Recruiter', manager: 'Michael Brown', kpis: 'Time to Hire, Quality of Hire' },
+            { id: 9, employeeName: 'Christopher Garcia', department: 'Finance', role: 'Accountant', manager: 'Sarah Williams', kpis: 'Financial Statement Accuracy, Audit Compliance' },
+            { id: 10, employeeName: 'Angela Rodriguez', department: 'IT', role: 'Network Administrator', manager: 'David Johnson', kpis: 'Network Security, Bandwidth Management' },
+            { id: 11, employeeName: 'Brian Martinez', department: 'Sales', role: 'Sales Associate', manager: 'Linda Miller', kpis: 'Individual Sales Target, Customer Retention' },
+            { id: 12, employeeName: 'Nicole Robinson', department: 'Marketing', role: 'Digital Marketing Specialist', manager: 'Robert Davis', kpis: 'Online Campaign Performance, Website Traffic' },
+            { id: 13, employeeName: 'Kevin Young', department: 'HR', role: 'HR Assistant', manager: 'Jennifer Wilson', kpis: 'Payroll Processing, Benefits Administration' },
+            { id: 14, employeeName: 'Michelle Hernandez', department: 'Finance', role: 'Financial Analyst', manager: 'Christopher Garcia', kpis: 'Investment Analysis, Risk Management' },
+            { id: 15, employeeName: 'Timothy Scott', department: 'IT', role: 'Help Desk Technician', manager: 'Angela Rodriguez', kpis: 'Help Desk Response Time, User Satisfaction' }
+        ];
 
-        function displayRoleAssignments() {
-            const tbody = roleAssignmentTable.querySelector('tbody');
-            tbody.innerHTML = '';
-            roleAssignments.forEach(assignment => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${assignment.employeeName}</td>
-                    <td>${assignment.department}</td>
-                    <td>${assignment.role}</td>
-                    <td>${assignment.manager}</td>
-                    <td>${assignment.kpis}</td>
-                    <td>
-                        <button class="action-btn view-btn" data-id="${assignment.id}">View</button>
-                        <button class="action-btn edit-btn" data-id="${assignment.id}">Edit</button>
-                        <button class="action-btn delete-btn" data-id="${assignment.id}">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-            addEventListenersToButtons();
-        }
+        function displayRoleAssignments() {
+            const tbody = roleAssignmentTable.querySelector('tbody');
+            tbody.innerHTML = '';
+            roleAssignments.forEach(assignment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${assignment.employeeName}</td>
+                    <td>${assignment.department}</td>
+                    <td>${assignment.role}</td>
+                    <td>${assignment.manager}</td>
+                    <td>${assignment.kpis}</td>
+                    <td>
+                        <button class="action-btn view-btn" data-id="${assignment.id}">View</button>
+                        <button class="action-btn edit-btn" data-id="${assignment.id}">Edit</button>
+                        <button class="action-btn delete-btn" data-id="${assignment.id}">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            addEventListenerToButtons();
+        }
 
-        function addEventListenersToButtons() {
-            const viewButtons = document.querySelectorAll('.view-btn');
-            const editButtons = document.querySelectorAll('.edit-btn');
-            const deleteButtons = document.querySelectorAll('.delete-btn');
+        function addEventListenerToButtons() {
+            const viewButtons = document.querySelectorAll('.view-btn');
+            const editButtons = document.querySelectorAll('.edit-btn');
+            const deleteButtons = document.querySelectorAll('.delete-btn');
 
-            viewButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    const assignment = roleAssignments.find(a => a.id === id);
-                    if (assignment) {
-                        viewEmployeeNameEl.textContent = assignment.employeeName;
-                        viewDepartmentEl.textContent = assignment.department;
-                        viewRoleEl.textContent = assignment.role;
-                        viewManagerEl.textContent = assignment.manager;
-                        viewKpisEl.textContent = assignment.kpis;
-                        viewRoleModal.style.display = 'block';
-                    }
-                });
-            });
+            viewButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.dataset.id);
+                    const assignment = roleAssignments.find(a => a.id === id);
+                    if (assignment) {
+                        viewEmployeeNameEl.textContent = assignment.employeeName;
+                        viewDepartmentEl.textContent = assignment.department;
+                        viewRoleEl.textContent = assignment.role;
+                        viewManagerEl.textContent = assignment.manager;
+                        viewKpisEl.textContent = assignment.kpis;
+                        viewRoleModal.style.display = 'block';
+                    }
+                });
+            });
 
-            editButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    editingId = id;
-                    const assignment = roleAssignments.find(a => a.id === id);
-                    if (assignment) {
-                        document.getElementById('employeeName').value = assignment.employeeName;                        document.getElementById('department').value = assignment.department;
-                        document.getElementById('role').value = assignment.role;
-                        document.getElementById('manager').value = assignment.manager;
-                        document.getElementById('kpis').value = assignment.kpis;
-                        addEditRoleModal.style.display = 'block';
-                        document.querySelector('.modal-title').textContent = 'Edit Role Assignment';
-                    }
-                });
-            });
+            editButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.dataset.id);
+                    editingId = id;
+                    const assignment = roleAssignments.find(a => a.id === id);
+                    if (assignment) {
+                        document.getElementById('employeeName').value = assignment.employeeName;
+                        document.getElementById('department').value = assignment.department;
+                        document.getElementById('role').value = assignment.role;
+                        document.getElementById('manager').value = assignment.manager;
+                        document.getElementById('kpis').value = assignment.kpis;
+                        addEditRoleModal.style.display = 'block';
+                        document.querySelector('.modal-title').textContent = 'Edit Role Assignment';
+                    }
+                });
+            });
 
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    if (confirm('Are you sure you want to delete this role assignment?')) {
-                        roleAssignments = roleAssignments.filter(a => a.id !== id);
-                        displayRoleAssignments();
-                    }
-                });
-            });
-        }
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.dataset.id);
+                    if (confirm('Are you sure you want to delete this role assignment?')) {
+                        roleAssignments = roleAssignments.filter(a => a.id !== id);
+                        displayRoleAssignments();
+                    }
+                });
+            });
+        }
 
-        addRoleButton.addEventListener('click', () => {
-            editingId = null;
-            document.getElementById('employeeName').value = '';
-            document.getElementById('department').value = '';
-            document.getElementById('role').value = '';
-            document.getElementById('manager').value = '';
-            document.getElementById('kpis').value = '';
-            addEditRoleModal.style.display = 'block';
-            document.querySelector('.modal-title').textContent = 'Add Role Assignment';
-        });
+        addRoleButton.addEventListener('click', () => {
+            editingId = null;
+            document.getElementById('employeeName').value = '';
+            document.getElementById('department').value = '';
+            document.getElementById('role').value = '';
+            document.getElementById('manager').value = '';
+            document.getElementById('kpis').value = '';
+            addEditRoleModal.style.display = 'block';
+            document.querySelector('.modal-title').textContent = 'Add Role Assignment';
+        });
 
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.modal').style.display = 'none';
-            });
-        });
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').style.display = 'none';
+            });
+        });
 
-        closeModalBtns.forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.modal').style.display = 'none';
-            });
-        });
+        closeModalBtns.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').style.display = 'none';
+            });
+        });
 
-        window.addEventListener('click', (event) => {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        });
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
 
-        addEditRoleForm.addEventListener('submit', (event) => {
-            event.preventDefault();
+        addEditRoleForm.addEventListener('submit', (event) => {
+            event.preventDefault();
 
-            const employeeName = document.getElementById('employeeName').value.trim();
-            const department = document.getElementById('department').value.trim();
-            const role = document.getElementById('role').value.trim();
-            const manager = document.getElementById('manager').value.trim();
-            const kpis = document.getElementById('kpis').value.trim();
+            const employeeName = document.getElementById('employeeName').value.trim();
+            const department = document.getElementById('department').value.trim();
+            const role = document.getElementById('role').value.trim();
+            const manager = document.getElementById('manager').value.trim();
+            const kpis = document.getElementById('kpis').value.trim();
 
-            let hasErrors = false;
+            let hasErrors = false;
 
-            if (!employeeName) {
-                formErrorResponse("employeeNameError", "Employee Name is required");
-                hasErrors = true;
-            } else {
-                document.getElementById("employeeNameError").textContent = "";
-            }
-            if (!department) {
-                formErrorResponse("departmentError", "Department is required");
-                hasErrors = true;
-            } else {
-                document.getElementById("departmentError").textContent = "";
-            }
-            if (!role) {
-                formErrorResponse("roleError", "Role is required");
-                hasErrors = true;
-            } else {
-                document.getElementById("roleError").textContent = "";
-            }
-            if (!manager) {
-                formErrorResponse("managerError", "Manager is required");
-                hasErrors = true;
-            } else {
-                document.getElementById("managerError").textContent = "";
-            }
-            if (!kpis) {
-                formErrorResponse("kpisError", "KPIs are required");
-                hasErrors = true;
-            } else {
-                document.getElementById("kpisError").textContent = "";
-            }
+            if (!employeeName) {
+                formErrorResponse("employeeNameError", "Employee Name is required");
+                hasErrors = true;
+            } else {
+                document.getElementById("employeeNameError").textContent = "";
+            }
+            if (!department) {
+                formErrorResponse("departmentError", "Department is required");
+                hasErrors = true;
+            } else {
+                document.getElementById("departmentError").textContent = "";
+            }
+            if (!role) {
+                formErrorResponse("roleError", "Role is required");
+                hasErrors = true;
+            } else {
+                document.getElementById("roleError").textContent = "";
+            }
+            if (!manager) {
+                formErrorResponse("managerError", "Manager is required");
+                hasErrors = true;
+            } else {
+                document.getElementById("managerError").textContent = "";
+            }
+            if (!kpis) {
+                formErrorResponse("kpisError", "KPIs are required");
+                hasErrors = true;
+            } else {
+                document.getElementById("kpisError").textContent = "";
+            }
 
-            if (hasErrors) {
-                return;
-            }
+            if (hasErrors) {
+                return;
+            }
 
-            if (editingId) {
-                const index = roleAssignments.findIndex(a => a.id === editingId);
-                if (index !== -1) {
-                    roleAssignments[index] = {
-                        ...roleAssignments[index],
-                        employeeName,
-                        department,
-                        role,
-                        manager,
-                        kpis
-                    };
-                }
-            } else {
-                const newId = roleAssignments.length > 0 ? Math.max(...roleAssignments.map(a => a.id)) + 1 : 1;
-                roleAssignments.push({
-                    id: newId,
-                    employeeName,
-                    department,
-                    role,
-                    manager,
-                    kpis
-                });
-            }
+            if (editingId) {
+                const index = roleAssignments.findIndex(a => a.id === editingId);
+                if (index !== -1) {
+                    roleAssignments[index] = {
+                        ...roleAssignments[index],
+                        employeeName,
+                        department,
+                        role,
+                        manager,
+                        kpis
+                    };
+                }
+            } else {
+                const newId = roleAssignments.length > 0 ? Math.max(...roleAssignments.map(a =>a.id)) + 1 : 1;
+                roleAssignments.push({
+                    id: newId,
+                    employeeName,
+                    department,
+                    role,
+                    manager,
+                    kpis
+                });
+            }
 
-            displayRoleAssignments();
-            addEditRoleModal.style.display = 'none';
-            addEditRoleForm.reset();
-            editingId = null;
-            alert('Role assignment saved successfully!');
-        });
+            displayRoleAssignments();
+            addEditRoleModal.style.display = 'none';
+            addEditRoleForm.reset();
+            editingId = null;
+            alert('Role assignment saved successfully!');
+        });
 
-        function formErrorResponse(inputID, response) {
-            const responseElement = document.getElementById(inputID);
-            responseElement.textContent = response;
-        }
+        function formErrorResponse(inputID, response) {
+            const responseElement = document.getElementById(inputID);
+            responseElement.textContent = response;
+        }
 
-        displayRoleAssignments();
-    </script>
+        displayRoleAssignments();
+    </script>
 </body>
 </html>
