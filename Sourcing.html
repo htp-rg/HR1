@@ -292,39 +292,8 @@
             <h1>Sourcing Candidates</h1>
             <p>Find and manage potential candidates for your job openings.</p>
 
-            <div class="sourcing-feature-section">
-                <h3>Integration with LinkedIn and Job Boards</h3>
-                <p>Connect and source candidates from various platforms to expand your reach and find the best talent.</p>
-                <ul>
-                    <li><strong>Direct Posting:</strong> Publish job openings created in this system directly to LinkedIn, Indeed, and other integrated job boards. This eliminates the need to manually create the same posting on multiple platforms.</li>
-                    <li><strong>Candidate Search:</strong> Utilize integrated search functionality to browse potential candidates on LinkedIn based on keywords, skills, location, and other criteria.</li>
-                    <li><strong>Profile Import:</strong> Easily import candidate profiles from LinkedIn directly into your talent pool database with a single click.</li>
-                    <li><strong>Job Board Aggregation (Future):</strong> In the future, this section could be expanded to aggregate candidate data from various job boards based on defined search parameters.</li>
-                </ul>
-            </div>
-
-            <div class="sourcing-feature-section">
-                <h3>Talent Pool Database</h3>
-                <p>Manage a centralized database of potential candidates for current and future opportunities. Build a valuable resource of talent over time.</p>
-                <ul>
-                    <li><strong>Centralized Storage:</strong> Store candidate profiles, contact information, resumes, and notes in one secure and easily accessible location.</li>
-                    <li><strong>Tagging and Categorization:</strong> Organize candidates using tags (e.g., skills, experience level, potential roles) for efficient filtering and retrieval.</li>
-                    <li><strong>Search and Filtering:</strong> Quickly find relevant candidates within the talent pool based on various criteria.</li>
-                    <li><strong>Communication History:</strong> Track all interactions with candidates, ensuring a consistent and personalized approach.</li>
-                    <li><strong>Pipeline Management:</strong> Move candidates through different stages of your sourcing pipeline (e.g., identified, contacted, interested).</li>
-                </ul>
-            </div>
-
-            <div class="sourcing-feature-section">
-                <h3>Resume Parser and Filter</h3>
-                <p>Automate the process of extracting key information from resumes and efficiently filter candidates based on specific requirements.</p>
-                <ul>
-                    <li><strong>Automatic Data Extraction:</strong> The system will automatically parse resumes uploaded by candidates or imported from external sources, extracting information such as name, contact details, education, work experience, skills, and more.</li>
-                    <li><strong>Customizable Parsing Rules (Future):</strong> Future enhancements could allow administrators to define custom rules for parsing specific information relevant to their industry or roles.</li>
-                    <li><strong>Advanced Filtering:</strong> Filter candidates based on keywords, specific skills, years of experience, education level, job titles, companies, and other criteria.</li>
-                    <li><strong>Ranking and Scoring (Future):</strong> Implement algorithms to rank candidates based on how well their skills and experience match the requirements of a specific job posting.</li>
-                </ul>
-            </div>
+            <div id="sourcingFeaturesContainer">
+                </div>
 
             <div style="margin-bottom: 20px;">
                 <button class="add-employee-button" onclick="openAddCandidateModal()">Add New Candidate</button>
@@ -418,7 +387,7 @@
             }
         }
 
-        
+       
         function openAddCandidateModal() {
             document.getElementById('addCandidateModal').style.display = 'block';
         }
@@ -433,61 +402,62 @@
             const email = document.getElementById('email').value;
             const source = document.getElementById('source').value;
             const skills = document.getElementById('skills').value;
-            console.log('Adding new candidate:', { candidateName, email,source, skills });
-closeAddCandidateModal();
-addCandidateToTable(candidateName, email, source, skills);
+            console.log('Adding new candidate:', { candidateName, email, source, skills });
+            closeAddCandidateModal();
+            addCandidateToTable(candidateName, email, source, skills);
+        });
+
+        function addCandidateToTable(name, email, source, skills) {
+            const newRow = document.getElementById('candidateTableBody').insertRow();
+            newRow.innerHTML = `
+                <td><span class="math-inline">\{name\}</td\>
+<td\></span>{email}</td>
+                <td><span class="math-inline">\{source\}</td\>
+<td\></span>{skills}</td>
+                <td class="action-buttons">
+                    <button onclick="openViewCandidateModal('TEMP_ID')">View</button>
+                    <button onclick="openEditCandidateModal('TEMP_ID')">Edit</button>
+                    <button onclick="openDeleteCandidateModal('TEMP_ID', '${name}')">Delete</button>
+                </td>
+            `;
+            // In a real application, you would likely assign a unique ID here
+        }
+
+        // Modal functions for View Candidate
+        function openViewCandidateModal(candidateId) {
+            const detailsContainer = document.getElementById('viewCandidateDetails');
+            detailsContainer.innerHTML = `<p>Candidate ID: ${candidateId}</p><p>Details will be loaded here...</p>`;
+            document.getElementById('viewCandidateModal').style.display = 'block';
+        }
+        function closeViewCandidateModal() {
+            document.getElementById('viewCandidateModal').style.display = 'none';
+        }
+
+       
+        function openEditCandidateModal(candidateId) {
+            document.getElementById('editCandidateId').value = candidateId;
+            document.getElementById('editCandidateName').value = 'Alice Wonderland'; // Example data
+            document.getElementById('editEmail').value = 'alice.wonder@example.com';
+            document.getElementById('editSource').value = 'LinkedIn';
+            document.getElementById('editSkills').value = 'Java, Spring, SQL';
+            document.getElementById('editCandidateModal').style.display = 'block';
+        }
+
+        function closeEditCandidateModal() {
+            document.getElementById('editCandidateModal').style.display = 'none';
+        }
+
+        document.getElementById('editCandidateForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const candidateId = document.getElementById('editCandidateId').value;
+            const candidateName = document.getElementById('editCandidateName').value;
+            const email = document.getElementById('editEmail').value;
+            const source = document.getElementById('editSource').value;
+            const skills = document.getElementById('editSkills').value;
+            console.log('Saving changes for candidate ID:', candidateId, {candidateName, email, source, skills });
+closeEditCandidateModal();
+
 });
-      function addCandidateToTable(name, email, source, skills) {
-        const newRow = document.getElementById('candidateTableBody').insertRow();
-        newRow.innerHTML = `
-            <td>${name}</td>
-            <td>${email}</td>
-            <td>${source}</td>
-            <td>${skills}</td>
-            <td class="action-buttons">
-                <button onclick="openViewCandidateModal('TEMP_ID')">View</button>
-                <button onclick="openEditCandidateModal('TEMP_ID')">Edit</button>
-                <button onclick="openDeleteCandidateModal('TEMP_ID', '${name}')">Delete</button>
-            </td>
-        `;
-        
-    }
-
-   
-    function openViewCandidateModal(candidateId) {
-        const detailsContainer = document.getElementById('viewCandidateDetails');
-        detailsContainer.innerHTML = `<p>Candidate ID: ${candidateId}</p><p>Details will be loaded here...</p>`;
-        document.getElementById('viewCandidateModal').style.display = 'block';
-    }
-    function closeViewCandidateModal() {
-        document.getElementById('viewCandidateModal').style.display = 'none';
-    }
-
-   
-    function openEditCandidateModal(candidateId) {
-        document.getElementById('editCandidateId').value = candidateId;
-        document.getElementById('editCandidateName').value = 'Alice Wonderland'; // Example data
-        document.getElementById('editEmail').value = 'alice.wonder@example.com';
-        document.getElementById('editSource').value = 'LinkedIn';
-        document.getElementById('editSkills').value = 'Java, Spring, SQL';
-        document.getElementById('editCandidateModal').style.display = 'block';
-    }
-
-    function closeEditCandidateModal() {
-        document.getElementById('editCandidateModal').style.display = 'none';
-    }
-
-    document.getElementById('editCandidateForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const candidateId = document.getElementById('editCandidateId').value;
-        const candidateName = document.getElementById('editCandidateName').value;
-        const email = document.getElementById('editEmail').value;
-        const source = document.getElementById('editSource').value;
-        const skills = document.getElementById('editSkills').value;
-        console.log('Saving changes for candidate ID:', candidateId, { candidateName, email, source, skills });
-        closeEditCandidateModal();
-    
-    });
 
    
     function openDeleteCandidateModal(candidateId, candidateName) {
@@ -505,14 +475,14 @@ addCandidateToTable(candidateName, email, source, skills);
         const candidateNameToDelete = document.getElementById('deleteCandidateName').innerText;
         console.log(`Deleting candidate with ID: ${candidateIdToDelete} (${candidateNameToDelete})`);
         closeDeleteCandidateModal();
-       
+        // In a real application, send a request to delete the candidate and update the table
         const rowToDelete = document.querySelector(`#candidateTableBody tr:nth-child(${parseInt(candidateIdToDelete.split('-')[2])})`);
         if (rowToDelete) {
             rowToDelete.remove();
         }
     }
 
-  
+    // Function to add initial candidates to the table
     function addInitialCandidates() {
         const initialCandidates = [
             { name: 'Alice Wonderland', email: 'alice.wonder@example.com', source: 'LinkedIn', skills: 'Java, Spring, SQL' },
@@ -541,7 +511,62 @@ addCandidateToTable(candidateName, email, source, skills);
         });
     }
 
+   
+    function renderLinkedInIntegration() {
+        const integrationSection = document.createElement('div');
+        integrationSection.classList.add('sourcing-feature-section');
+        integrationSection.innerHTML = `
+            <h3>Integration with LinkedIn and Job Boards</h3>
+            <p>Connect and source candidates from various platforms to expand your reach and find the best talent.</p>
+            <ul>
+                <li><strong>Direct Posting:</strong> Publish job openings created in this system directly to LinkedIn, Indeed, and other integrated job boards. This eliminates the need to manually create the same posting on multiple platforms.</li>
+                <li><strong>Candidate Search:</strong> Utilize integrated search functionality to browse potential candidates on LinkedIn based on keywords, skills, location, and other criteria.</li>
+                <li><strong>Profile Import:</strong> Easily import candidate profiles from LinkedIn directly into your talent pool database with a single click.</li>
+                <li><strong>Job Board Aggregation (Future):</strong> In the future, this section could be expanded to aggregate candidate data from various job boards based on defined search parameters.</li>
+            </ul>
+        `;
+        document.getElementById('sourcingFeaturesContainer').appendChild(integrationSection);
+    }
+
+   
+    function renderTalentPoolDatabase() {
+        const talentPoolSection = document.createElement('div');
+        talentPoolSection.classList.add('sourcing-feature-section');
+        talentPoolSection.innerHTML = `
+            <h3>Talent Pool Database</h3>
+            <p>Manage a centralized database of potential candidates for current and future opportunities. Build a valuable resource of talent over time.</p>
+            <ul>
+                <li><strong>Centralized Storage:</strong> Store candidate profiles, contact information, resumes, and notes in one secure and easily accessible location.</li>
+                <li><strong>Tagging and Categorization:</strong> Organize candidates using tags (e.g., skills, experience level, potential roles) for efficient filtering and retrieval.</li>
+                <li><strong>Search and Filtering:</strong> Quickly find relevant candidates within the talent pool based on various criteria.</li>
+                <li><strong>Communication History:</strong> Track all interactions with candidates, ensuring a consistent and personalized approach.</li>
+                <li><strong>Pipeline Management:</strong> Move candidates through different stages of your sourcing pipeline (e.g., identified, contacted, interested).</li>
+            </ul>
+        `;
+        document.getElementById('sourcingFeaturesContainer').appendChild(talentPoolSection);
+    }
+
+    
+    function renderResumeParserAndFilter() {
+        const resumeParserSection = document.createElement('div');
+        resumeParserSection.classList.add('sourcing-feature-section');
+        resumeParserSection.innerHTML = `
+            <h3>Resume Parser and Filter</h3>
+            <p>Automate the process of extracting key information from resumes and efficiently filter candidates based on specific requirements.</p>
+            <ul>
+                <li><strong>Automatic Data Extraction:</strong> The system will automatically parse resumes uploaded by candidates or imported from external sources, extracting information such as name, contact details, education, work experience, skills, and more.</li>
+                <li><strong>Customizable Parsing Rules (Future):</strong> Future enhancements could allow administrators to define custom rules for parsing specific information relevant to their industry or roles.</li>
+                <li><strong>Advanced Filtering:</strong> Filter candidates based on keywords, specific skills, years of experience, education level, job titles, companies, and other criteria.</li>
+                <li><strong>Ranking and Scoring (Future):</strong> Implement algorithms to rank candidates based on how well their skills and experience match the requirements of a specific job posting.</li>
+            </ul>
+        `;
+        document.getElementById('sourcingFeaturesContainer').appendChild(resumeParserSection);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+        renderLinkedInIntegration();
+        renderTalentPoolDatabase();
+        renderResumeParserAndFilter();
         addInitialCandidates();
     });
 </script>
