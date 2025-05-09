@@ -115,6 +115,176 @@
         .job-approval-actions button:hover {
             background-color: #218838;
         }
+
+        .add-employee-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .add-employee-button:hover {
+            background-color: #0056b3;
+        }
+
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .employee-table th,
+        .employee-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .employee-table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .action-buttons button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons button:hover {
+            background-color: #218838;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .modal-form input[type="text"],
+        .modal-form textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .modal-form button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-modal-content {
+            background-color: #fefefe;
+            margin: 20% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+        }
+
+        .delete-modal-content h2 {
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+
+        .delete-modal-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .delete-modal-content .cancel-delete,
+        .delete-modal-content .confirm-delete {
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-modal-content .confirm-delete {
+            background-color: #d9534f;
+        }
+
+        .delete-modal-content .cancel-delete:hover {
+            background-color: #eea236;
+        }
+
+        .delete-modal-content .confirm-delete:hover {
+            background-color: #c9302c;
+        }
     </style>
 </head>
 <body>
@@ -262,7 +432,7 @@
                 </ul>
             </div>
 
-            <div style="margin-bottom: 20px;">
+            <div>
                 <button class="add-employee-button" onclick="openAddCandidateModal()">Add New Candidate</button>
             </div>
 
@@ -277,13 +447,12 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="candidateTableBody">
-                    </tbody>
+                <tbody id="candidateTableBody"></tbody>
             </table>
 
             <div class="modal" id="addCandidateModal">
                 <div class="modal-content">
-                    <span class="close-button" onclick="closeAddCandidateModal()">&times;</span>
+                    <span class="close-button" onclick="closeAddCandidateModal()">×</span>
                     <h2>Add New Candidate</h2>
                     <form class="modal-form" id="addCandidateForm">
                         <label for="candidateName">Candidate Name:</label>
@@ -301,16 +470,15 @@
 
             <div class="modal" id="viewCandidateModal">
                 <div class="modal-content">
-                    <span class="close-button" onclick="closeViewCandidateModal()">&times;</span>
+                    <span class="close-button" onclick="closeViewCandidateModal()">×</span>
                     <h2>Candidate Details</h2>
-                    <div id="viewCandidateDetails">
-                        </div>
+                    <div id="viewCandidateDetails"></div>
                 </div>
             </div>
 
             <div class="modal" id="editCandidateModal">
                 <div class="modal-content">
-                    <span class="close-button" onclick="closeEditCandidateModal()">&times;</span>
+                    <span class="close-button" onclick="closeEditCandidateModal()">×</span>
                     <h2>Edit Candidate</h2>
                     <form class="modal-form" id="editCandidateForm">
                         <label for="editCandidateName">Candidate Name:</label>
@@ -329,186 +497,152 @@
 
             <div class="modal" id="deleteCandidateModal">
                 <div class="delete-modal-content">
-                    <span class="close-button" onclick="closeDeleteCandidateModal()">&times;</span>
+                    <span class="close-button" onclick="closeDeleteCandidateModal()">×</span>
                     <h2>Delete Candidate</h2>
                     <p>Are you sure you want to delete <span id="deleteCandidateName"></span>?</p>
                     <button class="cancel-delete" onclick="closeDeleteCandidateModal()">Cancel</button>
                     <button class="confirm-delete" onclick="deleteCandidate()">Delete</button>
-                    <span id="deleteCandidateIdHidden" style="display:none;"></span>
+                    <span id="deleteCandidateIdHidden" style="display: none;"></span>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
+        let candidates = [];
+        let currentEditId = null;
+
         function confirmLogout() {
             return confirm("Are you sure you want to log out?");
         }
+
         function toggleSubMenu(id) {
             const submenu = document.getElementById(id);
-            if (submenu.style.display === 'none') {
-                submenu.style.display = 'block';
-            } else {
-                submenu.style.display = 'none';
-            }
+            submenu.style.display = submenu.style.display === "none" ? "block" : "none";
         }
 
         function openAddCandidateModal() {
-            document.getElementById('addCandidateModal').style.display = 'block';
+            document.getElementById("addCandidateModal").style.display = "block";
         }
 
         function closeAddCandidateModal() {
-            document.getElementById('addCandidateModal').style.display = 'none';
-            document.getElementById('addCandidateForm').reset(); // Clear the form
+            document.getElementById("addCandidateModal").style.display = "none";
         }
 
-        document.getElementById('addCandidateForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const candidateName = document.getElementById('candidateName').value;
-            const email = document.getElementById('email').value;
-            const source = document.getElementById('source').value;
-            const skills = document.getElementById('skills').value;
-            console.log('Adding new candidate:', { candidateName, email, source, skills });
-            closeAddCandidateModal();
-            addCandidateToTable(candidateName, email, source, skills);
-        });
-
-        let candidates = []; 
-        let nextCandidateId = 1;
-
-        function addCandidateToTable(name, email, source, skills) {
-            const newCandidate = {
-                id: `CANDIDATE-${nextCandidateId++}`,
-                name: name,
-                email: email,
-                source: source,
-                skills: skills
-            };
-            candidates.push(newCandidate);
-            renderCandidateTable();
-        }
-
-        function renderCandidateTable() {
-            const tableBody = document.getElementById('candidateTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-            candidates.forEach(candidate => {
-                const newRow = tableBody.insertRow();
-                newRow.innerHTML = `
-                    <td><span class="math-inline">\{candidate\.name\}</td\>
-<td\></span>{candidate.email}</td>
-                    <td><span class="math-inline">\{candidate\.source\}</td\>
-<td\></span>{candidate.skills}</td>
-                    <td class="action-buttons">
-                        <button onclick="openViewCandidateModal('<span class="math-inline">\{candidate\.id\}'\)"\>View</button\>
-<button onclick\="openEditCandidateModal\('</span>{candidate.id}')">Edit</button>
-                        <button onclick="openDeleteCandidateModal('<span class="math-inline">\{candidate\.id\}', '</span>{candidate.name}')">Delete</button>
-                    </td>
-                `;
-            });
-        }
-       
-        function openViewCandidateModal(candidateId) {
-            const candidate = candidates.find(c => c.id === candidateId);
+        function openEditCandidateModal(id) {
+            const candidate = candidates.find(c => c.id === id);
             if (candidate) {
-                const detailsContainer = document.getElementById('viewCandidateDetails');
-                detailsContainer.innerHTML = `
-                    <p><strong>Candidate ID:</strong> ${candidate.id}</p>
-                    <p><strong>Name:</strong> ${candidate.name}</p>
-                    <p><strong>Email:</strong> ${candidate.email}</p>
-                    <p><strong>Source:</strong> ${candidate.source}</p>
-                    <p><strong>Skills:</strong> ${candidate.skills}</p>
-                    `;
-                document.getElementById('viewCandidateModal').style.display = 'block';
-            }
-        }
-        function closeViewCandidateModal() {
-            document.getElementById('viewCandidateModal').style.display = 'none';
-        }
-
-        
-        let currentEditCandidateId = null;
-
-        function openEditCandidateModal(candidateId) {
-            currentEditCandidateId = candidateId;
-            const candidate = candidates.find(c => c.id === candidateId);
-            if (candidate) {
-                document.getElementById('editCandidateId').value = candidateId;
-                document.getElementById('editCandidateName').value = candidate.name;
-                document.getElementById('editEmail').value = candidate.email;
-                document.getElementById('editSource').value = candidate.source;
-                document.getElementById('editSkills').value = candidate.skills;
-                document.getElementById('editCandidateModal').style.display = 'block';
+                document.getElementById("editCandidateName").value = candidate.name;
+                document.getElementById("editEmail").value = candidate.email;
+                document.getElementById("editSource").value = candidate.source;
+                document.getElementById("editSkills").value = candidate.skills;
+                document.getElementById("editCandidateId").value = candidate.id;
+                document.getElementById("editCandidateModal").style.display = "block";
+                currentEditId = id;
             }
         }
 
         function closeEditCandidateModal() {
-            document.getElementById('editCandidateModal').style.display = 'none';
-            document.getElementById('editCandidateForm').reset(); 
-            currentEditCandidateId = null;
+            document.getElementById("editCandidateModal").style.display = "none";
         }
 
-        document.getElementById('editCandidateForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (currentEditCandidateId) {
-                const candidateIndex = candidates.findIndex(cconst candidateIndex = candidates.findIndex(c => c.id === currentEditCandidateId);
-                if (candidateIndex !== -1) {
-                    candidates[candidateIndex].name = document.getElementById('editCandidateName').value;
-                    candidates[candidateIndex].email = document.getElementById('editEmail').value;
-                    candidates[candidateIndex].source = document.getElementById('editSource').value;
-                    candidates[candidateIndex].skills = document.getElementById('editSkills').value;
-                    renderCandidateTable();
-                }
-                closeEditCandidateModal();
+        function openViewCandidateModal(id) {
+            const candidate = candidates.find(c => c.id === id);
+            if (candidate) {
+                document.getElementById("viewCandidateDetails").innerHTML = `
+                    <p><strong>Name:</strong> ${candidate.name}</p>
+                    <p><strong>Email:</strong> ${candidate.email}</p>
+                    <p><strong>Source:</strong> ${candidate.source}</p>
+                    <p><strong>Skills:</strong> ${candidate.skills}</p>
+                `;
+                document.getElementById("viewCandidateModal").style.display = "block";
             }
-        });
+        }
 
-       
-        let currentDeleteCandidateId = null;
+        function closeViewCandidateModal() {
+            document.getElementById("viewCandidateModal").style.display = "none";
+        }
 
-        function openDeleteCandidateModal(candidateId, candidateName) {
-            currentDeleteCandidateId = candidateId;
-            document.getElementById('deleteCandidateIdHidden').innerText = candidateId;
-            document.getElementById('deleteCandidateName').innerText = candidateName;
-            document.getElementById('deleteCandidateModal').style.display = 'block';
+        function openDeleteCandidateModal(id) {
+            const candidate = candidates.find(c => c.id === id);
+            if (candidate) {
+                document.getElementById("deleteCandidateName").textContent = candidate.name;
+                document.getElementById("deleteCandidateIdHidden").textContent = candidate.id;
+                document.getElementById("deleteCandidateModal").style.display = "block";
+            }
         }
 
         function closeDeleteCandidateModal() {
-            document.getElementById('deleteCandidateModal').style.display = 'none';
-            currentDeleteCandidateId = null;
+            document.getElementById("deleteCandidateModal").style.display = "none";
         }
 
         function deleteCandidate() {
-            if (currentDeleteCandidateId) {
-                candidates = candidates.filter(c => c.id !== currentDeleteCandidateId);
-                renderCandidateTable();
-                closeDeleteCandidateModal();
-            }
+            const id = document.getElementById("deleteCandidateIdHidden").textContent;
+            candidates = candidates.filter(c => c.id !== id);
+            closeDeleteCandidateModal();
+            renderCandidates();
         }
 
-    
-        function addInitialCandidates() {
-            const initialCandidatesData = [
-                { name: 'Alice Wang', email: 'alice.wang@gmail.com', source: 'LinkedIn', skills: 'Java, Spring, SQL' },
-                { name: 'Bob Fernandez', email: 'bob.fernandez@gmail.com', source: 'Indeed', skills: 'Project Management, Construction' },
-                { name: 'Charlie Veras', email: 'charlie.veras@gmail.com', source: 'Internal Database', skills: 'Communication, Leadership' },
-                { name: 'Diana Prince', email: 'diana.prince@gmail.com', source: 'LinkedIn', skills: 'Strategic Planning, Negotiation' },
-                { name: 'Eve Harrington', email: 'eve.harrington@gmail.com', source: 'Company Website', skills: 'Customer Service, Sales' },
-                { name: 'Frank Martin', email: 'frank@gmail.com', source: 'Monster', skills: 'Electrical Engineering, Robotics' },
-                { name: 'Greta Garbo', email: 'greta@gmail.com', source: 'Referral', skills: 'Public Relations, Media' },
-                { name: 'Hans Solo', email: 'hans@gmail.com', source: 'LinkedIn', skills: 'Pilot, Negotiation, Problem-solving' },
-                { name: 'Leia Organa', email: 'leia@gmail.com', source: 'Internal Database', skills: 'Leadership, Diplomacy' },
-                { name: 'Luke Skywalker', email: 'luke@gmail.com', source: 'Referral', skills: 'Problem-solving, Teamwork' }
-            ];
-
-            initialCandidatesData.forEach(candidate => {
-                addCandidateToTable(candidate.name, candidate.email, candidate.source, candidate.skills);
+        function renderCandidates() {
+            const tbody = document.getElementById("candidateTableBody");
+            tbody.innerHTML = "";
+            candidates.forEach(candidate => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${candidate.name}</td>
+                    <td>${candidate.email}</td>
+                    <td>${candidate.source}</td>
+                    <td>${candidate.skills}</td>
+                    <td>
+                        <button onclick="openViewCandidateModal('${candidate.id}')">View</button>
+                        <button onclick="openEditCandidateModal('${candidate.id}')">Edit</button>
+                        <button onclick="openDeleteCandidateModal('${candidate.id}')">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            addInitialCandidates();
+        document.getElementById("addCandidateForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("candidateName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const source = document.getElementById("source").value.trim();
+            const skills = document.getElementById("skills").value.trim();
+            const id = Date.now().toString();
+            candidates.push({ id, name, email, source, skills });
+            this.reset();
+            closeAddCandidateModal();
+            renderCandidates();
         });
+
+        document.getElementById("editCandidateForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const id = document.getElementById("editCandidateId").value;
+            const name = document.getElementById("editCandidateName").value.trim();
+            const email = document.getElementById("editEmail").value.trim();
+            const source = document.getElementById("editSource").value.trim();
+            const skills = document.getElementById("editSkills").value.trim();
+            const candidate = candidates.find(c => c.id === id);
+            if (candidate) {
+                candidate.name = name;
+                candidate.email = email;
+                candidate.source = source;
+                candidate.skills = skills;
+            }
+            closeEditCandidateModal();
+            renderCandidates();
+        });
+
+     
+        const initialCandidates = [
+            { id: "1", name: "John Doe", email: "john.doe@example.com", source: "LinkedIn", skills: "Java, Spring" },
+            { id: "2", name: "Jane Smith", email: "jane.smith@example.com", source: "Indeed", skills: "Project Management" },
+            { id: "3", name: "Peter Jones", email: "peter.jones@example.com", source: "Referral", skills: "Communication Skills" }
+        ];
+
+        candidates.push(...initialCandidates);
+        renderCandidates();
     </script>
 </body>
 </html>
