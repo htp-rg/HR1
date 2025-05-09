@@ -71,7 +71,7 @@
 
         .file-upload-text {
             margin-right: 8px;
-             font-size: 14px;
+            font-size: 14px;
         }
 
         .file-upload-button {
@@ -129,7 +129,7 @@
             background: #c0392b;
         }
 
-       
+        
         .training-schedule {
             width: 100%;
             border-collapse: collapse;
@@ -150,88 +150,192 @@
             padding-bottom: 8px;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .modal-body {
+            margin-bottom: 15px;
+        }
+
+        .modal-body label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .modal-body input[type="text"],
+        .modal-body input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .modal-footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-footer button:hover {
+            background-color: #0056b3;
+        }
+
+        .modal-footer .cancel-button {
+            background-color: #ddd;
+            color: #333;
+            margin-right: 10px;
+        }
+
+        .modal-footer .cancel-button:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
-<body>
-    <div class="sidebar">
-        <div class="sidebar-top">
-            <img src="admin-avatar.png" alt="admin" class="admin-image">
-            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+<body class="bg-gray-100 font-sans">
+    <div class="sidebar bg-gray-800 text-white w-64 min-h-screen">
+        <div class="sidebar-top p-4">
+            <img src="admin-avatar.png" alt="admin" class="admin-image rounded-full w-16 h-16 mx-auto mb-2">
+            <p class="text-center text-lg font-semibold">HUMAN RESOURCES 1</p>
         </div>
-        <div class="sidebar-content">
+        <div class="sidebar-content mt-8">
             <ul class="sidebar-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
-
-                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-                <ul id="Recruitment" style="display:none;">
-                    <li><a href="Jobposting.html">Job Posting</a></li>
-                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-                    <li><a href="Create.html">Create Job Posting</a></li>
-                </ul>
-
-                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-                <ul id="ApplicantManagement" style="display:none;">
-                    <li><a href="Application.html">Application Tracking</a></li>
-                    <li><a href="interviews.html">Interviews & Assessments</a></li>
-                    <li><a href="selection.html">Selection Offer</a></li>
-                </ul>
-
-                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-                <ul id="NewHiredOnBoard" style="display:none;">
-                    <li><a href="Documentation.html">Documentation</a></li>
-                    <li><a href="Orientation.html">Orientation & Training</a></li>
-                    <li><a href="Assignment.html">Role Assignment</a></li>
-                </ul>
-
-                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-                <ul id="SocialRecognitionProgram" style="display:none;">
-                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-                    <li><a href="Employee.html">Employee engagement programs</a></li>
-                </ul>
-
-                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-                <ul id="Performancemanagement" style="display:none;">
-                    <li><a href="Goal.html">Goal setting</a></li>
-                    <li><a href="Feedback.html">Feedback cycles</a></li>
-                    <li><a href="Review.html">Performance reviews</a></li>
-                </ul>
-
-                <li><a href="users.html">Users</a></li>
-                <li><a href="settings.html">Settings</a></li>
+                <li class="p-2 hover:bg-gray-700 rounded"><a href="dashboard.html" class="block text-white no-underline">Dashboard</a></li>
+                <li class="p-2 hover:bg-gray-700 rounded">
+                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('Recruitment')">Recruitment</a>
+                    <ul id="Recruitment" style="display:none;" class="ml-4">
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Jobposting.html" class="block text-white no-underline">Job Posting</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Sourcing.html" class="block text-white no-underline">Sourcing Candidates</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Create.html" class="block text-white no-underline">Create Job Posting</a></li>
+                    </ul>
+                </li>
+                <li class="p-2 hover:bg-gray-700 rounded">
+                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a>
+                    <ul id="ApplicantManagement" style="display:none;" class="ml-4">
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Application.html" class="block text-white no-underline">Application Tracking</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="interviews.html" class="block text-white no-underline">Interviews & Assessments</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="selection.html" class="block text-white no-underline">Selection Offer</a></li>
+                    </ul>
+                </li>
+                <li class="p-2 hover:bg-gray-700 rounded">
+                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a>
+                    <ul id="NewHiredOnBoard" style="display:none;" class="ml-4">
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Documentation.html" class="block text-white no-underline">Documentation</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Orientation.html" class="block text-white no-underline">Orientation & Training</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Assignment.html" class="block text-white no-underline">Role Assignment</a></li>
+                    </ul>
+                </li>
+                <li class="p-2 hover:bg-gray-700 rounded">
+                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a>
+                    <ul id="SocialRecognitionProgram" style="display:none;" class="ml-4">
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Acknowledgement.html" class="block text-white no-underline">Acknowledging Achievements</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Peer.html" class="block text-white no-underline">Peer-to-peer recognition</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Employee.html" class="block text-white no-underline">Employee engagement programs</a></li>
+                    </ul>
+                </li>
+                <li class="p-2 hover:bg-gray-700 rounded">
+                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('Performancemanagement')">Performance management</a>
+                    <ul id="Performancemanagement" style="display:none;" class="ml-4">
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Goal.html" class="block text-white no-underline">Goal setting</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Feedback.html" class="block text-white no-underline">Feedback cycles</a></li>
+                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Review.html" class="block text-white no-underline">Performance reviews</a></li>
+                    </ul>
+                </li>
+                <li class="p-2 hover:bg-gray-700 rounded"><a href="users.html" class="block text-white no-underline">Users</a></li>
+                <li class="p-2 hover:bg-gray-700 rounded"><a href="settings.html" class="block text-white no-underline">Settings</a></li>
             </ul>
         </div>
-
-        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+        <a href="login1.html" class="logout-link block mt-auto p-2 text-white no-underline hover:bg-gray-700 rounded" onclick="return confirmLogout();">Log out</a>
     </div>
 
-    <div class="main-content">
+    <div class="main-content ml-64 p-8">
         <a href="admin.html" class="back-button">Back</a>
-        <div class="container">
-            <h1>New Hired Documentation</h1>
-            <form id="documentationForm">
+        <div class="container bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-semibold text-blue-800 mb-6 text-center">New Hired Documentation</h1>
+            <form id="documentationForm" class="mb-8">
                 <div class="form-group">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" required>
+                    <label for="lastName" class="block text-gray-700 text-sm font-bold mb-2">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="form-group">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" required>
+                    <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="form-group">
-                    <label for="middleName">Middle Name:</label>
-                    <input type="text" id="middleName" name="middleName">
+                    <label for="middleName" class="block text-gray-700 text-sm font-bold mb-2">Middle Name:</label>
+                    <input type="text" id="middleName" name="middleName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age" required>
+                    <label for="age" class="block text-gray-700 text-sm font-bold mb-2">Age:</label>
+                    <input type="number" id="age" name="age" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="form-group">
-                    <label for="birthDate">Birth Date:</label>
-                    <input type="date" id="birthDate" name="birthDate" required>
+                    <label for="birthDate" class="block text-gray-700 text-sm font-bold mb-2">Birth Date:</label>
+                    <input type="date" id="birthDate" name="birthDate" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="form-group">
-                    <label for="idUpload">Upload ID:</label>
+                    <label for="idUpload" class="block text-gray-700 text-sm font-bold mb-2">Upload ID:</label>
                     <div class="file-upload-group">
                         <div class="file-upload-wrapper">
                             <span class="file-upload-text">Choose File</span>
@@ -242,93 +346,191 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="certificatesUpload">Upload Certificates:</label>
-                     <div class="file-upload-group">
+                    <label for="certificatesUpload" class="block text-gray-700 text-sm font-bold mb-2">Upload Certificates:</label>
+                    <div class="file-upload-group">
                         <div class="file-upload-wrapper">
                             <span class="file-upload-text">Choose File</span>
                             <span class="file-upload-button">Browse</span>
                         </div>
                         <input type="file" id="certificatesUpload" name="certificatesUpload" accept="image/*,.pdf" multiple>
-                         <span id="certificatesStatus" class="status pending">Pending</span>
+                        <span id="certificatesStatus" class="status pending">Pending</span>
                     </div>
                 </div>
-                <button type="submit">Submit Documents</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Documents</button>
             </form>
 
-            <table class="training-schedule">
+            <table id="trainingScheduleTable" class="training-schedule">
                 <caption>Training Schedule and Deployment Location</caption>
                 <thead>
                     <tr>
-                        <th>Training Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Deployment Location</th>
+                        <th class="px-4 py-2">Training Name</th>
+                        <th class="px-4 py-2">Start Date</th>
+                        <th class="px-4 py-2">End Date</th>
+                        <th class="px-4 py-2">Deployment Location</th>
+                        <th class="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Orientation</td>
-                        <td>2024-01-15</td>
-                        <td>2024-01-19</td>
-                        <td>Manila</td>
+                        <td class="px-4 py-2">Orientation</td>
+                        <td class="px-4 py-2">2025-01-15</td>
+                        <td class="px-4 py-2">2025-01-19</td>
+                        <td class="px-4 py-2">Manila</td>
+                        <td class="px-4 py-2">
+                            <button data-id="1" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="1" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="1" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Technical Training</td>
-                        <td>2024-01-22</td>
-                        <td>2024-02-09</td>
-                        <td>Quezon City</td>
+                        <td class="px-4 py-2">Technical Training</td>
+                        <td class="px-4 py-2">2025-01-22</td>
+                        <td class="px-4 py-2">2025-02-09</td>
+                        <td class="px-4 py-2">Quezon City</td>
+                        <td class="px-4 py-2">
+                            <button data-id="2" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="2" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="2" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>On-the-Job Training</td>
-                        <td>2024-02-12</td>
-                        <td>2024-03-30</td>
-                        <td>Makati</td>
+                        <td class="px-4 py-2">On-the-Job Training</td>
+                        <td class="px-4 py-2">2025-02-12</td>
+                        <td class="px-4 py-2">2025-03-30</td>
+                        <td class="px-4 py-2">Makati</td>
+                        <td class="px-4 py-2">
+                            <button data-id="3" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="3" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="3" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2">Product Training</td>
+                        <td class="px-4 py-2">2025-04-01</td>
+                        <td class="px-4 py-2">2025-04-05</td>
+                        <td class="px-4 py-2">Taguig</td>
+                         <td class="px-4 py-2">
+                            <button data-id="4" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="4" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="4" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2">Sales Training</td>
+                        <td class="px-4 py-2">2025-04-08</td>
+                        <td class="px-4 py-2">2025-04-12</td>
+                        <td class="px-4 py-2">Pasay</td>
+                         <td class="px-4 py-2">
+                            <button data-id="5" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="5" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="5" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2">Leadership Training</td>
+                        <td class="px-4 py-2">2025-05-06</td>
+                        <td class="px-4 py-2">2025-05-10</td>
+                        <td class="px-4 py-2">Mandaluyong</td>
+                         <td class="px-4 py-2">
+                            <button data-id="6" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="6" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <buttondata-id="6" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2">Compliance Training</td>
+                        <td class="px-4 py-2">2025-05-13</td>
+                        <td class="px-4 py-2">2025-05-17</td>
+                        <td class="px-4 py-2">San Juan</td>
+                         <td class="px-4 py-2">
+                            <button data-id="7" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="7" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="7" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2">Customer Service Training</td>
+                        <td class="px-4 py-2">2025-06-03</td>
+                        <td class="px-4 py-2">2025-06-07</td>
+                        <td class="px-4 py-2">Pasig</td>
+                         <td class="px-4 py-2">
+                            <button data-id="8" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="8" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="8" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
                     </tr>
                      <tr>
-                        <td>Product Training</td>
-                        <td>2024-04-01</td>
-                        <td>2024-04-05</td>
-                        <td>Taguig</td>
+                        <td class="px-4 py-2">Project Management Training</td>
+                        <td class="px-4 py-2">2025-06-10</td>
+                        <td class="px-4 py-2">2025-06-14</td>
+                        <td class="px-4 py-2">Caloocan</td>
+                         <td class="px-4 py-2">
+                            <button data-id="9" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="9" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="9" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Sales Training</td>
-                        <td>2024-04-08</td>
-                        <td>2024-04-12</td>
-                        <td>Pasay</td>
-                    </tr>
-                    <tr>
-                        <td>Leadership Training</td>
-                        <td>2024-05-06</td>
-                        <td>2024-05-10</td>
-                        <td>Mandaluyong</td>
-                    </tr>
-                    <tr>
-                        <td>Compliance Training</td>
-                        <td>2024-05-13</td>
-                        <td>2024-05-17</td>
-                        <td>San Juan</td>
-                    </tr>
-                    <tr>
-                        <td>Customer Service Training</td>
-                        <td>2024-06-03</td>
-                        <td>2024-06-07</td>
-                        <td>Pasig</td>
-                    </tr>
-                    <tr>
-                        <td>Project Management Training</td>
-                        <td>2024-06-10</td>
-                        <td>2024-06-14</td>
-                        <td>Caloocan</td>
-                    </tr>
-                    <tr>
-                        <td>Diversity and Inclusion Training</td>
-                        <td>2024-07-01</td>
-                        <td>2024-07-05</td>
-                        <td>Las Piñas</td>
+                        <td class="px-4 py-2">Diversity and Inclusion Training</td>
+                        <td class="px-4 py-2">2025-07-01</td>
+                        <td class="px-4 py-2">2025-07-05</td>
+                        <td class="px-4 py-2">Las Piñas</td>
+                        <td class="px-4 py-2">
+                            <button data-id="10" class="view-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">View</button>
+                            <button data-id="10" class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Edit</button>
+                            <button data-id="10" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
 
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>View Training Schedule</h2>
+            <div class="modal-body">
+                <p><strong class="font-semibold">Training Name:</strong> <span id="viewTrainingName"></span></p>
+                <p><strong class="font-semibold">Start Date:</strong> <span id="viewStartDate"></span></p>
+                <p><strong class="font-semibold">End Date:</strong> <span id="viewEndDate"></span></p>
+                <p><strong class="font-semibold">Deployment Location:</strong> <span id="viewDeploymentLocation"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Training Schedule</h2>
+            <div class="modal-body">
+                <label for="editTrainingName">Training Name:</label>
+                <input type="text" id="editTrainingName" name="editTrainingName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <label for="editStartDate">Start Date:</label>
+                <input type="date" id="editStartDate" name="editStartDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <label for="editEndDate">End Date:</label>
+                <input type="date" id="editEndDate" name="editEndDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <label for="editDeploymentLocation">Deployment Location:</label>
+                <input type="text" id="editDeploymentLocation" name="editDeploymentLocation" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-button">Cancel</button>
+                <button type="button" id="saveChangesButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Delete Training Schedule</h2>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this training schedule?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-button">Cancel</button>
+                <button type="button" id="confirmDeleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete</button>
+            </div>
         </div>
     </div>
 
@@ -336,6 +538,7 @@
         function confirmLogout() {
             return confirm("Are you sure you want to log out?");
         }
+
         function toggleSubMenu(id) {
             const submenu = document.getElementById(id);
             if (submenu.style.display === 'none') {
@@ -366,9 +569,9 @@
             }
         });
 
-       certificatesUploadInput.addEventListener('change', () => {
+        certificatesUploadInput.addEventListener('change', () => {
             if (certificatesUploadInput.files.length > 0) {
-                  let fileNames = Array.from(certificatesUploadInput.files).map(file => file.name).join(', ');
+                let fileNames = Array.from(certificatesUploadInput.files).map(file => file.name).join(', ');
                 fileUploadTexts[1].textContent = fileNames;
                 certificatesStatusSpan.textContent = 'Uploaded';
                 certificatesStatusSpan.className = 'status verified';
@@ -394,7 +597,7 @@
                 alert('Please upload all required documents.');
                 return;
             }
-             if (!/^\d+$/.test(age) || parseInt(age) <= 0) {
+            if (!/^\d+$/.test(age) || parseInt(age) <= 0) {
                 alert('Please enter a valid age.');
                 return;
             }
@@ -409,13 +612,141 @@
 
             alert('Documents submitted successfully!');
             documentationForm.reset();
-             fileUploadTexts[0].textContent = 'Choose File';
-             fileUploadTexts[1].textContent = 'Choose File';
+            fileUploadTexts[0].textContent = 'Choose File';
+            fileUploadTexts[1].textContent = 'Choose File';
             idStatusSpan.textContent = 'Pending';
             idStatusSpan.className = 'status pending';
             certificatesStatusSpan.textContent = 'Pending';
             certificatesStatusSpan.className = 'status pending';
 
+        });
+
+
+        const table = document.getElementById("trainingScheduleTable");
+
+      
+        const viewModal = document.getElementById("viewModal");
+        const editModal = document.getElementById("editModal");
+        const deleteModal = document.getElementById("deleteModal");
+
+    
+        const viewCloseButton = viewModal.querySelector(".close-button");
+        const editCloseButton = editModal.querySelector(".close-button");
+        const deleteCloseButton = deleteModal.querySelector(".close-button");
+
+       
+        const viewTrainingName = document.getElementById("viewTrainingName");
+        const viewStartDate = document.getElementById("viewStartDate");
+        const viewEndDate = document.getElementById("viewEndDate");
+        const viewDeploymentLocation = document.getElementById("viewDeploymentLocation");
+
+      
+        const editTrainingNameInput = document.getElementById("editTrainingName");
+        const editStartDateInput = document.getElementById("editStartDate");
+        const editEndDateInput = document.getElementById("editEndDate");
+        const editDeploymentLocationInput = document.getElementById("editDeploymentLocation");
+        const saveChangesButton = document.getElementById("saveChangesButton");
+
+       
+        const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+
+        let editingRowId = null;
+        let deletingRowId = null;
+
+       
+        function openViewModal(rowId) {
+            const row = document.querySelector(`[data-id="${rowId}"]`).parentNode.parentNode;
+            const trainingName = row.cells[0].textContent;
+            const startDate = row.cells[1].textContent;
+            const endDate = row.cells[2].textContent;
+            const deploymentLocation = row.cells[3].textContent;
+
+            viewTrainingName.textContent = trainingName;
+            viewStartDate.textContent = startDate;
+            viewEndDate.textContent = endDate;
+            viewDeploymentLocation.textContent = deploymentLocation;
+
+            viewModal.style.display = "block";
+        }
+
+       
+        function openEditModal(rowId) {
+            editingRowId = rowId;
+            const row = document.querySelector(`[data-id="${rowId}"]`).parentNode.parentNode;
+            const trainingName = row.cells[0].textContent;
+            const startDate = row.cells[1].textContent;
+            const endDate = row.cells[2].textContent;
+            const deploymentLocation = row.cells[3].textContent;
+
+            editTrainingNameInput.value = trainingName;
+            editStartDateInput.value = startDate;
+            editEndDateInput.value = endDate;
+            editDeploymentLocationInput.value = deploymentLocation;
+
+            editModal.style.display = "block";
+        }
+
+       
+        function openDeleteModal(rowId) {
+            deletingRowId = rowId;
+            deleteModal.style.display = "block";
+        }
+
+       
+        table.addEventListener("click", (event) => {
+            if (event.target.classList.contains("view-button")) {
+                const rowId = event.target.getAttribute("data-id");
+                openViewModal(rowId);
+            } else if (event.target.classList.contains("edit-button")) {
+                const rowId = event.target.getAttribute("data-id");
+                openEditModal(rowId);
+            } else if (event.target.classList.contains("delete-button")) {
+                const rowId = event.target.getAttribute("data-id");
+                openDeleteModal(rowId);
+            }
+        });
+
+     
+        viewCloseButton.addEventListener("click", () => {
+            viewModal.style.display = "none";
+        });
+
+        editCloseButton.addEventListener("click", () => {
+            editModal.style.display = "none";
+        });
+
+        deleteCloseButton.addEventListener("click", () => {
+            deleteModal.style.display = "none";
+        });
+
+       
+        saveChangesButton.addEventListener("click", () => {
+            if (editingRowId) {
+                const row = document.querySelector(`[data-id="${editingRowId}"]`).parentNode.parentNode;
+                row.cells[0].textContent = editTrainingNameInput.value;
+                row.cells[1].textContent = editStartDateInput.value;
+                row.cells[2].textContent = editEndDateInput.value;
+                row.cells[3].textContent = editDeploymentLocationInput.value;
+                editModal.style.display = "none";
+                editingRowId = null;
+            }
+        });
+
+       
+        confirmDeleteButton.addEventListener("click", () => {
+            if (deletingRowId) {
+                const row = document.querySelector(`[data-id="${deletingRowId}"]`).parentNode.parentNode;
+                row.remove();
+                deleteModal.style.display = "none";
+                deletingRowId = null;
+            }
+        });
+
+        
+        window.addEventListener("click", (event) => {
+            if (event.target.classList.contains("modal")) {
+                event.target.style.display = "none";
+            }
         });
     </script>
 </body>
