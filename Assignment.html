@@ -13,8 +13,8 @@
         }
 
         .sidebar {
-            width: 250px;
-            background-color: #333;
+            width: 280px;
+            background-color: navy;
             color: white;
             height: 100vh;
             position: fixed;
@@ -25,9 +25,9 @@
         }
 
         .sidebar-top {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+  text-align: center;
+  padding: 20px 0;
+}
 
         .admin-image {
             width: 100px;
@@ -43,20 +43,38 @@
         }
 
         .sidebar-menu li {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 1px solid #444;
-        }
+  padding: 15px 20px;
+  border-bottom: 1px solid #34495e;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 
-        .sidebar-menu li:hover {
-            background-color: #4CAF50;
-        }
+.sidebar-menu li:hover {
+  background: #3498db;
+}
 
-        .sidebar-menu li a {
-            color: white;
-            text-decoration: none;
-        }
+.sidebar-menu li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+}
 
+.logout-link {
+  background: black;
+  color: white !important;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 20px;
+  margin: 20px;
+  transition: background 0.3s;
+  display: block;
+}
+
+.logout-link:hover {
+  background: #333;
+}
         .sidebar-menu ul {
             list-style: none;
             padding-left: 20px;
@@ -71,11 +89,11 @@
         .main-content {
             margin-left: 250px;
             padding: 20px;
-            display: flex; /* Added to contain the back button and the container */
-            flex-direction: column; /* Stack items vertically by default */
-            min-height: calc(100vh - 40px); /* Ensure main content takes up full height minus padding */
-            box-sizing: border-box; /* Include padding in height calculation */
-            position: relative; /* Needed for absolute positioning of back button */
+            display: flex; 
+            flex-direction: column; 
+            min-height: calc(100vh - 40px); 
+            box-sizing: border-box;
+            position: relative; 
         }
 
         .container {
