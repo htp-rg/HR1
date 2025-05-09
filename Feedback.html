@@ -2,187 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Cycles</title>
     <link rel="stylesheet" href="style.css">
+
     <style>
-       
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
+        .feedback-form {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3 {
-            color: #333;
             margin-bottom: 20px;
         }
-        button {
+
+        .feedback-form h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .feedback-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .feedback-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+            font-weight: bold;
+        }
+
+        .feedback-form .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 5px;
+        }
+
+        .feedback-form .star-rating input {
+            display: none;
+        }
+
+        .feedback-form .star-rating label {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"%3E%3Cpolygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z%3C/polygon%3E%3C/svg%3E');
+            background-size: cover;
+        }
+
+        .feedback-form .star-rating label:hover,
+        .feedback-form .star-rating label:hover ~ label,
+        .feedback-form .star-rating input:checked ~ label {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f1c40f" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"%3E%3Cpolygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z%3C/polygon%3E%3C/svg%3E');
+        }
+
+        .feedback-form textarea {
+            width: calc(100% - 16px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            font-size: 14px;
+            height: 80px;
+        }
+
+        .feedback-form button {
+            background-color: #2ecc71;
+            color: white;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        button.primary {
-            background-color: #007bff;
-            color: white;
-        }
-        button.primary:hover {
-            background-color: #0056b3;
-        }
-        button.secondary {
-            background-color: #e0e0e0;
-            color: #333;
-        }
-        button.secondary:hover {
-            background-color: #ccc;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+            transition: background-color 0.3s ease;
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
         }
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
+
+        .feedback-form button:hover {
+            background-color: #27ae60;
+        }
+
+        .feedback-section {
+            background: #ecf0f1;
             padding: 20px;
-            border: 1px solid #888;
-            width: 60%;
-            border-radius: 8px;
-            position: relative;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 10px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
         }
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: #000;
-            text-decoration: none;
-        }
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        form input[type="text"],
-        form select,
-        form textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
+
+        .feedback-section h3 {
+            margin-top: 0;
             margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
+            color: #3498db;
+            text-align: center;
         }
-        form textarea {
-            resize: vertical;
-            height: 100px;
-        }
-        form button {
-            margin-top: 10px;
-        }
-        .feedback-panel {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-        }
+
         .feedback-list {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
+
         .feedback-list li {
-            background-color: #fff;
+            background: white;
             padding: 15px;
+            border-radius: 8px;
             margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #eee;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            color: #555;
+            font-size: 14px;
         }
-        .feedback-list li strong {
-            font-weight: bold;
-            color: #333;
+        .feedback-list li:last-child{
+            margin-bottom: 0;
         }
-        .rating-scale {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .rating-scale label {
-            cursor: pointer;
-        }
-        .rating-scale input[type="radio"] {
-            display: none;
-        }
-        .rating-scale span {
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .rating-scale input[type="radio"]:checked + span {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-        .feedback-question {
-            margin-bottom: 15px;
-        }
-        .feedback-question label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .feedback-question textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            height: 80px;
-            resize: vertical;
-        }
-        .feedback-request-list {
-            list-style: none;
-            padding: 0;
-        }
-        .feedback-request-list li {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .feedback-request-actions button {
-            margin-left: 10px;
+
+        @media screen and (max-width: 768px) {
+            .feedback-form {
+                padding: 15px;
+            }
+            .feedback-form textarea {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -195,168 +135,227 @@
         <div class="sidebar-content">
             <ul class="sidebar-menu">
                 <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a>
-                    <ul id="Recruitment" style="display:none;">
-                        <li><a href="Jobposting.html">Job Posting</a></li>
-                        <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-                        <li><a href="Create.html">Create Job Posting</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a>
-                    <ul id="ApplicantManagement" style="display:none;">
-                        <li><a href="Application.html">Application Tracking</a></li>
-                        <li><a href="interviews.html">Interviews & Assessments</a></li>
-                        <li><a href="selection.html">Selection Offer</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a>
-                    <ul id="NewHiredOnBoard" style="display:none;">
-                        <li><a href="Documentation.html">Documentation</a></li>
-                        <li><a href="Orientation.html">Orentation & Training</a></li>
-                        <li><a href="Assignment.html">Role Assignment</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a>
-                    <ul id="SocialRecognitionProgram" style="display:none;">
-                        <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-                        <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-                        <li><a href="Employee.html">Employee engagement programs</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a>
-                    <ul id="Performancemanagement" style="display:none;">
-                        <li><a href="Goal.html">Goal setting</a></li>
-                        <li><a href="Feedback.html">Feedback cycles</a></li>
-                        <li><a href="Review.html">Performance reviews</a></li>
-                    </ul>
-                </li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
                 <li><a href="users.html">Users</a></li>
                 <li><a href="settings.html">Settings</a></li>
             </ul>
         </div>
         <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
+
     <div class="main-content">
         <a href="admin.html" class="back-button">Back</a>
-        <div class="container">
+        <div class="content-box">
             <h1>Feedback Cycles</h1>
+            <p>Collect and review feedback to improve employee performance and development.</p>
 
-            <section class="feedback-panel">
-                <h2>360° Feedback</h2>
-                <ul class="feedback-list" id="receivedFeedbackList">
-                    </ul>
-            </section>
-
-            <section>
-                <h2>Request Feedback</h2>
-                <button class="primary" onclick="openRequestFeedbackModal()">Request Feedback</button>
-                <ul class="feedback-request-list" id="feedbackRequestList">
-                </ul>
-            </section>
-
-            <section>
-                <h2>Give Feedback</h2>
-                <button class="primary" onclick="openGiveFeedbackModal()">Give Feedback</button>
-            </section>
-
-            <div class="modal" id="requestFeedbackModal">
-                <div class="modal-content">
-                    <span class="close-button" onclick="closeRequestFeedbackModal()">&times;</span>
-                    <h2>Request Feedback</h2>
-                    <form id="requestFeedbackForm">
-                        <label for="feedbackFor">Feedback For:</label>
-                        <select id="feedbackFor">
-                            <option value="user1">User 1</option>
-                            <option value="user2">User 2</option>
-                            <option value="user3">User 3</option>
-                        </select>
-                        <label for="feedbackFromPeers">Request from Peers (select up to 3):</label>
-                        <select id="feedbackFromPeers" multiple size="5">
-                            <option value="peer1">Peer 1</option>
-                            <option value="peer2">Peer 2</option>
-                            <option value="peer3">Peer 3</option>
-                            <option value="peer4">Peer 4</option>
-                            <option value="peer5">Peer 5</option>
-                        </select>
-                        <button type="submit">Send Request</button>
-                    </form>
+            <form class="feedback-form" id="feedbackForm">
+                <h2>Provide Feedback</h2>
+                <div class="form-group">
+                    <label for="question1">Communication Skills:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_1" name="question1" value="5" required>
+                        <label for="star5_1" title="5 stars"></label>
+                        <input type="radio" id="star4_1" name="question1" value="4">
+                        <label for="star4_1" title="4 stars"></label>
+                        <input type="radio" id="star3_1" name="question1" value="3">
+                        <label for="star3_1" title="3 stars"></label>
+                        <input type="radio" id="star2_1" name="question1" value="2">
+                        <label for="star2_1" title="2 stars"></label>
+                        <input type="radio" id="star1_1" name="question1" value="1">
+                        <label for="star1_1" title="1 star"></label>
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="question2">Teamwork:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_2" name="question2" value="5" required>
+                        <label for="star5_2" title="5 stars"></label>
+                        <input type="radio" id="star4_2" name="question2" value="4">
+                        <label for="star4_2" title="4 stars"></label>
+                        <input type="radio" id="star3_2" name="question2" value="3">
+                        <label for="star3_2" title="3 stars"></label>
+                        <input type="radio" id="star2_2" name="question2" value="2">
+                        <label for="star2_2" title="2 stars"></label>
+                        <input type="radio" id="star1_2" name="question2" value="1">
+                        <label for="star1_2" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question3">Problem-Solving:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_3" name="question3" value="5" required>
+                        <label for="star5_3" title="5 stars"></label>
+                        <input type="radio" id="star4_3" name="question3" value="4">
+                        <label for="star4_3" title="4 stars"></label>
+                        <input type="radio" id="star3_3" name="question3" value="3">
+                        <label for="star3_3" title="3 stars"></label>
+                        <input type="radio" id="star2_3" name="question3" value="2">
+                        <label for="star2_3" title="2 stars"></label>
+                        <input type="radio" id="star1_3" name="question3" value="1">
+                        <label for="star1_3" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question4">Work Quality:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_4" name="question4" value="5" required>
+                        <label for="star5_4" title="5 stars"></label>
+                        <input type="radio" id="star4_4" name="question4" value="4">
+                        <label for="star4_4" title="4 stars"></label>
+                        <input type="radio" id="star3_4" name="question4" value="3">
+                        <label for="star3_4" title="3 stars"></label>
+                        <input type="radio" id="star2_4" name="question4" value="2">
+                        <label for="star2_4" title="2 stars"></label>
+                        <input type="radio" id="star1_4" name="question4" value="1">
+                        <label for="star1_4" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question5">Initiative:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_5" name="question5" value="5" required>
+                        <label for="star5_5" title="5 stars"></label>
+                        <input type="radio" id="star4_5" name="question5" value="4">
+                        <label for="star4_5" title="4 stars"></label>
+                        <input type="radio" id="star3_5" name="question5" value="3">
+                        <label for="star3_5" title="3 stars"></label>
+                        <input type="radio" id="star2_5" name="question5" value="2">
+                        <label for="star2_5" title="2 stars"></label>
+                        <input type="radio" id="star1_5" name="question5" value="1">
+                        <label for="star1_5" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question6">Adaptability:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_6" name="question6" value="5" required>
+                        <label for="star5_6" title="5 stars"></label>
+                        <input type="radio" id="star4_6" name="question6" value="4">
+                        <label for="star4_6" title="4 stars"></label>
+                        <input type="radio" id="star3_6" name="question6" value="3">
+                        <label for="star3_6" title="3 stars"></label>
+                        <input type="radio" id="star2_6" name="question6" value="2">
+                        <label for="star2_6" title="2 stars"></label>
+                        <input type="radio" id="star1_6" name="question6" value="1">
+                        <label for="star1_6" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question7">Attendance:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_7" name="question7" value="5" required>
+                        <label for="star5_7" title="5 stars"></label>
+                        <input type="radio" id="star4_7" name="question7" value="4">
+                        <label for="star4_7" title="4 stars"></label>
+                        <input type="radio" id="star3_7" name="question7" value="3">
+                        <label for="star3_7" title="3 stars"></label>
+                        <input type="radio" id="star2_7" name="question7" value="2">
+                        <label for="star2_7" title="2 stars"></label>
+                        <input type="radio" id="star1_7" name="question7" value="1">
+                        <label for="star1_7" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question8">Customer Service:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_8" name="question8" value="5" required>
+                        <label for="star5_8" title="5 stars"></label>
+                        <input type="radio" id="star4_8" name="question8" value="4">
+                        <label for="star4_8" title="4 stars"></label>
+                        <input type="radio" id="star3_8" name="question8" value="3">
+                        <label for="star3_8" title="3 stars"></label>
+                        <input type="radio" id="star2_8" name="question8" value="2">
+                        <label for="star2_8" title="2 stars"></label>
+                        <input type="radio" id="star1_8" name="question8" value="1">
+                        <label for="star1_8" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question9">Leadership:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_9" name="question9" value="5" required>
+                        <label for="star5_9" title="5 stars"></label>
+                        <input type="radio" id="star4_9" name="question9" value="4">
+                        <label for="star4_9" title="4 stars"></label>
+                        <input type="radio" id="star3_9" name="question9" value="3">
+                        <label for="star3_9" title="3 stars"></label>
+                        <input type="radio" id="star2_9" name="question9" value="2">
+                        <label for="star2_9" title="2 stars"></label>
+                        <input type="radio" id="star1_9" name="question9" value="1">
+                        <label for="star1_9" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="question10">Overall Performance:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5_10" name="question10" value="5" required>
+                        <label for="star5_10" title="5 stars"></label>
+                        <input type="radio" id="star4_10" name="question10" value="4">
+                        <label for="star4_10" title="4 stars"></label>
+                        <input type="radio" id="star3_10" name="question10" value="3">
+                        <label for="star3_10" title="3 stars"></label>
+                        <input type="radio" id="star2_10" name="question10" value="2">
+                        <label for="star2_10" title="2 stars"></label>
+                        <input type="radio" id="star1_10" name="question10" value="1">
+                        <label for="star1_10" title="1 star"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalComments">Additional Comments:</label>
+                    <textarea id="additionalComments" name="additionalComments" rows="4"></textarea>
+                </div>
+                <button type="submit">Submit Feedback</button>
+            </form>
+
+            <div class="feedback-section">
+                <h3>Feedback from Employees</h3>
+                <ul class="feedback-list" id="employeeFeedbackList">
+                    </ul>
             </div>
 
-            <div class="modal" id="giveFeedbackModal">
-                <div class="modal-content">
-                    <span class="close-button" onclick="closeGiveFeedbackModal()">&times;</span>
-                    <h2>Give Feedback</h2>
-                    <form id="giveFeedbackForm">
-                        <label for="feedbackTo">Feedback For:</label>
-                        <select id="feedbackTo">
-                            <option value="user1">User 1</option>
-                            <option value="user2">User 2</option>
-                            <option value="user3">User 3</option>
-                        </select>
-                        <h3>Rating (1 - Poor, 5 - Excellent)</h3>
-                        <div class="feedback-question">
-                            <label for="question1">Question 1: How well does the employee communicate?</label>
-                            <div class="rating-scale">
-                                <label><input type="radio" name="q1" value="1"><span>1</span></label>
-                                <label><input type="radio" name="q1" value="2"><span>2</span></label>
-                                <label><input type="radio" name="q1" value="3"><span>3</span></label>
-                                <label><input type="radio" name="q1" value="4"><span>4</span></label>
-                                <label><input type="radio" name="q1" value="5"><span>5</span></label>
-                            </div>
-                        </div>
-                        <div class="feedback-question">
-                            <label for="question2">Question 2: How effective is their teamwork?</label>
-                            <div class="rating-scale">
-                                <label><input type="radio" name="q2" value="1"><span>1</span></label>
-                                <label><input type="radio" name="q2" value="2"><span>2</span></label>
-                                <label><input type="radio" name="q2" value="3"><span>3</span></label>
-                                <label><input type="radio" name="q2" value="4"><span>4</span></label>
-                                <label><input type="radio" name="q2" value="5"><span>5</span></label>
-                            </div>
-                        </div>
-                        <div class="feedback-question">
-                            <label for="question3">Question 3: How is their problem-solving ability?</label>
-                            <div class="rating-scale">
-                                <label><input type="radio" name="q3" value="1"><span>1</span></label>
-                                <label><input type="radio" name="q3" value="2"><span>2</span></label>
-                                <label><input type="radio" name="q3" value="3"><span>3</span></label>
-                                <label><input type="radio" name="q3" value="4"><span>4</span></label>
-                                <label><input type="radio" name="q3" value="5"><span>5</span></label>
-                            </div>
-                        </div>
-                        <div class="feedback-question">
-                            <label for="question4">Question 4: How is their work quality?</label>
-                            <div class="rating-scale">
-                                <label><input type="radio" name="q4" value="1"><span>1</span></label>
-                                <label><input type="radio" name="q4" value="2"><span>2</span></label>
-                                <label><input type="radio" name="q4" value="3"><span>3</span></label>
-                                <label><input type="radio" name="q4" value="4"><span>4</span></label>
-                                <label><input type="radio" name="q4" value="5"><span>5</span></label>
-                            </div>
-                        </div>
-                        <div class="feedback-question">
-                            <label for="question5">Question 5: How is their initiative?</label>
-                            <div class="rating-scale">
-                                <label><input type="radio" name="q5" value="1"><span>1</span></label>
-                                <label><input type="radio" name="q5" value="2"><span>2</span></label>
-                                <label><input type="radio" name="q5" value="3"><span>3</span></label>
-                                <label><input type="radio" name="q5" value="4"><span>4</span></label>
-                                <label><input type="radio" name="q5" value="5"><span>5</span></label>
-                            </div>
-                        </div>
-                        <label for="additionalComments">Additional Comments (Optional):</label>
-                        <textarea id="additionalComments"></textarea>
-                        <button type="submit">Submit Feedback</button>
-                    </form>
-                </div>
+            <div class="feedback-section">
+                <h3>Feedback from Managers</h3>
+                <ul class="feedback-list" id="managerFeedbackList">
+                    </ul>
             </div>
         </div>
     </div>
+
     <script>
         function confirmLogout() {
             return confirm("Are you sure you want to log out?");
         }
+
         function toggleSubMenu(id) {
             const submenu = document.getElementById(id);
             if (submenu.style.display === 'none') {
@@ -366,127 +365,116 @@
             }
         }
 
-        const receivedFeedbackList = document.getElementById('receivedFeedbackList');
-        const feedbackRequestList = document.getElementById('feedbackRequestList');
+        const feedbackForm = document.getElementById('feedbackForm');
+        const employeeFeedbackList = document.getElementById('employeeFeedbackList');
+        const managerFeedbackList = document.getElementById('managerFeedbackList');
 
-        const requestFeedbackModal = document.getElementById('requestFeedbackModal');
-        const closeRequestFeedbackModalBtn = document.querySelector('#requestFeedbackModal .close-button');
-        const requestFeedbackForm = document.getElementById('requestFeedbackForm');
+        let allFeedback = [];
 
-        const giveFeedbackModal = document.getElementById('giveFeedbackModal');
-        const closeGiveFeedbackModalBtn = document.querySelector('#giveFeedbackModal .close-button');
-        const giveFeedbackForm = document.getElementById('giveFeedbackForm');
-
-        let receivedFeedback = [
-            { from: 'Manager', rating1: 4, rating2: 5, rating3: 4, rating4: 5, rating5: 4, comments: 'Overall a strong performer.' },
-            { from: 'Peer 1', rating1: 3, rating2: 4, rating3: 3, rating4: 4, rating5: 3, comments: 'Good team player.' },
-            { from: 'Peer 2', rating1: 4, rating2: 4, rating3: 4, rating4: 4, rating5: 4, comments: 'Reliable and consistent.' }
-        ];
-
-        let feedbackRequests = [
-            { to: 'User 1', from: ['Peer 1', 'Peer 2'] },
-            { to: 'User 2', from: ['Peer 3'] }
-        ];
-
-        function renderReceivedFeedback() {
-            receivedFeedbackList.innerHTML = '';
-            receivedFeedback.forEach(feedback => {
-                receivedFeedbackList.innerHTML += `
-                    <li>
-                        <strong>From: ${feedback.from}</strong><br>
-                        Rating 1: ${feedback.rating1}/5<br>
-                        Rating 2: ${feedback.rating2}/5<br>
-                        Rating 3: ${feedback.rating3}/5<br>
-                        Rating 4: ${feedback.rating4}/5<br>
-                        Rating 5: ${feedback.rating5}/5<br>
-                        Comments: ${feedback.comments}
-                    </li>
-                `;
-            });
-        }
-
-        function renderFeedbackRequests() {
-            feedbackRequestList.innerHTML = '';
-            feedbackRequests.forEach(request => {
-                feedbackRequestList.innerHTML += `
-                    <li>
-                        <span>To: ${request.to}</span>
-                        <span>From: ${request.from.join(', ')}</span>
-                    </li>
-                `;
-            });
-        }
-
-        function openRequestFeedbackModal() {
-            requestFeedbackModal.style.display = 'block';
-        }
-
-        function closeRequestFeedbackModal() {
-            requestFeedbackModal.style.display = 'none';
-            requestFeedbackForm.reset();
-        }
-
-        function openGiveFeedbackModal() {
-            giveFeedbackModal.style.display = 'block';
-        }
-
-        function closeGiveFeedbackModal() {
-            giveFeedbackModal.style.display = 'none';
-            giveFeedbackForm.reset();
-        }
-
-        requestFeedbackForm.addEventListener('submit', (event) => {
+        feedbackForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            const feedbackFor = document.getElementById('feedbackFor').value;
-            const feedbackFromPeers = Array.from(document.getElementById('feedbackFromPeers').selectedOptions).map(option => option.value);
-            if (feedbackFromPeers.length > 3) {
-                alert("You can only select up to 3 peers.");
-                return;
-            }
-            const newRequest = { to: feedbackFor, from: feedbackFromPeers };
-            feedbackRequests.push(newRequest);
-            renderFeedbackRequests();
-            closeRequestFeedbackModal();
-            alert("Feedback requested!");
-        });
 
-        giveFeedbackForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const feedbackTo = document.getElementById('feedbackTo').value;
-            const rating1 = document.querySelector('input[name="q1"]:checked');
-            const rating2 = document.querySelector('input[name="q2"]:checked');
-            const rating3 = document.querySelector('input[name="q3"]:checked');
-            const rating4 = document.querySelector('input[name="q4"]:checked');
-            const rating5 = document.querySelector('input[name="q5"]:checked');
-            const comments = document.getElementById('additionalComments').value;
-
-            if (!rating1 || !rating2 || !rating3 || !rating4 || !rating5) {
-                alert("Please answer all rating questions.");
-                return;
+            const questionRatings = [];
+            for (let i = 1; i <= 10; i++) {
+                const questionName = `question${i}`;
+                const selectedRating = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (selectedRating) {
+                    questionRatings.push({
+                        question: questionName,
+                        rating: parseInt(selectedRating.value)
+                    });
+                } else {
+                    alert(`Please rate question ${i}`);
+                    return;
+                }
             }
 
+            const additionalComments = document.getElementById('additionalComments').value;
             const newFeedback = {
-                from: 'Anonymous',
-                rating1: parseInt(rating1.value),
-                rating2: parseInt(rating2.value),
-                rating3: parseInt(rating3.value),
-                rating4: parseInt(rating4.value),
-                rating5: parseInt(rating5.value),
-                comments: comments
+                questionRatings,
+                additionalComments,
+                timestamp: new Date(),
+                type: 'employee' // Add a type to distinguish between employee/manager feedback
             };
-            receivedFeedback.push(newFeedback);
-            renderReceivedFeedback();
-            closeGiveFeedbackModal();
-            alert("Feedback submitted!");
 
+            allFeedback.push(newFeedback);
+            displayFeedback();
+            feedbackForm.reset();
+            for (let i = 1; i <= 10; i++){
+                const labels = document.querySelectorAll(`label[for^="star${i}"]`);
+                labels.forEach(label => {
+                    label.style.backgroundImage = 'url(\'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"%3E%3Cpolygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z%3C/polygon%3E%3C/svg%3E\')';
+                });
+            }
         });
 
-        closeRequestFeedbackModalBtn.addEventListener('click', closeRequestFeedbackModal);
-        closeGiveFeedbackModalBtn.addEventListener('click', closeGiveFeedbackModal);
+        function displayFeedback() {
+            employeeFeedbackList.innerHTML = '';
+            managerFeedbackList.innerHTML = '';
 
-        renderReceivedFeedback();
-        renderFeedbackRequests();
+           
+            const exampleEmployeeFeedback = {
+                questionRatings: [
+                    { question: "question1", rating: 4 },
+                    { question: "question2", rating: 5 },
+                    { question: "question3", rating: 3 },
+                    { question: "question4", rating: 4 },
+                    { question: "question5", rating: 5 },
+                    { question: "question6", rating: 4 },
+                    { question: "question7", rating: 5 },
+                    { question: "question8", rating: 4 },
+                    { question: "question9", rating: 3 },
+                    { question: "question10", rating: 4 }
+                ],
+                additionalComments: "Overall, a good performance.  Teamwork was excellent, but communication skills could be improved slightly.",
+                timestamp: new Date(Date.now() - 3600000), // 1 hour ago
+                type: 'employee'
+            };
+
+            const exampleManagerFeedback = {
+                questionRatings: [
+                    { question: "question1", rating: 5 },
+                    { question: "question2", rating: 4 },
+                    { question: "question3", rating: 4 },
+                    { question: "question4", rating: 5 },
+                    { question: "question5", rating: 4 },
+                    { question: "question6", rating: 5 },
+                    { question: "question7", rating: 5 },
+                    { question: "question8", rating: 4 },
+                    { question: "question9", rating: 4 },
+                    { question: "question10", rating: 5 }
+                ],
+                additionalComments: "Employee consistently exceeds expectations.  Leadership and initiative are particularly strong.",
+                timestamp: new Date(Date.now() - 7200000), // 2 hours ago
+                type: 'manager'
+            };
+
+           
+            if (allFeedback.length === 0) {
+                allFeedback.push(exampleEmployeeFeedback);
+                allFeedback.push(exampleManagerFeedback);
+            }
+
+
+            allFeedback.forEach(feedback => {
+                const listItem = document.createElement('li');
+                let feedbackText = '<strong>Feedback:</strong><br>';
+                feedback.questionRatings.forEach(q => {
+                    feedbackText += `${q.question}: ${q.rating} stars<br>`;
+                });
+                feedbackText += `<strong>Comments:</strong> ${feedback.additionalComments}<br>`;
+                feedbackText += `<strong>Date:</strong> ${feedback.timestamp.toLocaleString()}`;
+
+                listItem.innerHTML = feedbackText;
+
+                if (feedback.type === 'employee') {employeeFeedbackList.appendChild(listItem);
+                } else if (feedback.type === 'manager') {
+                    managerFeedbackList.appendChild(listItem);
+                }
+            });
+        }
+        
+        displayFeedback();
     </script>
 </body>
 </html>
-                        
