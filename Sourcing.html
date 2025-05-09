@@ -475,24 +475,24 @@ closeEditCandidateModal();
         const candidateNameToDelete = document.getElementById('deleteCandidateName').innerText;
         console.log(`Deleting candidate with ID: ${candidateIdToDelete} (${candidateNameToDelete})`);
         closeDeleteCandidateModal();
-        // In a real application, send a request to delete the candidate and update the table
+       
         const rowToDelete = document.querySelector(`#candidateTableBody tr:nth-child(${parseInt(candidateIdToDelete.split('-')[2])})`);
         if (rowToDelete) {
             rowToDelete.remove();
         }
     }
 
-    // Function to add initial candidates to the table
+    
     function addInitialCandidates() {
         const initialCandidates = [
-            { name: 'Alice Wonderland', email: 'alice.wonder@example.com', source: 'LinkedIn', skills: 'Java, Spring, SQL' },
-            { name: 'Bob The Builder', email: 'bob.builder@example.com', source: 'Indeed', skills: 'Project Management, Construction' },
-            { name: 'Charlie Chaplin', email: 'charlie.chaplin@example.com', source: 'Internal Database', skills: 'Communication, Leadership' },
-            { name: 'Diana Prince', email: 'diana.prince@example.com', source: 'LinkedIn', skills: 'Strategic Planning, Negotiation' },
-            { name: 'Eve Harrington', email: 'eve.harrington@example.com', source: 'Company Website', skills: 'Customer Service, Sales' },
-            { name: 'Frankenstein', email: 'frank@example.com', source: 'Monster', skills: 'Electrical Engineering, Robotics' },
-            { name: 'Greta Garbo', email: 'greta@example.com', source: 'Referral', skills: 'Public Relations, Media' },
-            { name: 'Hans Solo', email: 'hans@example.com', source: 'LinkedIn', skills: 'Pilot, Negotiation, Problem-solving' }
+            { name: 'Alice Wang', email: 'alice.wang@gmail.com', source: 'LinkedIn', skills: 'Java, Spring, SQL' },
+            { name: 'Bob Fernandez', email: 'bob.fernandez@gmail.com', source: 'Indeed', skills: 'Project Management, Construction' },
+            { name: 'Charlie Veras', email: 'charlie.veras@gmail.com', source: 'Internal Database', skills: 'Communication, Leadership' },
+            { name: 'Diana Prince', email: 'diana.prince@gmail.com', source: 'LinkedIn', skills: 'Strategic Planning, Negotiation' },
+            { name: 'Eve Harrington', email: 'eve.harrington@gmail.com', source: 'Company Website', skills: 'Customer Service, Sales' },
+            { name: 'Frank Martin', email: 'frank@gmail.com', source: 'Monster', skills: 'Electrical Engineering, Robotics' },
+            { name: 'Greta Garbo', email: 'greta@gmail.com', source: 'Referral', skills: 'Public Relations, Media' },
+            { name: 'Hans Solo', email: 'hans@gmail.com', source: 'LinkedIn', skills: 'Pilot, Negotiation, Problem-solving' }
         ];
 
         initialCandidates.forEach((candidate, index) => {
