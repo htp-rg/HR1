@@ -4,12 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peer-to-Peer Recognition</title>
-  <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
     <style>
         body {
             display: flex;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
         }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .logout-link {
+            text-decoration: none;
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            text-align: center;
+            display: block;
+            background-color: #f8f8f8;
+        }
+
+        .logout-link:hover {
+            background-color: #f0f0f0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -37,1215 +115,911 @@
         }
 
         #give-kudos-modal {
-            position: fixed;
-            z-index: 10;
-            inset: 0;
-            overflow-y: auto;
             display: none;
-        }
-
-        #give-kudos-modal.show {
-            display: flex;
-        }
-
-        .modal-overlay {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0.75;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
 
         .modal-content {
             background-color: #ffffff;
+            padding: 20px;
             border-radius: 8px;
-            text-align: left;
-            overflow: hidden;
-            transform: translateY(0);
-            transition: transform 0.3s ease-out;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        #give-kudos-modal.show .modal-content {
-            transform: translateY(0);
-        }
-
-
-        .modal-header {
-            padding: 16px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .modal-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin: 0;
-        }
-
-        .modal-body {
-            padding: 16px;
-        }
-
-        .modal-body form {
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-bottom: 0;
         }
 
-        .modal-body form div {
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .modal-form-group {
             display: flex;
             flex-direction: column;
         }
 
-        .modal-body form label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
+        .modal-form-group label {
             margin-bottom: 6px;
-            display: block;
-        }
-
-        .modal-body form select,
-        .modal-body form textarea {
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
-            font-size: 1rem;
             color: #4b5563;
-            width: 100%;
-            box-sizing: border-box;
-            transition: border-color 0.2s ease;
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        .modal-body form select:focus,
-        .modal-body form textarea:focus {
+        .modal-form-group input, .modal-form-group textarea, .modal-form-group select {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .modal-form-group input:focus, .modal-form-group textarea:focus, .modal-form-group select:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            border-color: #fcd34d;
+            box-shadow: 0 0 0 2px rgba(252, 211, 77, 0.2);
         }
 
-
-        .modal-body form textarea {
-            resize: vertical;
-            height: 120px;
+        .modal-form-group textarea {
+            resize: none;
+            height: 80px;
         }
 
-        .modal-footer {
+        .modal-form-actions {
             display: flex;
             justify-content: flex-end;
-            padding: 16px;
-            border-top: 1px solid #e5e7eb;
-            gap: 12px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .modal-footer button {
-            padding: 10px 20px;
+        .modal-form-actions button {
+            padding: 10px 16px;
             border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s;
             border: none;
+            font-size: 14px;
         }
 
-        .modal-footer button.submit-button {
-            background-color: #3b82f6;
-            color: #ffffff;
+        .modal-form-actions button:first-child {
+            background-color: #fcd34d;
+            color: #1e293b;
         }
 
-        .modal-footer button.submit-button:hover {
-            background-color: #2563eb;
+        .modal-form-actions button:first-child:hover {
+            background-color: #fbb034;
         }
 
-        .modal-footer button.cancel-button {
-            background-color: #ffffff;
+        .modal-form-actions button:last-child {
+            background-color: #d1d5db;
             color: #374151;
-            border: 1px solid #d1d5db;
         }
 
-        .modal-footer button.cancel-button:hover {
-            background-color: #f7f7f7;
+        .modal-form-actions button:last-child:hover {
+            background-color: #b0b8c4;
         }
 
-        #char-count {
-            font-size: 0.75rem;
-            color: #6b7280;
-            text-align: right;
-            margin-top: 4px;
-        }
-
-        .w-1\/4 {
-            width: 25%;
-        }
-
-        .w-3\/4 {
-            width: 75%;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .flex-col {
-            flex-direction: column;
-        }
-
-        .lg\:flex-row {
-            flex-direction: row;
-        }
-
-        .gap-6 {
-            gap: 24px;
-        }
-
-        .rounded-lg {
+        .recognition-filters {
+            background-color: #ffffff;
+            padding: 20px;
             border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
         }
 
-        .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        .recognition-filters .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
         }
 
-        .p-4 {
-            padding: 16px;
+        .recognition-filters .filter-group label {
+            margin-bottom: 6px;
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        .md\:p-6 {
-            padding: 24px;
+        .recognition-filters .filter-group select {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
         }
 
-        .mb-6 {
+        .recognition-filters .filter-group select:focus {
+            outline: none;
+            border-color: #fcd34d;
+            box-shadow: 0 0 0 2px rgba(252, 211, 77, 0.2);
+        }
+
+        .recognition-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             margin-bottom: 24px;
         }
 
-        .text-lg {
-            font-size: 1.125rem;
-            line-height: 1.75rem;
-        }
-
-        .font-semibold {
-            font-weight: 600;
-        }
-
-        .text-gray-700 {
-            color: #374151;
-        }
-
-        .mb-4 {
-            margin-bottom: 16px;
-        }
-
-        .block {
-            display: block;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-        .appearance-none {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-
-        .border {
-            border-width: 1px;
-        }
-
-        .rounded {
-            border-radius: 6px;
-        }
-
-        .w-full {
-            width: 80%;
-        }
-
-        .py-3 {
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .px-4 {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .text-gray-700 {
-            color: #374151;
-        }
-
-        .leading-tight {
-            line-height: 1.5rem;
-        }
-
-        .focus\:outline-none:focus {
-            outline: none;
-        }
-
-        .focus\:shadow-outline:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-
-        .bg-blue-500 {
-            background-color: #3b82f6;
-        }
-
-        .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
-        }
-
-        .text-white {
-            color: #ffffff;
-        }
-
-        .py-2 {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .focus\:outline-none:focus {
-            outline: none;
-        }
-
-        .focus\:shadow-outline:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-
-        .space-y-2 > * + * {
-            margin-top: 8px;
-        }
-
-        .text-blue-600 {
-            color: #2563eb;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-2xl {
-            font-size: 1.5rem;
-            line-height: 2rem;
-        }
-
-        .md\:text-3xl {
-            font-size: 1.875rem;
-            line-height: 2.25rem;
-        }
-
-        .lg\:text-4xl {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
-        }
-
-        .space-y-4 > * + * {
-            margin-top: 1rem;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-between {
-            justify-content: space-between;
-        }
-
-        .text-gray-800 {
-            color: #1f2937;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-        }
-
-        .text-gray-600 {
-            color: #4b5563;
-        }
-
-        .rounded-md {
-            border-radius: 0.375rem;
-        }
-
-        .bg-gray-50 {
-            background-color: #f9fafb;
-        }
-
-        .pt-2 {
-            padding-top: 0.5rem;
-        }
-
-        .border-t {
-            border-top-width: 1px;
-        }
-
-        .border-gray-200 {
-            border-color: #e5e7eb;
-        }
-
-        .text-xs {
-            font-size: 0.75rem;
-            line-height: 1rem;
-        }
-
-        .text-gray-500 {
-            color: #6b7280;
-        }
-
-        .mr-2 {
-            margin-right: 0.5rem;
-        }
-
-        .reaction-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: background-color 0.2s;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-        }
-
-        .reaction-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .text-red-500 {
-            color: #dc2626;
-        }
-
-        .text-blue-500 {
-            color: #3b82f6;
-        }
-
-        .text-yellow-500 {
-            color: #d97706;
-        }
-
-        .self-start {
-            align-self: flex-start;
-        }
-
-        .comment {
-            display: flex;
-            gap: 8px;
-            padding: 8px;
-            border-radius: 8px;
-            background-color: #f0f0f0;
-            margin-bottom: 4px;
-        }
-
-        .comment-section {
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .comment-section.show {
-            display: block;
-        }
-
-        .rounded-full {
-            border-radius: 50%;
-        }
-
-        .h-8 {
-            height: 2rem;
-        }
-
-        .w-8 {
-            width: 2rem;
-        }
-
-        .bg-blue-500 {
-            background-color: #3b82f6;
-        }
-
-        .text-white {
-            color: #fff;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-center {
-            justify-content: center;
-        }
-
-        .h-6 {
-            height: 1.5rem;
-        }
-
-        .w-6 {
-            width: 1.5rem;
-        }
-
-        .bg-purple-500 {
-            background-color: #8b5cf6;
-        }
-
-        .flex-1 {
-            flex: 1 1 0%;
-        }
-        .main-content {
-            margin-left: 0px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - 40px);
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            background-color: red;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.2s;
-            margin-bottom: 20px;
-            border: 1px solid #d1d5db;
-        }
-
-        .back-button:hover {
-            background-color: #d1d5db;
-        }
-
-        .post-card {
-            background-color: white;
+        .recognition-post {
+            background-color: #ffffff;
+            padding: 16px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
-            padding: 16px;
         }
 
         .post-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 12px;
-            font-size: 0.875rem;
-            color: #6b7280;
         }
 
-        .post-sender {
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-header .sender-name {
             font-weight: 600;
-            color: #1f2937;
+            color: #1e293b;
+            margin-right: 4px;
         }
 
-        .post-receiver {
+        .post-header .receiver-name {
             font-weight: 600;
-            color: #1f2937;
+            color: #fcd34d;
         }
 
-        .post-message {
+        .post-content {
             margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.5;
             color: #374151;
         }
 
         .post-badge {
-            font-size: 1.5rem;
+            padding: 6px 10px;
+            border-radius: 12px;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 12px;
             margin-bottom: 12px;
+            display: inline-block;
         }
 
-        .post-reactions {
+        .post-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        .post-actions button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: transparent;
+            color: #6b7280;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .post-actions button:hover {
+            color: #fcd34d;
+        }
+
+        .comments-section {
+            margin-top: 16px;
+            padding-top: 16px;
             border-top: 1px solid #e5e7eb;
         }
 
-        .comment-section {
-            margin-top: 1rem;
-        }
-
-        .comment-header {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #1f2937;
-        }
-
         .comment {
-            background-color: #f0f0f0;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.25rem;
-            font-size: 0.875rem;
-            color: #374151;
-        }
-
-        .comment-sender {
-            font-weight: 600;
-            color: #1f2937;
-            margin-right: 0.25rem;
-        }
-
-        .add-comment-form {
-            margin-top: 1rem;
             display: flex;
-            gap: 0.5rem;
-        }
-
-        .comment-input {
-            flex: 1;
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-            border: 1px solid #d1d5db;
-            font-size: 0.875rem;
-            color: #4b5563;
-            focus:outline-none;
-            focus:ring-2;
-            focus:ring-blue-500;
-        }
-
-        .comment-button {
-            padding: 0.5rem 1rem;
-            background-color: #3b82f6;
-            color: #fff;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .comment-button:hover {
-            background-color: #2563eb;
-        }
-
-        .view-comments-button {
-            margin-top: 0.5rem;
-            color: #3b82f6;
-            font-size: 0.875rem;
-            cursor: pointer;
-            text-decoration: underline;
-            border: none;
-            background: none;
-            padding: 0;
-        }
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px solid #e5e7eb;
         }
 
-        .leaderboard-item:last-child {
+        .comment:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .comment img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .comment-header .commenter-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .comment-header .comment-date {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        .comment-input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .comment-input-container img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            resize: none;
+            min-height: 30px;
+            transition: border-color 0.3s;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #fcd34d;
+            box-shadow: 0 0 0 2px rgba(252, 211, 77, 0.2);
+        }
+
+        .comment-submit {
+            padding: 6px 12px;
+            background-color: #fcd34d;
+            color: #1e293b;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-end;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .comment-submit:hover {
+            background-color: #fbb034;
+        }
+
+        .leaderboard {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leaderboard-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .leaderboard-list li:last-child {
             border-bottom: none;
         }
 
-        .employee-name {
-            font-weight: 600;
-            color: #1f2937;
+        .leaderboard-list li span {
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
         }
 
-        .kudos-count {
-            color: #6b7280;
-            font-size: 0.875rem;
+        .top-employees {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .top-employee-card {
+            background-color: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            width: calc(33.33% - 10px);
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-employee-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .top-employee-card .name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .top-employee-card .kudos-count {
+            color: #fcd34d;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .recognition-filters {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .recognition-filters .filter-group {
+                min-width: 100%;
+            }
+            .top-employee-card {
+                width: calc(50% - 10px);
+            }
+        }
+        @media (max-width: 480px){
+            .top-employee-card{
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="sidebar-top">
-      <img src="admin-avatar.png" alt="admin" class="admin-image">
-      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
-    </div>
-    <div class="sidebar-content">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard.html">Dashboard</a></li>
-
-        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-        <ul id="Recruitment" style="display:none;">
-          <li><a href="Jobposting.html">Job Posting</a></li>
-          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-          <li><a href="Create.html">Create Job Posting</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-        <ul id="ApplicantManagement" style="display:none;">
-          <li><a href="Application.html">Application Tracking</a></li>
-          <li><a href="interviews.html">Interviews & Assessments</a></li>
-          <li><a href="selection.html">Selection Offer</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-        <ul id="NewHiredOnBoard" style="display:none;">
-          <li><a href="Documentation.html">Documentation</a></li>
-          <li><a href="Orientation.html">Orientation & Training</a></li>
-          <li><a href="Assignment.html">Role Assignment</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-        <ul id="SocialRecognitionProgram" style="display:none;">
-          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-          <li><a href="Employee.html">Employee engagement programs</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-        <ul id="Performancemanagement" style="display:none;">
-          <li><a href="Goal.html">Goal setting</a></li>
-          <li><a href="Feedback.html">Feedback cycles</a></li>
-          <li><a href="Review.html">Performance reviews</a></li>
-        </ul>
-
-        <li><a href="users.html">Users</a></li>
-        <li><a href="settings.html">Settings</a></li>
-      </ul>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
 
-    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
-  </div>
-
-   <div class="main-content">
-        <a href="admin.html" class="back-button">Back</a>
+    <div class="main-content">
         <div class="container">
-        <h1 class="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-600 text-center mb-6">Peer-to-Peer Recognition</h1>
+            <h1 style="color: Navy; text-align: center; margin-bottom: 20px;">Peer-to-Peer Recognition</h1>
+            <button id="give-kudos-button" class="kudos-button">
+                <i class="fas fa-hand-sparkles"></i> Give Kudos
+            </button>
 
-        <div class="flex flex-col lg:flex-row gap-6">
-            <div class="w-full lg:w-1/4">
-                <div class="bg-white; rounded-lg shadow-md p-4 md:p-6 mb-6">
-                    <h2 class="text-lg font-semibold text-gray-700 mb-4">Filter By</h2>
-                    <div class="mb-4">
-                        <label for="team" class="block text-gray-700 text-sm font-bold mb-2">Team</label>
-                        <select id="team" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option>All Teams</option>
-                            <option>Engineering</option>
-                            <option>Marketing</option>
-                            <option>Sales</option>
-                            <option>HR</option>
+            <div id="give-kudos-modal">
+                <div class="modal-content">
+                    <div class="modal-header">Give Kudos</div>
+                    <div class="modal-form-group">
+                        <label for="recipient">To:</label>
+                        <select id="recipient" required>
+                            <option value="">Select Recipient</option>
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
-                        <select id="department" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option>All Departments</option>
-                            <option>Product Development</option>
-                            <option>Communications</option>
-                            <option>Business Development</option>
-                            <option>People Operations</option>
+                    <div class="modal-form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" placeholder="Write your recognition message..." required></textarea>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="badge">Badge:</label>
+                        <select id="badge">
+                            <option value="kudos">Kudos</option>
+                            <option value="appreciation">Appreciation</option>
+                            <option value="thanks">Thanks</option>
+                            <option value="celebration">Celebration</option>
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date</label>
-                        <input type="date" id="date" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <div class="mb-4">
-                        <label for="badge" class="block text-gray-700 text-sm font-bold mb-2">Badge</label>
-                        <select id="badge" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option>All Badges</option>
-                            <option>Great Mentor</option>
-                            <option>Team Hero</option>
-                            <option>Excellent Communicator</option>
-                            <option>Problem Solver</option>
+                    <div class="modal-form-group">
+                        <label for="visibility">Visibility:</label>
+                        <select id="visibility">
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
                         </select>
                     </div>
-                    <button id="filter-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Apply Filters
-                    </button>
-                </div>
-                <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
-                    <h2 class="text-lg font-semibold text-gray-700 mb-4">Top Recognized Employees</h2>
-                    <ul id="leaderboard" class="space-y-2">
-                    </ul>
+                    <div class="modal-form-actions">
+                        <button id="submit-kudos-button">Give Kudos</button>
+                        <button id="cancel-kudos-button">Cancel</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="w-full lg:w-3/4">
-                <button id="give-kudos-button" class="kudos-button text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline mb-6">
-                    Give Kudos
+            <div class="recognition-filters">
+                <div class="filter-group">
+                    <label for="department-filter">Department:</label>
+                    <select id="department-filter">
+                        <option value="">All Departments</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="team-filter">Team:</label>
+                    <select id="team-filter">
+                        <option value="">All Teams</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date:</label>
+                    <input type="date" id="date-filter">
+                </div>
+                <div class="filter-group">
+                    <label for="badge-filter">Badge:</label>
+                    <select id="badge-filter">
+                        <option value="">All Badges</option>
+                        <option value="kudos">Kudos</option>
+                        <option value="appreciation">Appreciation</option>
+                        <option value="thanks">Thanks</option>
+                        <option value="celebration">Celebration</option>
+                    </select>
+                </div>
+                <button id="filter-button" class="kudos-button" style="margin-top: 0;">
+                    <i class="fas fa-filter"></i> Filter
                 </button>
+            </div>
 
-                <div id="recognition-feed" class="space-y-4">
-                </div>
+            <div class="recognition-feed" id="recognition-feed">
+            </div>
+
+            <div class="leaderboard">
+                <h2 class="leaderboard-header">Top Recognized Employees (All Time)</h2>
+                <ul class="leaderboard-list" id="leaderboard-list">
+                </ul>
+            </div>
+            <div class="top-employees">
+                <h2>Top Employees</h2>
             </div>
         </div>
     </div>
 
-    <div id="give-kudos-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Give Kudos
-                            </h2>
-                            <form id="kudos-form" class="mt-4 space-y-4">
-                                <div>
-                                    <label for="recipient" class="block text-gray-700 text-sm font-bold mb-2">To:</label>
-                                    <select id="recipient" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                        <option value="">Select Recipient</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="badge-emoji" class="block text-gray-700 text-sm font-bold mb-2">Badge/Emoji:</label>
-                                    <select id="badge-emoji" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                        <option value="">Select Badge/Emoji</option>
-                                        <option value="🏅">🏅 Achievement</option>
-                                        <option value="🤝">🤝 Teamwork</option>
-                                        <option value="⭐">⭐ Excellence</option>
-                                        <option value="💡">💡 Innovation</option>
-                                        <option value="💖">💖 Appreciation</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
-                                    <textarea id="message" rows="5" maxlength="500" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                                    <p id="char-count" class="text-gray-500 text-xs text-right">0/500</p>
-                                </div>
-                                <div>
-                                    <label for="visibility" class="block text-gray-700 text-sm font-bold mb-2">Visibility:</label>
-                                    <select id="visibility" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                        <option value="public">Public (Show on Wall)</option>
-                                        <option value="private">Private (Email Only)</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="document.getElementById('kudos-form').dispatchEvent(new Event('submit'))">
-                        Give Kudos
-                    </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm close-button">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-function confirmLogout() {
-  return confirm("Are you sure you want to log out?");
-}
+ <script>
+        const employees = [
+            { id: 1, name: 'John Doe', department: 'Sales', team: 'Team A', avatar: 'https://randomuser.me/api/portraits/men/1.jpg' },
+            { id: 2, name: 'Jane Smith', department: 'Marketing', team: 'Team B', avatar: 'https://randomuser.me/api/portraits/women/2.jpg' },
+            { id: 3, name: 'Michael Brown', department: 'Engineering', team: 'Team C', avatar: 'https://randomuser.me/api/portraits/men/3.jpg' },
+            { id: 4, name: 'Sarah Williams', department: 'HR', team: 'Team A', avatar: 'https://randomuser.me/api/portraits/women/4.jpg' },
+            { id: 5, name: 'David Johnson', department: 'Sales', team: 'Team B', avatar: 'https://randomuser.me/api/portraits/men/5.jpg' },
+            { id: 6, name: 'Linda Miller', department: 'Marketing', team: 'Team C', avatar: 'https://randomuser.me/api/portraits/women/6.jpg' },
+            { id: 7, name: 'Christopher Davis', department: 'Engineering', team: 'Team A', avatar: 'https://randomuser.me/api/portraits/men/7.jpg' },
+            { id: 8, name: 'Angela Wilson', department: 'HR', team: 'Team B', avatar: 'https://randomuser.me/api/portraits/women/8.jpg' },
+            { id: 9, name: 'Brian Martinez', department: 'Sales', team: 'Team C', avatar: 'https://randomuser.me/api/portraits/men/9.jpg' },
+            { id: 10, name: 'Nicole Robinson', department: 'Marketing', team: 'Team A', avatar: 'https://randomuser.me/api/portraits/women/10.jpg' },
+        ];
 
-function toggleSubMenu(menuId) {
-  var subMenu = document.getElementById(menuId);
-  if (subMenu.style.display === "none") {
-    subMenu.style.display = "block";
-  } else {
-    subMenu.style.display = "none";
-  }
-}
+        const departments = [...new Set(employees.map(emp => emp.department))];
+        const teams = [...new Set(employees.map(emp => emp.team))];
+        const recognitionPosts = [];
 
-const employees = [
-    { id: '1', name: 'Alice Smith', team: 'Engineering', department: 'Product Development' },
-    { id: '2', name: 'Bob Johnson', team: 'Marketing', department: 'Communications' },
-    { id: '3', name: 'Charlie Brown', team: 'Sales', department: 'Business Development' },
-    { id: '4', name: 'Diana Miller', team: 'HR', department: 'People Operations' },
-    { id: '5', name: 'Ethan Davis', team: 'Engineering', department: 'Product Development' },
-    { id: '6', name: 'Fiona Green', team: 'Marketing', department: 'Communications' },
-    { id: '7', name: 'George White', team: 'Sales', department: 'Business Development' },
-    { id: '8', name: 'Hannah Black', team: 'HR', department: 'People Operations' },
-    { id: '9', name: 'Ivy Taylor', team: 'Engineering', department: 'Product Development' },
-    { id: '10', name: 'Jack Lewis', team: 'Marketing', department: 'Communications' },
-];
+        const giveKudosButton = document.getElementById('give-kudos-button');
+        const giveKudosModal = document.getElementById('give-kudos-modal');
+        const cancelKudosButton = document.getElementById('cancel-kudos-button');
+        const submitKudosButton = document.getElementById('submit-kudos-button');
+        const recipientSelect = document.getElementById('recipient');
+        const messageInput = document.getElementById('message');
+        const badgeSelect = document.getElementById('badge');
+        const visibilitySelect = document.getElementById('visibility');
+        const recognitionFeed = document.getElementById('recognition-feed');
+        const departmentFilter = document.getElementById('department-filter');
+        const teamFilter = document.getElementById('team-filter');
+        const dateFilter = document.getElementById('date-filter');
+        const badgeFilterSelect = document.getElementById('badge-filter');
+        const filterButton = document.getElementById('filter-button');
+        const leaderboardList = document.getElementById('leaderboard-list');
 
-const recognitionPosts = [
-  {
-    id: '101',
-    sender: { id: '1', name: 'Alice Smith' },
-    receiver: { id: '2', name: 'Bob Johnson' },
-    badge: '⭐',
-    message: 'For outstanding work on the Q3 campaign!',
-    timestamp: '2025-07-28T10:00:00Z',
-    visibility: 'public',
-    comments: [
-      { id: 'c1', sender: {id: '3', name: 'Charlie Brown'}, text: 'Great job, Bob!' },
-      { id: 'c2', sender: {id: '4', name: 'Diana Miller'}, text: 'Well deserved!' },
-    ],
-    reactions: {
-      'like': [{id: '5', name: 'Ethan Davis'}],
-      'love': [{id: '6', name: 'Fiona Green'}],
-      'celebrate': [{id: '7', name: 'George White'}]
-    },
-  },
-  {
-    id: '102',
-    sender: { id: '3', name: 'Charlie Brown' },
-    receiver: { id: '1', name: 'Alice Smith' },
-    badge: '🏅',
-    message: 'For leading the team to exceed sales targets.',
-    timestamp: '2025-07-27T15:30:00Z',
-    visibility: 'public',
-    comments: [],
-     reactions: {
-      'like': [],
-      'love': [],
-      'celebrate': []
-    },
-  },
-    {
-    id: '103',
-    sender: { id: '4', name: 'Diana Miller' },
-    receiver: { id: '5', name: 'Ethan Davis' },
-    badge: '🤝',
-    message: 'Thank you for being a great team player.',
-    timestamp: '2025-07-26T09:15:00Z',
-    visibility: 'public',
-    comments: [],
-     reactions: {
-      'like': [],
-      'love': [],
-      'celebrate': []
-    },
-  },
-    {
-    id: '104',
-    sender: { id: '6', name: 'Fiona Green' },
-    receiver: { id: '7', name: 'George White' },
-    badge: '💡',
-    message: 'For the innovative idea that improved our workflow.',
-    timestamp: '2025-07-25T11:00:00Z',
-    visibility: 'public',
-    comments: [],
-     reactions: {
-      'like': [],
-      'love': [],
-      'celebrate': []
-    },
-  },
-    {
-    id: '105',
-    sender: { id: '8', name: 'Hannah Black' },
-    receiver: { id: '9', name: 'Ivy Taylor' },
-    badge: '💖',
-    message: 'Your positive attitude is appreciated.',
-    timestamp: '2025-07-24T14:45:00Z',
-    visibility: 'public',
-    comments: [],
-     reactions: {
-      'like': [],
-      'love': [],
-      'celebrate': []
-    },
-  },
-];
-
-const loggedInUser = { id: '10', name: 'Jack Lewis' };
-
-const kudosButton = document.getElementById('give-kudos-button');
-const kudosModal = document.getElementById('give-kudos-modal');
-const closeModalButtons = document.querySelectorAll('.close-button');
-const kudosForm = document.getElementById('kudos-form');
-const recipientSelect = document.getElementById('recipient');
-const messageInput = document.getElementById('message');
-const charCountDisplay = document.getElementById('char-count');
-const recognitionFeed = document.getElementById('recognition-feed');
-const teamFilter = document.getElementById('team');
-const departmentFilter = document.getElementById('department');
-const dateFilter = document.getElementById('date');
-const badgeFilter = document.getElementById('badge');
-const filterButton = document.getElementById('filter-button');
-const leaderboardList = document.getElementById('leaderboard');
-
-
-let isModalOpen = false;
-
-function updateCharCount(text) {
-    const count = text.length;
-    charCountDisplay.textContent = `${count}/500`;
-    charCountDisplay.style.color = count === 500 ? '#ff0000' : '#6b7280';
-}
-
-function openKudosModal() {
-    if (!isModalOpen) {
-        kudosModal.classList.add('show');
-        isModalOpen = true;
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeKudosModal() {
-    if (isModalOpen) {
-        kudosModal.classList.remove('show');
-        isModalOpen = false;
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function populateRecipients() {
-    recipientSelect.innerHTML = '<option value="">Select Recipient</option>';
-    employees.forEach((employee) => {
-        if (employee.id !== loggedInUser.id) {
-            const option = document.createElement('option');
-            option.value = employee.id;
-            option.textContent = employee.name;
-            recipientSelect.appendChild(option);
-        }
-    });
-}
-
-function getTopRecognizedEmployees() {
-    const employeeRecognitionCount = {};
-    recognitionPosts.forEach((post) => {
-        const receiverId = post.receiver.id;
-        employeeRecognitionCount[receiverId] =
-            (employeeRecognitionCount[receiverId] || 0) + 1;
-    });
-
-    const sortedEmployeeIds = Object.keys(employeeRecognitionCount).sort(
-        (a, b) => employeeRecognitionCount[b] - employeeRecognitionCount[a]
-    );
-
-    return sortedEmployeeIds.slice(0, 5).map((id) => {
-        const employee = employees.find((e) => e.id === id);
-        return {
-            id: employee.id,
-            name: employee.name,
-            count: employeeRecognitionCount[id],
+        let currentUser = {
+            id: 1,
+            name: 'John Doe',
+            avatar: 'https://randomuser.me/api/portraits/men/1.jpg'
         };
-    });
-}
 
-function renderLeaderboard() {
-    leaderboardList.innerHTML = '';
-    const topEmployees = getTopRecognizedEmployees();
-    topEmployees.forEach((employee) => {
-        const listItem = document.createElement('li');
-        listItem.className = 'leaderboard-item';
-        listItem.innerHTML = `<span class="employee-name">${employee.name}</span> <span class="kudos-count">${employee.count} Kudos</span>`;
-        leaderboardList.appendChild(listItem);
-    });
-}
-
-function renderRecognitionFeed(posts = recognitionPosts) {
-    recognitionFeed.innerHTML = '';
-    posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    posts.forEach((post) => {
-        const postElement = document.createElement('div');
-        postElement.className = 'post-card';
-
-        const senderName = post.sender.name;
-        const receiverName = post.receiver.name;
-
-        const postHeader = document.createElement('div');
-        postHeader.className = 'post-header';
-        postHeader.innerHTML = `
-          <span class="post-sender">From: ${senderName}</span>
-          <span class="post-receiver">To: ${receiverName}</span>
-          <span class="text-gray-500">${new Date(post.timestamp).toLocaleDateString()}</span>
-        `;
-
-        const messageElement = document.createElement('p');
-        messageElement.className = 'post-message';
-        messageElement.textContent = `${post.message}`;
-
-        const badgeElement = document.createElement('div');
-        badgeElement.className = 'post-badge';
-        badgeElement.textContent = post.badge;
-
-        const reactionsElement = document.createElement('div');
-        reactionsElement.className = 'post-reactions';
-
-      const reactionTypes = ['like', 'love', 'celebrate'];
-        reactionTypes.forEach(type => {
-            const count = post.reactions[type]?.length || 0;
-            const userHasReacted = post.reactions[type]?.some(user => user.id === loggedInUser.id);
-            const button = document.createElement('button');
-            button.className = `reaction-button ${userHasReacted ? `text-${
-                type === 'like' ? 'blue' :
-                type === 'love' ? 'red' : 'yellow'
-            }-500` : ''}`;
-            button.textContent = `${
-                type === 'like' ? '👍' :
-                type === 'love' ? '❤️' : '🎉'
-            } ${count}`;
-            button.addEventListener('click', () => {
-                handleReaction(post.id, type);
+        function populateDropdowns() {
+            employees.forEach(employee => {
+                const option = document.createElement('option');
+                option.value = employee.id;
+                option.textContent = employee.name;
+                recipientSelect.appendChild(option);
             });
-            reactionsElement.appendChild(button);
-        });
 
-        const commentSection = document.createElement('div');
-        commentSection.className = 'comment-section';
+            departments.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                departmentFilter.appendChild(option);
+            });
 
-        const commentHeader = document.createElement('h4');
-        commentHeader.className = 'comment-header';
-        commentHeader.textContent = 'Comments';
-        commentSection.appendChild(commentHeader);
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team;
+                option.textContent = team;
+                teamFilter.appendChild(option);
+            });
+            badgeFilterSelect.value = "";
+        }
 
-        post.comments.forEach(comment => {
-            const commentDiv = document.createElement('div');
-            commentDiv.className = 'comment';
-            commentDiv.innerHTML = `<span class="comment-sender">${comment.sender.name}:</span> ${comment.text}`;
-            commentSection.appendChild(commentDiv);
-        });
+        function displayRecognitionPosts(posts = recognitionPosts) {
+            recognitionFeed.innerHTML = '';
+            posts.forEach(post => {
+                const postElement = createPostElement(post);
+                recognitionFeed.appendChild(postElement);
+            });
+            displayLeaderboard();
+        }
 
-        const addCommentForm = document.createElement('form');
-        addCommentForm.className = 'add-comment-form';
-        addCommentForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const commentInput = event.target.querySelector('input');
-            const commentText = commentInput.value.trim();
-            if (commentText) {
-                const newComment = {
-                    id: `c${post.comments.length + 1}`,
-                    sender: loggedInUser,
-                    text: commentText
-                };
-                post.comments.push(newComment);
-                renderRecognitionFeed();
-                commentInput.value = '';
-                commentSection.classList.add('show');
+        function createPostElement(post) {
+            const postDiv = document.createElement('div');
+            postDiv.classList.add('recognition-post');
+
+            const headerDiv = document.createElement('div');
+            headerDiv.classList.add('post-header');
+
+            const senderImg = document.createElement('img');
+            senderImg.src = post.sender.avatar;
+            senderImg.alt = post.sender.name;
+
+            const senderNameSpan = document.createElement('span');
+            senderNameSpan.classList.add('sender-name');
+            senderNameSpan.textContent = post.sender.name;
+
+            const receiverNameSpan = document.createElement('span');
+            receiverNameSpan.classList.add('receiver-name');
+            receiverNameSpan.textContent = `to ${post.receiver.name}`;
+
+            headerDiv.appendChild(senderImg);
+            headerDiv.appendChild(senderNameSpan);
+            headerDiv.appendChild(receiverNameSpan);
+
+            const contentP = document.createElement('p');
+            contentP.classList.add('post-content');
+            contentP.textContent = post.message;
+
+            const badgeSpan = document.createElement('span');
+            badgeSpan.classList.add('post-badge');
+            badgeSpan.textContent = post.badge;
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.classList.add('post-actions');
+
+            const likeButton = document.createElement('button');
+            likeButton.innerHTML = `<i class="far fa-thumbs-up"></i> Like (${post.likes})`;
+            likeButton.addEventListener('click', () => {
+                post.likes++;
+                displayRecognitionPosts();
+            });
+
+            const commentButton = document.createElement('button');
+            commentButton.innerHTML = `<i class="far fa-comment"></i> Comment (${post.comments.length})`;
+            commentButton.addEventListener('click', () => {
+                const commentInputContainer = document.createElement('div');
+                commentInputContainer.classList.add('comment-input-container');
+
+                const currentUserImg = document.createElement('img');
+                currentUserImg.src = currentUser.avatar;
+                currentUserImg.alt = currentUser.name;
+
+                const commentInputWrapper = document.createElement('div');
+                commentInputWrapper.classList.add('comment-input-wrapper');
+                const commentInput = document.createElement('textarea');
+                commentInput.classList.add('comment-input');
+                commentInput.placeholder = "Write a comment...";
+
+                const commentSubmit = document.createElement('button');
+                commentSubmit.classList.add('comment-submit');
+                commentSubmit.textContent = "Post";
+                commentSubmit.addEventListener('click', () => {
+                    if (commentInput.value.trim() !== "") {
+                        const newComment = {
+                            user: currentUser,
+                            text: commentInput.value,
+                            date: new Date()
+                        }
+                        post.comments.push(newComment);
+                        displayRecognitionPosts();
+                    }
+                });
+                commentInputWrapper.appendChild(commentInput);
+                commentInputWrapper.appendChild(commentSubmit);
+                commentInputContainer.appendChild(currentUserImg);
+                commentInputContainer.appendChild(commentInputWrapper);
+                postDiv.appendChild(commentInputContainer);
+            });
+
+            const commentsDiv = document.createElement('div');
+            commentsDiv.classList.add('comments-section');
+
+            post.comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment');
+
+                const commentImg = document.createElement('img');
+                commentImg.src = comment.user.avatar;
+                commentImg.alt = comment.user.name;
+
+                const commentContentDiv = document.createElement('div');
+                commentContentDiv.classList.add('comment-content');
+
+                const commentHeaderDiv = document.createElement('div');
+                commentHeaderDiv.classList.add('comment-header');
+
+                const commenterNameSpan = document.createElement('span');
+                commenterNameSpan.classList.add('commenter-name');
+                commenterNameSpan.textContent = comment.user.name;
+
+                const commentDateSpan = document.createElement('span');
+                commentDateSpan.classList.add('comment-date');
+                commentDateSpan.textContent = comment.date.toLocaleDateString();
+
+                commentHeaderDiv.appendChild(commenterNameSpan);
+                commentHeaderDiv.appendChild(commentDateSpan);
+
+                const commentTextP = document.createElement('p');
+                commentTextP.classList.add('comment-text');
+                commentTextP.textContent = comment.text;
+
+                commentContentDiv.appendChild(commentHeaderDiv);
+                commentContentDiv.appendChild(commentTextP);
+
+                commentDiv.appendChild(commentImg);
+                commentDiv.appendChild(commentContentDiv);
+                commentsDiv.appendChild(commentDiv);
+            });
+
+            actionsDiv.appendChild(likeButton);
+            actionsDiv.appendChild(commentButton);
+
+            postDiv.appendChild(headerDiv);
+            postDiv.appendChild(contentP);
+            postDiv.appendChild(badgeSpan);
+            postDiv.appendChild(actionsDiv);
+            postDiv.appendChild(commentsDiv);
+
+            return postDiv;
+        }
+
+        function giveKudos() {
+            const recipientId = parseInt(recipientSelect.value);
+            const message = messageInput.value;
+            const badge = badgeSelect.value;
+            const visibility = visibilitySelect.value;
+
+            if (!recipientId || !message) {
+                alert('Please fill in all required fields.');
+                return;
             }
+
+            const receiver = employees.find(emp => emp.id === recipientId);
+
+            if (!receiver) {
+                alert('Recipient not found.');
+                return;
+            }
+
+            const newPost = {
+                sender: currentUser,
+                receiver: receiver,
+                message: message,
+                badge: badge,
+                visibility: visibility,
+                likes: 0,
+                comments: [],
+                date: new Date()
+            };
+
+            recognitionPosts.push(newPost);
+            displayRecognitionPosts();
+            giveKudosModal.style.display = 'none';
+            clearModalForm();
+        }
+
+        function clearModalForm() {
+            recipientSelect.value = '';
+            messageInput.value = '';
+            badgeSelect.value = 'kudos';
+            visibilitySelect.value = 'public';
+        }
+
+        function filterPosts() {
+            const department = departmentFilter.value;
+            const team = teamFilter.value;
+            const date = dateFilter.value;
+            const badge = badgeFilterSelect.value;
+
+            const filteredPosts = recognitionPosts.filter(post => {
+                const postDate = new Date(post.date).toISOString().split('T')[0];
+                return (
+                    (!department || post.receiver.department === department) &&
+                    (!team || post.receiver.team === team) &&
+                    (!date || postDate === date) &&
+                    (!badge || post.badge === badge)
+                );
+            });
+            displayRecognitionPosts(filteredPosts);
+        }
+
+        function displayLeaderboard() {
+            const employeeKudosCount = {};
+            recognitionPosts.forEach(post => {
+                const receiverId = post.receiver.id;
+                employeeKudosCount[receiverId] = (employeeKudosCount[receiverId] || 0) + 1;
+            });
+
+            const sortedEmployees = Object.entries(employeeKudosCount)
+                .sort(([, countA], [, countB]) => countB - countA)
+                .slice(0, 5);
+
+            leaderboardList.innerHTML = '';
+            sortedEmployees.forEach(([employeeId, count]) => {
+                const employee = employees.find(emp => emp.id === parseInt(employeeId));
+                if(employee){
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<span>${employee.name}</span> <span>${count} Kudos</span>`;
+                    leaderboardList.appendChild(listItem);
+                }
+
+            });
+            displayTopEmployees(sortedEmployees);
+        }
+        function displayTopEmployees(topEmployees){
+            const topEmployeesContainer = document.querySelector('.top-employees');
+            topEmployeesContainer.innerHTML = '<h2>Top Employees</h2>';
+            topEmployees.forEach(([employeeId, kudosCount]) => {
+                const employee = employees.find(emp => emp.id === parseInt(employeeId));
+                if (employee) {
+                    const employeeCard = document.createElement('div');
+                    employeeCard.classList.add('top-employee-card');
+
+                    const employeeImg = document.createElement('img');
+                    employeeImg.src = employee.avatar;
+                    employeeImg.alt = employee.name;
+
+                    const employeeName = document.createElement('div');
+                    employeeName.classList.add('name');
+                    employeeName.textContent = employee.name;
+
+                    const kudosCountDiv = document.createElement('div');
+                    kudosCountDiv.classList.add('kudos-count');
+                    kudosCountDiv.textContent = `${kudosCount} Kudos`;
+
+                    employeeCard.appendChild(employeeImg);
+                    employeeCard.appendChild(employeeName);
+                    employeeCard.appendChild(kudosCountDiv);
+
+                    topEmployeesContainer.appendChild(employeeCard);
+                }
+            });
+        }
+
+        giveKudosButton.addEventListener('click', () => {
+            giveKudosModal.style.display = 'flex';
         });
 
-        const commentInput = document.createElement('input');
-        commentInput.type = 'text';
-        commentInput.placeholder = 'Add a comment...';
-        commentInput.className = 'comment-input';
-        const commentButton = document.createElement('button');
-        commentButton.type = 'submit';
-        commentButton.textContent = 'Post';
-        commentButton.className = 'comment-button';
-        addCommentForm.appendChild(commentInput);
-        addCommentForm.appendChild(commentButton);
-        commentSection.appendChild(addCommentForm);
-
-        const viewCommentsButton = document.createElement('button');
-        viewCommentsButton.textContent = post.comments.length > 0 ? `View ${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}`: 'View Comments';
-        viewCommentsButton.className = 'view-comments-button';
-        viewCommentsButton.addEventListener('click', () => {
-            commentSection.classList.toggle('show');
+        cancelKudosButton.addEventListener('click', () => {
+            giveKudosModal.style.display = 'none';
+            clearModalForm();
         });
-        postElement.appendChild(postHeader);
-        postElement.appendChild(badgeElement);
-        postElement.appendChild(messageElement);
-        postElement.appendChild(reactionsElement);
-        postElement.appendChild(viewCommentsButton);
-        postElement.appendChild(commentSection);
-        recognitionFeed.appendChild(postElement);
-    });
-}
-function handleReaction(postId, reactionType) {
-    const post = recognitionPosts.find(p => p.id === postId);
-    if (!post) return;
 
-    const existingReaction = post.reactions[reactionType]?.find(user => user.id === loggedInUser.id);
+        submitKudosButton.addEventListener('click', giveKudos);
+        filterButton.addEventListener('click', filterPosts);
 
-    if (existingReaction) {
-       
-        post.reactions[reactionType] = post.reactions[reactionType].filter(user => user.id !== loggedInUser.id);
-    } else {
-       
-        if (!post.reactions[reactionType]) {
-            post.reactions[reactionType] = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDropdowns();
+            displayRecognitionPosts();
+        });
+
+        function toggleSubMenu(menuId) {
+            var subMenu = document.getElementById(menuId);
+            if (subMenu.style.display === "none") {
+                subMenu.style.display = "block";
+            } else {
+                subMenu.style.display = "none";
+            }
         }
-        post.reactions[reactionType].push(loggedInUser);
-    }
-    renderRecognitionFeed();
-    renderLeaderboard(); // Update leaderboard to reflect changes
-}
 
-kudosButton.addEventListener('click', openKudosModal);
-closeModalButtons.forEach(button => {
-    button.addEventListener('click', closeKudosModal);
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target === kudosModal) {
-        closeKudosModal();
-    }
-});
-
-messageInput.addEventListener('input', (event) => {
-    updateCharCount(event.target.value);
-});
-
-kudosForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const recipientId = recipientSelect.value;
-    const badge = document.getElementById('badge-emoji').value;
-    const message = messageInput.value.trim();
-    const visibility = document.getElementById('visibility').value;
-
-    if (recipientId && message) {
-        const recipient = employees.find((e) => e.id === recipientId);
-         const newPost = {
-            id: String(Date.now()),
-            sender: loggedInUser,
-            receiver: recipient,
-            badge,
-            message,
-            timestamp: new Date().toISOString(),
-            visibility,
-             comments: [],
-              reactions: {
-              'like': [],
-              'love': [],
-              'celebrate': []
-            },
-        };
-
-        recognitionPosts.push(newPost);
-        renderRecognitionFeed();
-        renderLeaderboard(); // Update leaderboard
-
-        if (visibility === 'private') {
-            console.log(`Sending private recognition email to ${recipient.name}: ${message}`);
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
         }
-        closeKudosModal();
-    } else {
-        alert('Please select a recipient and enter a message.');
-    }
-});
-
-filterButton.addEventListener('click', () => {
-    const selectedTeam = teamFilter.value;
-    const selectedDepartment = departmentFilter.value;
-    const selectedDate = dateFilter.value;
-    const selectedBadge = badgeFilter.value;
-
-    const filteredPosts = recognitionPosts.filter(post => {
-        const postDate = new Date(post.timestamp).toISOString().split('T')[0];
-
-        const teamMatch = !selectedTeam || employees.find(e => e.id === post.sender.id).team === selectedTeam || employees.find(e => e.id === post.receiver.id).team === selectedTeam;
-        const departmentMatch = !selectedDepartment || employees.find(e => e.id === post.sender.id).department === selectedDepartment || employees.find(e => e.id === post.receiver.id).department === selectedDepartment;
-        const dateMatch = !selectedDate || postDate === selectedDate;
-        const badgeMatch = !selectedBadge || post.badge === selectedBadge;
-
-        return teamMatch && departmentMatch && dateMatch && badgeMatch;
-    });
-    renderRecognitionFeed(filteredPosts);
-});
-
-populateRecipients();
-renderLeaderboard();
-renderRecognitionFeed();
-</script>
+    </script>
 </body>
 </html>
