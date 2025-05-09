@@ -608,7 +608,18 @@
                 shares: 10
             }
         ];
-
+  <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
         let currentFilter = 'recent';
 
         function renderPosts() {
@@ -783,7 +794,7 @@
             commentItem.appendChild(avatar);
             commentItem.appendChild(commentContent);
 
-            // Render Replies
+            
             if(comment.replies && comment.replies.length > 0){
                 const repliesSection = document.createElement('div');
                 repliesSection.className = 'replies-section';
