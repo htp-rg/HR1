@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection Offer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .offer-section {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .offer-summary {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .offer-details {
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], select, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0 auto;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .modal-header h2 {
+            margin: 0;
+            color: #007bff;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+        #offerLetterPreview {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .hidden {
+            display: none;
+        }
+        .inline-block {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .offer-section {
+                padding: 10px;
+            }
+            .evaluator-feedback {
+                flex-direction: column;
+            }
+            .evaluator-feedback .input-group {
+                width: 100%;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions button {
+                margin: 10px auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+    </div>
 
+    <div class="main-content">
+        <a href="admin.html" class="back-button">Back</a>
+        <div class="container">
+            <h1>Selection Offer</h1>
+
+            <div class="offer-section">
+                <h2 class="text-xl font-semibold mb-4 text-blue-600">Generate Offer Letter</h2>
+                <form id="offerForm" class="mb-6">
+                    <div class="form-group">
+                        <label for="candidateName">Candidate Name:</label>
+                        <input type="text" id="candidateName" name="candidateName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title:</label>
+                        <input type="text" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="text" id="salary" name="salary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalTerms">Additional Terms:</label>
+                        <textarea id="additionalTerms" name="additionalTerms"></textarea>
+                    </div>
+                    <button type="submit" id="generateOffer">Generate Offer Letter</button>
+                </form>
+                <div id="offerLetterPreview" class="hidden"></div>
+                <div class="form-actions mt-6 flex flex-wrap justify-center">
+                    <button type="button" id="sendOffer" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Send for E-signing</button>
+                    <button type="button" id="trackAcceptance" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Track Acceptance</button>
+                    <button type="button" id="startVerification" class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">Start Background Verification</button>
+                </div>
+            </div>
+
+            <div id="esignModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>E-signing Process</h2>
+                    <p>The offer letter has been sent for e-signing.  The candidate will receive an email with instructions.</p>
+                </div>
+            </div>
+
+            <div id="acceptanceModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>Acceptance Status</h2>
+                    <p>Acceptance status will be displayed here.</p>
+                    <div id="acceptanceStatus"></div>
+                </div>
+            </div>
+
+            <div id="verificationModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>Background Verification</h2>
+                    <p>Background verification process started. You will be notified of the results.</p>
+                    <div id="verificationStatus"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
+
+        const offerForm = document.getElementById('offerForm');
+        const offerLetterPreview = document.getElementById('offerLetterPreview');
+        const sendOfferButton = document.getElementById('sendOffer');
+        const trackAcceptanceButton = document.getElementById('trackAcceptance');
+        const startVerificationButton = document.getElementById('startVerification');
+
+        const esignModal = document.getElementById('esignModal');
+        const acceptanceModal = document.getElementById('acceptanceModal');
+        const verificationModal = document.getElementById('verificationModal');
+        const closeButtons = document.querySelectorAll('.close-button');
+
+        const acceptanceStatusDiv = document.getElementById('acceptanceStatus');
+        const verificationStatusDiv = document.getElementById('verificationStatus');
+
+        const mergeTags = {
+            CANDIDATE_NAME: '',
+            JOB_TITLE: '',
+            SALARY: '',
+            START_DATE: '',
+            ADDITIONAL_TERMS: ''
+        };
+
+        const offerLetterTemplate = `
+            <h1>Offer Letter</h1>
+            <p>Dear {{CANDIDATE_NAME}},</p>
+            <p>We are pleased to offer you the position of {{JOB_TITLE}} at our company.</p>
+            <p>Your starting salary will be {{SALARY}} per year.</p>
+            <p>Your start date will be {{START_DATE}}.</p>
+            <p>Additional Terms: {{ADDITIONAL_TERMS}}</p>
+            <p>Please sign this offer letter and return it to us by [Date].</p>
+            <p>Sincerely,</p>
+            <p>[Your Name/Company Name]</p>
+        `;
+
+        offerForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            mergeTags.CANDIDATE_NAME = document.getElementById('candidateName').value;
+            mergeTags.JOB_TITLE = document.getElementById('jobTitle').value;
+            mergeTags.SALARY = document.getElementById('salary').value;
+            mergeTags.START_DATE = document.getElementById('startDate').value;
+            mergeTags.ADDITIONAL_TERMS = document.getElementById('additionalTerms').value;
+
+            let generatedLetter = offerLetterTemplate;
+            for (const key in mergeTags) {
+                generatedLetter = generatedLetter.replace(`{{${key}}}`, mergeTags[key]);
+            }
+            offerLetterPreview.textContent = generatedLetter;
+            offerLetterPreview.classList.remove('hidden');
+        });
+
+        sendOfferButton.addEventListener('click', () => {
+            if (!offerLetterPreview.classList.contains('hidden')) {
+                esignModal.style.display = "block";
+            } else {
+                alert("Please generate the offer letter first.");
+            }
+        });
+
+        trackAcceptanceButton.addEventListener('click', () => {
+            acceptanceModal.style.display = "block";
+            acceptanceStatusDiv.textContent = "Waiting for candidate to accept the offer.";
+        });
+
+        startVerificationButton.addEventListener('click', () => {
+            verificationModal.style.display = "block";
+            verificationStatusDiv.textContent = "Verification in progress...";
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                if (modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
