@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Verification - Services Management System</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: navy;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .login-container {
+      background: white;
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    .input-group {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .label-box {
+      background: black;
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      font-size: 14px;
+      width: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-group input {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid black;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      background: #f0f0f0;
+      color: #333;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .code-display {
+      color: green;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Services Management System</h1>
+  <h2>Email Verification</h2>
+
+  <div class="login-container">
+    <p style="color: #333; margin-bottom: 20px;">We have sent a verification code to your email. Please enter it below:</p>
+
+    <form id="verificationForm" onsubmit="event.preventDefault(); verifyCode();">
+      <div class="input-group">
+        <div class="label-box">Code</div>
+        <input type="text" id="verificationCode" placeholder="Enter Code" required>
+      </div>
+
+      <button type="submit">Verify</button>
+    </form>
+
+    <p class="code-display" id="displayCode"></p>
+  </div>
+
+  <script>
+    
+    const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+    localStorage.setItem('verificationCode', generatedCode);
+
+        document.getElementById('displayCode').innerText = "Verification Code: " + generatedCode;
+
+    function verifyCode() {
+      const userCode = document.getElementById('verificationCode').value.trim();
+      const realCode = localStorage.getItem('verificationCode');
+
+      if (userCode === realCode) {
+        alert("Verification successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid code. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HUMAN RESOURCES 3 - Employee Side</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: navy;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .login-container {
+      background: white; 
+      backdrop-filter: blur(10px); 
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+    .input-group {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .label-box {
+      background: black;
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      font-size: 14px;
+      width: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-group input {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid black; 
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      background: #f0f0f0;
+      color: #333;
+      outline: none;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>HUMAN RESOURCES 3</h1>
+  <h2>Employee Side</h2>
+
+  <div class="login-container">
+    <form id="employeeLoginForm" autocomplete="off">
+      
+      <div class="input-group">
+        <div class="label-box">Email</div>
+        <input type="email" id="employeeEmail" placeholder="Enter Email" required>
+      </div>
+
+      <div class="input-group">
+        <div class="label-box">Password</div>
+        <input type="password" id="employeePassword" placeholder="Enter Password" required>
+      </div>
+
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('employeeLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault(); 
+      const email = document.getElementById('employeeEmail').value;
+      const password = document.getElementById('employeePassword').value;
+      
+      if (email && password) {
+        window.location.href = 'verification.html'; 
+      } else {
+        alert('Please enter email and password!');
+      }
+    });
+  </script>
+
+</body>
+</html>
+
