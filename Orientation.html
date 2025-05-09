@@ -150,7 +150,6 @@
             padding-bottom: 8px;
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -253,60 +252,57 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="sidebar bg-gray-800 text-white w-64 min-h-screen">
-        <div class="sidebar-top p-4">
-            <img src="admin-avatar.png" alt="admin" class="admin-image rounded-full w-16 h-16 mx-auto mb-2">
-            <p class="text-center text-lg font-semibold">HUMAN RESOURCES 1</p>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
         </div>
-        <div class="sidebar-content mt-8">
+        <div class="sidebar-content">
             <ul class="sidebar-menu">
-                <li class="p-2 hover:bg-gray-700 rounded"><a href="dashboard.html" class="block text-white no-underline">Dashboard</a></li>
-                <li class="p-2 hover:bg-gray-700 rounded">
-                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('Recruitment')">Recruitment</a>
-                    <ul id="Recruitment" style="display:none;" class="ml-4">
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Jobposting.html" class="block text-white no-underline">Job Posting</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Sourcing.html" class="block text-white no-underline">Sourcing Candidates</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Create.html" class="block text-white no-underline">Create Job Posting</a></li>
-                    </ul>
-                </li>
-                <li class="p-2 hover:bg-gray-700 rounded">
-                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a>
-                    <ul id="ApplicantManagement" style="display:none;" class="ml-4">
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Application.html" class="block text-white no-underline">Application Tracking</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="interviews.html" class="block text-white no-underline">Interviews & Assessments</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="selection.html" class="block text-white no-underline">Selection Offer</a></li>
-                    </ul>
-                </li>
-                <li class="p-2 hover:bg-gray-700 rounded">
-                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a>
-                    <ul id="NewHiredOnBoard" style="display:none;" class="ml-4">
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Documentation.html" class="block text-white no-underline">Documentation</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Orientation.html" class="block text-white no-underline">Orientation & Training</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Assignment.html" class="block text-white no-underline">Role Assignment</a></li>
-                    </ul>
-                </li>
-                <li class="p-2 hover:bg-gray-700 rounded">
-                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a>
-                    <ul id="SocialRecognitionProgram" style="display:none;" class="ml-4">
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Acknowledgement.html" class="block text-white no-underline">Acknowledging Achievements</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Peer.html" class="block text-white no-underline">Peer-to-peer recognition</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Employee.html" class="block text-white no-underline">Employee engagement programs</a></li>
-                    </ul>
-                </li>
-                <li class="p-2 hover:bg-gray-700 rounded">
-                    <a href="#" class="block text-white no-underline" onclick="toggleSubMenu('Performancemanagement')">Performance management</a>
-                    <ul id="Performancemanagement" style="display:none;" class="ml-4">
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Goal.html" class="block text-white no-underline">Goal setting</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Feedback.html" class="block text-white no-underline">Feedback cycles</a></li>
-                        <li class="p-2 hover:bg-gray-700 rounded"><a href="Review.html" class="block text-white no-underline">Performance reviews</a></li>
-                    </ul>
-                </li>
-                <li class="p-2 hover:bg-gray-700 rounded"><a href="users.html" class="block text-white no-underline">Users</a></li>
-                <li class="p-2 hover:bg-gray-700 rounded"><a href="settings.html" class="block text-white no-underline">Settings</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
             </ul>
         </div>
-        <a href="login1.html" class="logout-link block mt-auto p-2 text-white no-underline hover:bg-gray-700 rounded" onclick="return confirmLogout();">Log out</a>
+
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
 
     <div class="main-content ml-64 p-8">
