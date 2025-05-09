@@ -1,1 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Scheduling</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], input[type="time"], select, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0 auto;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        /* --- Calendar Styles --- */
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed;
+        }
+        .calendar th, .calendar td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            vertical-align: top;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        .calendar th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .calendar td {
+            height: 50px;
+            background-color: #fff;
+            transition: background-color 0.2s ease;
+        }
+        .calendar td:hover {
+            background-color: #f8f8f8;
+        }
+        .calendar .available {
+            background-color: #fff;
+        }
+        .calendar .available:hover {
+                background-color: #f8f8f8;
+        }
+        .calendar .scheduled {
+            background-color: #ffeeba;
+        }
+        .calendar .sunday {
+            background-color: #f0fff0;
+        }
+        .calendar .no-interview {
+            background-color: #e0f7fa;
+        }
+        .calendar .slot-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 2px;
+            display: inline-block;
+            transition: background-color 0.2s ease;
+        }
+        .slot-button:hover {
+            background-color: #45a049;
+        }
+        .slot-info {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #555;
+        }
+
+        /* --- Schedule Form Styles --- */
+        .schedule-form {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+        .schedule-form h2 {
+            color: #007bff;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* --- Evaluator and Feedback Styles --- */
+        .evaluator-feedback {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .evaluator-feedback .input-group {
+            width: 48%;
+        }
+        .evaluator-feedback label {
+            display: block;
+            margin-top: 0;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* --- Scorecard Styles --- */
+        .scorecard {
+            margin-bottom: 15px;
+        }
+        .scorecard table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .scorecard table th, .scorecard table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .scorecard table th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .scorecard table td input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .calendar th, .calendar td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            .schedule-form {
+                padding: 10px;
+            }
+            .evaluator-feedback {
+                flex-direction: column;
+            }
+            .evaluator-feedback .input-group{
+                width: 100%;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .calendar th, .calendar td {
+                font-size: 10px;
+                padding: 4px;
+                height: auto;
+            }
+            .calendar th:nth-child(1),
+            .calendar td:nth-child(1) {
+                display: none;
+            }
+            .schedule-form h2{
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interview Scheduling</h1>
+
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>9:00 AM</th>
+                    <td class="available" data-date="2024-07-29" data-time="09:00"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+                <tr>
+                    <th>10:00 AM</th>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+                <tr>
+                    <th>11:00 AM</th>
+                    <td class="no-interview"></td>
+                    <td class="available" data-date="2024-07-30" data-time="11:00"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+                <tr>
+                    <th>1:00 PM</th>
+                    <td class="available" data-date="2024-08-03" data-time="13:00"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+                <tr>
+                    <th>2:00 PM</th>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+                <tr>
+                    <th>3:00 PM</th>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview"></td>
+                    <td class="available" data-date="2024-08-01" data-time="15:00"></td>
+                    <td class="no-interview"></td>
+                    <td class="no-interview">No Interview</td>
+                    <td class="sunday"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form class="schedule-form" id="scheduleForm">
+            <h2>Schedule Interview</h2>
+            <label for="candidateName">Candidate Name:</label>
+            <input type="text" id="candidateName" name="candidateName" required>
+
+            <label for="jobTitle">Job Title:</label>
+            <input type="text" id="jobTitle" name="jobTitle" required>
+
+            <div class="evaluator-feedback">
+                <div class="input-group">
+                    <label for="evaluator1">Evaluator 1:</label>
+                    <input type="text" id="evaluator1" name="evaluator1" required>
+                </div>
+                <div class="input-group">
+                    <label for="evaluator2">Evaluator 2:</label>
+                    <input type="text" id="evaluator2" name="evaluator2">
+                </div>
+            </div>
+
+            <label for="interviewDate">Date:</label>
+            <input type="date" id="interviewDate" name="interviewDate" required>
+
+            <label for="interviewTime">Time:</label>
+            <select id="interviewTime" name="interviewTime" required>
+                <option value="">Select Time</option>
+            </select>
+
+            <div class="scorecard">
+                <h2>Feedback Scorecard</h2>
+                <table>
+                    <tr>
+                        <th>Criteria</th>
+                        <th>Score (1-5)</th>
+                        <th>Comments</th>
+                    </tr>
+                    <tr>
+                        <td>Communication Skills</td>
+                        <td><input type="number" name="communicationScore" min="1" max="5"></td>
+                        <td><input type="text" name="communicationComments"></td>
+                    </tr>
+                    <tr>
+                        <td>Technical Skills</td>
+                        <td><input type="number" name="technicalScore" min="1" max="5"></td>
+                        <td><input type="text" name="technicalComments"></td>
+                    </tr>
+                    <tr>
+                        <td>Problem-Solving</td>
+                        <td><input type="number" name="problemSolvingScore" min="1" max="5"></td>
+                        <td><input type="text" name="problemSolvingComments"></td>
+                    </tr>
+                    <tr>
+                        <td>Cultural Fit</td>
+                        <td><input type="number" name="cultureFitScore" min="1" max="5"></td>
+                        <td><input type="text" name="cultureFitComments"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <label for="additionalComments">Additional Comments:</label>
+            <textarea id="additionalComments" name="additionalComments"></textarea>
+
+            <button type="submit">Schedule Interview</button>
+            <div id="error" class="error-message"></div>
+        </form>
+    </div>
+
+    <script>
+        const scheduleForm = document.getElementById('scheduleForm');
+        const calendar = document.querySelector('.calendar');
+        const interviewDateInput = document.getElementById('interviewDate');
+        const interviewTimeSelect = document.getElementById('interviewTime');
+        const timeSlots = ["09:00", "11:00", "13:00", "15:00"];
+        const bookedSlots = new Set();
+
+        function populateTimeSlots(selectedDate) {
+            interviewTimeSelect.innerHTML = '<option value="">Select Time</option>';
+            const day = new Date(selectedDate).getDay();
+            if (day === 0) {
+                interviewTimeSelect.innerHTML = '<option value="" disabled>No interviews on Sundays</option>';
+                return;
+            }
+
+            let validSlots = [];
+            if (selectedDate === "2024-07-29") {
+                validSlots = ["09:00"];
+            } else if (selectedDate === "2024-07-30") {
+                validSlots = ["11:00"];
+            } else if (selectedDate === "2024-08-01"){
+                validSlots = ["15:00"]
+            }
+            else if (selectedDate === "2024-08-03"){
+                validSlots = ["13:00"]
+            }
+            
+
+            validSlots.forEach(slot => {
+                const slotKey = `${selectedDate}-${slot}`;
+                if (!bookedSlots.has(slotKey)) {
+                    const option = document.createElement('option');
+                    option.value = slot;
+                    option.textContent = slot;
+                    interviewTimeSelect.appendChild(option);
+                }
+            });
+            if (interviewTimeSelect.options.length === 1) {
+                interviewTimeSelect.innerHTML = '<option value="" disabled>No slots available</option>';
+            }
+
+        }
+
+        interviewDateInput.addEventListener('change', function() {
+            populateTimeSlots(this.value);
+        });
+
+        calendar.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target.tagName === 'TD' && target.classList.contains('available')) {
+                const selectedDate = target.dataset.date;
+                const selectedTime = target.dataset.time;
+                const dateObj = new Date(selectedDate);
+                const day = dateObj.getDay();
+
+
+                if (day === 0){
+                    alert("No interviews on Sundays.");
+                    return;
+                }
+
+                populateTimeSlots(selectedDate);
+                document.getElementById('interviewDate').value = selectedDate;
+                document.getElementById('interviewTime').value = selectedTime;
+            }
+        });
+
+        function generateRandomDate(start, end) {
+            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        }
+
+        function scheduleRandomInterview() {
+            const startDate = new Date(2024, 6, 29);
+            const endDate = new Date(2024, 8, 2);
+            let randomDate = generateRandomDate(startDate, endDate);
+            const day = randomDate.getDay();
+
+            while (day === 0) {
+                randomDate = generateRandomDate(startDate, endDate);
+            }
+            const formattedDate = randomDate.toISOString().split('T')[0];
+
+            let validTimes = [];
+             if (formattedDate === "2024-07-29") {
+                validTimes = ["09:00"];
+            } else if (formattedDate === "2024-07-30") {
+                validTimes = ["11:00"];
+            } else if (formattedDate === "2024-08-01"){
+                validTimes = ["15:00"]
+            }
+            else if (formattedDate === "2024-08-03"){
+                validTimes = ["13:00"]
+            }
+            const randomTimeIndex = Math.floor(Math.random() * validTimes.length);
+            const randomTime = validTimes[randomTimeIndex];
+
+            const candidateName = "Random Candidate";
+            const jobTitle = "Software Engineer";
+            const evaluator1 = "John Doe";
+            const evaluator2 = "Jane Smith";
+            const communicationScore = Math.floor(Math.random() * 5) + 1;
+            const technicalScore = Math.floor(Math.random() * 5) + 1;
+            const problemSolvingScore = Math.floor(Math.random() * 5) + 1;
+            const cultureFitScore = Math.floor(Math.random() * 5) + 1;
+            const additionalComments = "Good candidate.";
+
+            document.getElementById('candidateName').value = candidateName;
+            document.getElementById('jobTitle').value = jobTitle;
+            document.getElementById('evaluator1').value = evaluator1;
+            document.getElementById('evaluator2').value = evaluator2;
+            document.getElementById('interviewDate').value = formattedDate;
+            document.getElementById('interviewTime').value = randomTime;
+            document.querySelector('input[name="communicationScore"]').value = communicationScore;
+            document.querySelector('input[name="technicalScore"]').value = technicalScore;
+            document.querySelector('input[name="problemSolvingScore"]').value = problemSolvingScore;
+            document.querySelector('input[name="cultureFitScore"]').value = cultureFitScore;
+            document.getElementById('additionalComments').value = additionalComments;
+
+
+            const slotKey = `${formattedDate}-${randomTime}`;
+            bookedSlots.add(slotKey);
+            const selectedCell = document.querySelector(`[data-date="${formattedDate}"][data-time="${randomTime}"]`);
+            if (selectedCell) {
+                selectedCell.classList.remove('available');
+                selectedCell.classList.add('scheduled');
+                selectedCell.innerHTML = `<span class="slot-info">Booked by ${candidateName}</span>`;
+            }
+            populateTimeSlots(formattedDate);
+            alert(`Random interview scheduled for ${candidateName} on ${formattedDate} at ${randomTime}!`);
+            scheduleForm.reset();
+            errorDiv.textContent = '';
+
+        }
+        scheduleRandomInterview();
+
+        scheduleForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const candidateName = document.getElementById('candidateName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const interviewDate = document.getElementById('interviewDate').value;
+            const interviewTime = document.getElementById('interviewTime').value;
+            const evaluator1 = document.getElementById('evaluator1').value;
+            const evaluator2 = document.getElementById('evaluator2').value;
+            const communicationScore = document.querySelector('input[name="communicationScore"]').value;
+            const technicalScore = document.querySelector('input[name="technicalScore"]').value;
+            const problemSolvingScore = document.querySelector('input[name="problemSolvingScore"]').value;
+            const cultureFitScore = document.querySelector('input[name="cultureFitScore"]').value;
+            const additionalComments = document.getElementById('additionalComments').value;
+            const errorDiv = document.getElementById('error');
+
+            if (!interviewDate || interviewTime === "") {
+                errorDiv.textContent = 'Please select a valid date and time for the interview.';
+                return;
+            }
+             if (!evaluator1) {
+                errorDiv.textContent = 'Please enter Evaluator 1 name.';
+                return;
+            }
+            if (!candidateName) {
+                errorDiv.textContent = 'Please enter Candidate name.';
+                return;
+            }
+            if (!jobTitle) {
+                errorDiv.textContent = 'Please enter Job Title.';
+                return;
+            }
+
+            const slotKey = `${interviewDate}-${interviewTime}`;
+            if (bookedSlots.has(slotKey)) {
+                errorDiv.textContent = 'This time slot is already booked. Please select another time.';
+                return;
+            }
+
+            bookedSlots.add(slotKey);
+            const selectedCell = document.querySelector(`[data-date="${interviewDate}"][data-time="${interviewTime}"]`);
+            if (selectedCell) {
+                selectedCell.classList.remove('available');
+                selectedCell.classList.add('scheduled');
+                selectedCell.innerHTML = `<span class="slot-info">Booked by ${candidateName}</span>`;
+            }
+
+            alert(`Interview scheduled for ${candidateName} on ${interviewDate} at ${interviewTime}!`);
+            scheduleForm.reset();
+            errorDiv.textContent = '';
+            populateTimeSlots(interviewDate);
+        });
+    </script>
+</body>
+</html>
 
