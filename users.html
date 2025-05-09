@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Board</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .employee-board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .employee-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #2c3e50;
+            width: 280px; 
+            margin: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex; /
+            flex-direction: column;
+            align-items: center; 
+            justify-content: flex-start; 
+            height: 300px; 
+        }
+
+        .employee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .employee-card img {
+            width: 100px; /* Increased size of the image */
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px; /* Added margin below the image */
+        }
+
+        .employee-card h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 18px; /* Increased font size */
+            font-weight: bold;
+            color: #3498db; /* Added color */
+        }
+
+        .employee-card p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #555; 
+        }
+
+        .employee-card .role {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+    </div>
+
+    <div class="main-content">
+        <a href="admin.html" class="back-button">Back</a>
+        <div class="content-box">
+            <h1>Employee Board</h1>
+            <p>Here are the details of our valued employees.</p>
+
+            <div class="employee-board">
+                <div class="employee-card">
+                    <img src="andy.png">
+                    <h4>FERRER, ANDY L.</h4>
+                    <p class="role">Team Lead</p>
+                    <p>Andy is a highly skilled and experienced team leader.  He is responsible for guiding the team, ensuring project success, and fostering a collaborative environment.  He excels at problem-solving and communication.</p>
+                </div>
+
+                <div class="employee-card">
+                    <img src="james.png">
+                    <h4>HIDALGO, JAMES HAROLD</h4>
+                    <p class="role">Senior Developer</p>
+                    <p>James is a senior developer with expertise in full-stack development. He is proficient in designing, developing, and implementing complex software solutions.  He is a valuable asset to our development team.</p>
+                </div>
+
+                <div class="employee-card">
+                    <img src="laurens.png">
+                    <h4>FERNANDEZ, LAURENS</h4>
+                    <p class="role">HR Manager</p>
+                    <p>Laurens is an experienced HR Manager.  She handles all aspects of human resources, including recruitment, employee relations, and performance management. She is dedicated to creating a positive and productive work environment.</p>
+                </div>
+
+                <div class="employee-card">
+                    <img src="jun.png">
+                    <h4>GUILLERMO, JUN</h4>
+                    <p class="role">Accountant</p>
+                    <p>Jun is a detail-oriented and meticulous accountant. He is responsible for managing the company's financial records, ensuring accuracy, and providing financial reports. His work is crucial for our financial stability.</p>
+                </div>
+
+                <div class="employee-card">
+                    <img src="gawdin.png">
+                    <h4>ORACION, GAWDIN JOSE</h4>
+                    <p class="role">Project Manager</p>
+                    <p>Gawdin Jose is a proactive and results-driven project manager. He oversees project planning, execution, and closure, ensuring that projects are completed on time and within budget. He is adept at managing resources and risks.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
+
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
