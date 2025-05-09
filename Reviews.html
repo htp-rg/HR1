@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Review</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    
+        .main-content {
+            margin-left: 0px;
+            padding: 20px;
+        }
+        .content-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .modal-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .modal-form input[type="text"],
+        .modal-form select {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .modal-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .modal-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-modal-content {
+            background-color: #fefefe;
+            margin: 20% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+        }
+
+        .delete-modal-content button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            flex: 1;
+        }
+
+        .delete-modal-content button:first-child {
+            margin-left: 0;
+        }
+
+        .delete-modal-content button:last-child {
+            margin-right: 0;
+        }
+
+        .delete-modal-content .confirm-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete-modal-content .cancel-delete {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .add-review-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .add-review-button:hover {
+            background-color: #218838;
+        }
+
+        .review-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .review-table th, .review-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .review-table th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+       .review-table thead th{
+         background-color: #007bff;
+         color: white;
+       }
+
+        .review-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .review-table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        .action-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+        .status-badge {
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .status-not-started {
+            background-color: #e74c3c;
+        }
+
+        .status-in-review {
+            background-color: #f39c12;
+        }
+
+        .status-completed {
+            background-color: #2ecc71;
+        }
+
+        @media screen and (max-width: 768px) {
+            .review-table {
+                display: block;
+                overflow-x: auto;
+            }
+            .modal-content {
+                width: 95%;
+            }
+             .delete-modal-content{
+                width: 95%;
+            }
+            .delete-modal-content button{
+                flex: none;
+                margin: 10px;
+            }
+        }
+         @media screen and (max-width: 480px){
+            .modal-form input[type="text"],
+            .modal-form select{
+                width: 100%;
+            }
+             .delete-modal-content button{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+    </div>
+
+    <div class="main-content">
+        <a href="admin.html" class="back-button">Back</a>
+        <div class="content-box">
+            <h1>Performance Reviews</h1>
+            <p>Manage employee performance reviews.</p>
+
+            <button class="add-review-button" onclick="openAddReviewModal()">Add New Review</button>
+
+            <table class="review-table" id="reviewTable">
+                <thead>
+                    <tr>
+                        <th>Review Cycle Name</th>
+                        <th>Employee Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="modal" id="addReviewModal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddReviewModal()">&times;</span>
+                    <h2>Add New Review</h2>
+                    <form class="modal-form" id="addReviewForm">
+                        <label for="reviewCycleName">Review Cycle Name:</label>
+                        <input type="text" id="reviewCycleName" required>
+                        <label for="employeeName">Employee Name:</label>
+                        <input type="text" id="employeeName" required>
+                        <label for="status">Status:</label>
+                        <select id="status">
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                        <button type="submit">Add Review</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal" id="viewReviewModal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeViewReviewModal()">&times;</span>
+                    <h2>Review Details</h2>
+                    <div id="viewReviewDetails">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="editReviewModal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeEditReviewModal()">&times;</span>
+                    <h2>Edit Review</h2>
+                    <form class="modal-form" id="editReviewForm">
+                        <label for="editReviewCycleName">Review Cycle Name:</label>
+                        <input type="text" id="editReviewCycleName" required>
+                        <label for="editEmployeeName">Employee Name:</label>
+                        <input type="text" id="editEmployeeName" required>
+                        <label for="editStatus">Status:</label>
+                        <select id="editStatus">
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                        <input type="hidden" id="editReviewId">
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal" id="deleteReviewModal">
+                <div class="delete-modal-content">
+                    <span class="close-button" onclick="closeDeleteReviewModal()">&times;</span>
+                    <h2>Delete Review</h2>
+                    <p>Are you sure you want to delete this review?</p>
+                    <div style="display: flex;">
+                        <button class="cancel-delete" onclick="closeDeleteReviewModal()">Cancel</button>
+                        <button class="confirm-delete" onclick="deleteReview()">Delete</button>
+                    </div>
+                    <span id="deleteReviewIdHidden" style="display:none;"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
+
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
+
+        let reviews = [
+            { id: '1', reviewCycleName: '2024 First Half', employeeName: 'John Doe', status: 'Not Started' },
+            { id: '2', reviewCycleName: '2024 First Half', employeeName: 'Jane Smith', status: 'In Review' },
+            { id: '3', reviewCycleName: '2024 Second Half', employeeName: 'Bob Johnson', status: 'Completed' },
+            { id: '4', reviewCycleName: '2024 Second Half', employeeName: 'Alice Brown', status: 'Not Started' },
+            { id: '5', reviewCycleName: '2024 First Half', employeeName: 'Mike Davis', status: 'In Review' },
+            { id: '6', reviewCycleName: '2024 First Half', employeeName: 'Sarah Williams', status: 'Not Started' },
+            { id: '7', reviewCycleName: '2024 Second Half', employeeName: 'David Wilson', status: 'Completed' },
+            { id: '8', reviewCycleName: '2024 Second Half', employeeName: 'Jessica Garcia', status: 'In Review' },
+            { id: '9', reviewCycleName: '2024 First Half', employeeName: 'Michael Rodriguez', status: 'Not Started' },
+            { id: '10', reviewCycleName: '2024 Second Half', employeeName: 'Jennifer Martinez', status: 'Completed' }
+        ];
+
+        function getStatusBadge(status) {
+            switch (status) {
+                case 'Not Started':
+                    return `<span class="status-badge status-not-started">Not Started</span>`;
+                case 'In Review':
+                    return `<span class="status-badge status-in-review">In Review</span>`;
+                case 'Completed':
+                    return `<span class="status-badge status-completed">Completed</span>`;
+                default:
+                    return `<span class="status-badge">Unknown</span>`;
+            }
+        }
+
+        function renderReviews() {
+            const reviewTableBody = document.querySelector('#reviewTable tbody');
+            reviewTableBody.innerHTML = '';
+
+            reviews.forEach(review => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${review.reviewCycleName}</td>
+                    <td>${review.employeeName}</td>
+                    <td>${getStatusBadge(review.status)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button onclick="openViewReviewModal('${review.id}')">View</button>
+                            <button onclick="openEditReviewModal('${review.id}')">Edit</button>
+                            <button onclick="openDeleteReviewModal('${review.id}')">Delete</button>
+                        </div>
+                    </td>
+                `;
+                reviewTableBody.appendChild(row);
+            });
+        }
+
+        function openAddReviewModal() {
+            document.getElementById('addReviewModal').style.display = 'block';
+        }
+
+        function closeAddReviewModal() {
+            document.getElementById('addReviewModal').style.display = 'none';
+        }
+
+        document.getElementById('addReviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const reviewCycleName = document.getElementById('reviewCycleName').value;
+            const employeeName = document.getElementById('employeeName').value;
+            const status = document.getElementById('status').value;
+             const newId = reviews.length > 0 ? Math.max(...reviews.map(r => parseInt(r.id))) + 1 : 1;
+
+            const newReview = { id: newId.toString(), reviewCycleName, employeeName, status };
+            reviews.push(newReview);
+            renderReviews();
+            closeAddReviewModal();
+
+            document.getElementById('reviewCycleName').value = '';
+            document.getElementById('employeeName').value = '';
+            document.getElementById('status').value = 'Not Started';
+        });
+
+        function openViewReviewModal(id) {
+            const review = reviews.find(r => r.id === id);
+            const detailsContainer = document.getElementById('viewReviewDetails');
+            detailsContainer.innerHTML = `
+                <p><strong>Review Cycle Name:</strong> ${review.reviewCycleName}</p>
+                <p><strong>Employee Name:</strong> ${review.employeeName}</p>
+                <p><strong>Status:</strong> ${getStatusBadge(review.status)}</p>
+            `;
+            document.getElementById('viewReviewModal').style.display = 'block';
+        }
+
+        function closeViewReviewModal() {
+            document.getElementById('viewReviewModal').style.display = 'none';
+        }
+
+        function openEditReviewModal(id) {
+            const review = reviews.find(r => r.id === id);
+            document.getElementById('editReviewId').value = review.id;
+            document.getElementById('editReviewCycleName').value = review.reviewCycleName;
+            document.getElementById('editEmployeeName').value = review.employeeName;
+            document.getElementById('editStatus').value = review.status;
+            document.getElementById('editReviewModal').style.display = 'block';
+        }
+
+        function closeEditReviewModal() {
+            document.getElementById('editReviewModal').style.display = 'none';
+        }
+
+        document.getElementById('editReviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const id = document.getElementById('editReviewId').value;
+            const reviewCycleName = document.getElementById('editReviewCycleName').value;
+            const employeeName = document.getElementById('editEmployeeName').value;
+            const status = document.getElementById('editStatus').value;
+
+            const index = reviews.findIndex(r => r.id === id);
+            if (index !== -1) {
+                reviews[index] = { id, reviewCycleName, employeeName, status };
+            }
+            renderReviews();
+            closeEditReviewModal();
+        });
+
+        function openDeleteReviewModal(id) {
+            const review = reviews.find(r => r.id === id);
+            document.getElementById('deleteReviewIdHidden').innerText = id;
+            document.getElementById('deleteReviewName').innerText = `${review.reviewCycleName} - ${review.employeeName}`;
+            document.getElementById('deleteReviewModal').style.display = 'block';
+        }
+
+        function closeDeleteReviewModal() {
+            document.getElementById('deleteReviewModal').style.display = 'none';
+        }
+
+        function deleteReview() {
+            const idToDelete = document.getElementById('deleteReviewIdHidden').innerText;
+            reviews = reviews.filter(r => r.id !== idToDelete);
+            renderReviews();
+            closeDeleteReviewModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderReviews();
+        });
+    </script>
+</body>
+</html>
