@@ -505,7 +505,7 @@
             flex: 1 1 0%;
         }
         .main-content {
-            margin-left: 0;
+            margin-left: 250px; /* Adjust based on your sidebar width */
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -658,7 +658,6 @@
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
@@ -689,12 +688,12 @@
                                     <textarea id="message" rows="5" maxlength="500" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                                     <p id="char-count" class="text-gray-500 text-xs text-right">0/500</p>
                                 </div>
-                                 <div>
+                                <div>
                                     <label for="visibility" class="block text-gray-700 text-sm font-bold mb-2">Visibility:</label>
                                     <select id="visibility" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="public">Public (Show on Wall)</option>
                                         <option value="private">Private (Email Only)</option>
-                                                                                    </select>
+                                    </select>
                                 </div>
                             </form>
                         </div>
@@ -711,471 +710,406 @@
             </div>
         </div>
     </div>
-
     <script>
-      function confirmLogout() {
-        return confirm("Are you sure you want to log out?");
+function confirmLogout() {
+  return confirm("Are you sure you want to log out?");
+}
+
+function toggleSubMenu(menuId) {
+  var subMenu = document.getElementById(menuId);
+  if (subMenu.style.display === "none") {
+    subMenu.style.display = "block";
+  } else {
+    subMenu.style.display = "none";
+  }
+}
+
+const employees = [
+    { id: '1', name: 'Alice Smith', team: 'Engineering', department: 'Product Development' },
+    { id: '2', name: 'Bob Johnson', team: 'Marketing', department: 'Communications' },
+    { id: '3', name: 'Charlie Brown', team: 'Sales', department: 'Business Development' },
+    { id: '4', name: 'Diana Miller', team: 'HR', department: 'People Operations' },
+    { id: '5', name: 'Ethan Davis', team: 'Engineering', department: 'Product Development' },
+    { id: '6', name: 'Fiona Green', team: 'Marketing', department: 'Communications' },
+    { id: '7', name: 'George White', team: 'Sales', department: 'Business Development' },
+    { id: '8', name: 'Hannah Black', team: 'HR', department: 'People Operations' },
+    { id: '9', name: 'Ivy Taylor', team: 'Engineering', department: 'Product Development' },
+    { id: '10', name: 'Jack Lewis', team: 'Marketing', department: 'Communications' },
+];
+
+const recognitionPosts = [
+  {
+    id: '101',
+    sender: { id: '1', name: 'Alice Smith' },
+    receiver: { id: '2', name: 'Bob Johnson' },
+    badge: '⭐',
+    message: 'For outstanding work on the Q3 campaign!',
+    timestamp: '2024-07-28T10:00:00Z',
+    visibility: 'public',
+    comments: [
+      { id: 'c1', sender: {id: '3', name: 'Charlie Brown'}, text: 'Great job, Bob!' },
+      { id: 'c2', sender: {id: '4', name: 'Diana Miller'}, text: 'Well deserved!' },
+    ],
+    reactions: {
+      'like': [{id: '5', name: 'Ethan Davis'}],
+      'love': [{id: '6', name: 'Fiona Green'}],
+      'celebrate': [{id: '7', name: 'George White'}]
+    },
+  },
+  {
+    id: '102',
+    sender: { id: '3', name: 'Charlie Brown' },
+    receiver: { id: '1', name: 'Alice Smith' },
+    badge: '🏅',
+    message: 'For leading the team to exceed sales targets.',
+    timestamp: '2024-07-27T15:30:00Z',
+    visibility: 'public',
+    comments: [],
+     reactions: {
+      'like': [],
+      'love': [],
+      'celebrate': []
+    },
+  },
+    {
+    id: '103',
+    sender: { id: '4', name: 'Diana Miller' },
+    receiver: { id: '5', name: 'Ethan Davis' },
+    badge: '🤝',
+    message: 'Thank you for being a great team player.',
+    timestamp: '2024-07-26T09:15:00Z',
+    visibility: 'public',
+    comments: [],
+     reactions: {
+      'like': [],
+      'love': [],
+      'celebrate': []
+    },
+  },
+    {
+    id: '104',
+    sender: { id: '6', name: 'Fiona Green' },
+    receiver: { id: '7', name: 'George White' },
+    badge: '💡',
+    message: 'For the innovative idea that improved our workflow.',
+    timestamp: '2024-07-25T11:00:00Z',
+    visibility: 'public',
+    comments: [],
+     reactions: {
+      'like': [],
+      'love': [],
+      'celebrate': []
+    },
+  },
+    {
+    id: '105',
+    sender: { id: '8', name: 'Hannah Black' },
+    receiver: { id: '9', name: 'Ivy Taylor' },
+    badge: '💖',
+    message: 'Your positive attitude is appreciated.',
+    timestamp: '2024-07-24T14:45:00Z',
+    visibility: 'public',
+    comments: [],
+     reactions: {
+      'like': [],
+      'love': [],
+      'celebrate': []
+    },
+  },
+];
+
+const loggedInUser = { id: '10', name: 'Jack Lewis' };
+
+const kudosButton = document.getElementById('give-kudos-button');
+const kudosModal = document.getElementById('give-kudos-modal');
+const closeModalButtons = document.querySelectorAll('.close-button');
+const kudosForm = document.getElementById('kudos-form');
+const recipientSelect = document.getElementById('recipient');
+const messageInput = document.getElementById('message');
+const charCountDisplay = document.getElementById('char-count');
+const recognitionFeed = document.getElementById('recognition-feed');
+const teamFilter = document.getElementById('team');
+const departmentFilter = document.getElementById('department');
+const dateFilter = document.getElementById('date');
+const badgeFilter = document.getElementById('badge');
+const filterButton = document.getElementById('filter-button');
+const leaderboardList = document.getElementById('leaderboard');
+
+
+let isModalOpen = false;
+
+function updateCharCount(text) {
+    const count = text.length;
+    charCountDisplay.textContent = `${count}/500`;
+    charCountDisplay.style.color = count === 500 ? '#ff0000' : '#6b7280';
+}
+
+function openKudosModal() {
+    if (!isModalOpen) {
+        kudosModal.classList.add('show');
+        isModalOpen = true;
+        document.body.style.overflow = 'hidden';
     }
-    function toggleSubMenu(id) {
-        const submenu = document.getElementById(id);
-        if (submenu.style.display === 'none') {
-            submenu.style.display = 'block';
-        } else {
-            submenu.style.display = 'none';
+}
+
+function closeKudosModal() {
+    if (isModalOpen) {
+        kudosModal.classList.remove('show');
+        isModalOpen = false;
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function populateRecipients() {
+    recipientSelect.innerHTML = '<option value="">Select Recipient</option>';
+    employees.forEach((employee) => {
+        if (employee.id !== loggedInUser.id) {
+            const option = document.createElement('option');
+            option.value = employee.id;
+            option.textContent = employee.name;
+            recipientSelect.appendChild(option);
         }
-    }
-      
-    const recognitionFeed = document.getElementById('recognition-feed');
-    const giveKudosButton = document.getElementById('give-kudos-button');
-    const giveKudosModal = document.getElementById('give-kudos-modal');
-    const kudosForm = document.getElementById('kudos-form');
-    const recipientDropdown = document.getElementById('recipient');
-    const closeButtons = document.querySelectorAll('.close-button');
-    const messageInput = document.getElementById('message');
-    const charCountDisplay = document.getElementById('char-count');
-    const filterButton = document.getElementById('filter-button');
-    const teamFilter = document.getElementById('team');
-    const departmentFilter = document.getElementById('department');
-    const dateFilter = document.getElementById('date');
-    const badgeFilter = document.getElementById('badge');
-    const leaderboardList = document.getElementById('leaderboard');
+    });
+}
 
+function getTopRecognizedEmployees() {
+    const employeeRecognitionCount = {};
+    recognitionPosts.forEach((post) => {
+        const receiverId = post.receiver.id;
+        employeeRecognitionCount[receiverId] =
+            (employeeRecognitionCount[receiverId] || 0) + 1;
+    });
 
-    let employees = [
-        { id: '1', name: 'Alice Smith', team: 'Engineering', department: 'Product Development', kudosCount: 5 },
-        { id: '2', name: 'Bob Johnson', team: 'Marketing', department: 'Communications', kudosCount: 12 },
-        { id: '3', name: 'Charlie Brown', team: 'Sales', department: 'Business Development', kudosCount: 8 },
-        { id: '4', name: 'Diana Miller', team: 'HR', department: 'People Operations', kudosCount: 3 },
-        { id: '5', name: 'Ethan Davis', team: 'Engineering', department: 'Product Development', kudosCount: 7 },
-        { id: '6', name: 'Fiona Green', team: 'Marketing', department: 'Communications', kudosCount: 9 },
-        { id: '7', name: 'George White', team: 'Sales', department: 'Business Development', kudosCount: 6 },
-        { id: '8', name: 'Hannah Black', team: 'HR', department: 'People Operations', kudosCount: 2 },
-        { id: '9', name: 'Isaac Taylor', team: 'Engineering', department: 'Product Development', kudosCount: 11 },
-        { id: '10', name: 'Jessica Clark', team: 'Marketing', department: 'Communications', kudosCount: 4 },
-        { id: '11', name: 'Kevin Lee', team: 'Engineering', department: 'Product Development', kudosCount: 10 },
-        { id: '12', name: 'Laura Hall', team: 'Marketing', department: 'Communications', kudosCount: 15 },
-        { id: '13', name: 'Mike Davis', team: 'Sales', department: 'Business Development', kudosCount: 7 },
-        { id: '14', name: 'Nancy Wilson', team: 'HR', department: 'People Operations', kudosCount: 1 },
-        { id: '15', name: 'Oliver Brown', team: 'Engineering', department: 'Product Development', kudosCount: 9 },
-        { id: '16', name: 'Patricia Garcia', team: 'Marketing', department: 'Communications', kudosCount: 6 },
-        { id: '17', name: 'Quincy Adams', team: 'Sales', department: 'Business Development', kudosCount: 14 },
-        { id: '18', name: 'Rachel Young', team: 'HR', department: 'People Operations', kudosCount: 4 },
-        { id: '19', name: 'Samuel Jackson', team: 'Engineering', department: 'Product Development', kudosCount: 13 },
-        { id: '20', name: 'Tina Turner', team: 'Marketing', department: 'Communications', kudosCount: 2 },
-    ];
+    const sortedEmployeeIds = Object.keys(employeeRecognitionCount).sort(
+        (a, b) => employeeRecognitionCount[b] - employeeRecognitionCount[a]
+    );
 
-    let recognitionPosts = [
-        {
-            id: 'p1',
-            sender: { id: '1', name: 'Alice Smith' },
-            receiver: { id: '2', name: 'Bob Johnson' },
-            message: 'Thanks for the help with the Q2 report!',
-            badge: '',
-            timestamp: '2025-07-28T10:00:00Z',
-            reactions: { like: 3, heart: 1, clap: 5 },
-            comments: [
-                { id: 'c1', sender: {id: '2', name: 'Bob Johnson'}, text: 'You\'re welcome!', timestamp: '2025-07-28T10:05:00Z' },
-                { id: 'c2', sender: {id: '1', name: 'Alice Smith'}, text: 'Great teamwork!', timestamp: '2025-07-28T10:10:00Z' },
-            ],
-        },
-        {
-            id: 'p2',
-            sender: { id: '3', name: 'Charlie Brown' },
-            receiver: { id: '5', name: 'Ethan Davis' },
-            message: 'Appreciate your dedication to the project.',
-            badge: '⭐',
-            timestamp: '2025-07-27T15:30:00Z',
-            reactions: { like: 8, heart: 2, clap: 1 },
-            comments: [],
-        },
-        {
-            id: 'p3',
-            sender: { id: '6', name: 'Fiona Green' },
-            receiver: { id: '1', name: 'Alice Smith' },
-            message: 'Your presentation was excellent!',
-            badge: '🏅',
-            timestamp: '2025-07-26T09:15:00Z',
-            reactions: { like: 10, heart: 5, clap: 2 },
-            comments: [],
-        },
-        {
-            id: 'p4',
-            sender: { id: '7', name: 'George White' },
-            receiver: { id: '4', name: 'Diana Miller' },
-            message: 'Thanks for handling the client meeting.',
-            badge: '🤝',
-            timestamp: '2025-07-25T11:00:00Z',
-            reactions: { like: 2, heart: 1, clap: 7 },
-            comments: [],
-        },
-        {
-            id: 'p5',
-            sender: { id: '5', name: 'Ethan Davis' },
-            receiver: { id: '2', name: 'Bob Johnson' },
-            message: 'You are a great mentor.',
-            badge: '⭐',
-            timestamp: '2025-07-24T14:45:00Z',
-            reactions: { like: 6, heart: 3, clap: 4 },
-            comments: [],
-        },
-        {
-            id: 'p6',
-            sender: { id: '8', name: 'Hannah Black' },
-            receiver: { id: '9', name: 'Isaac Taylor' },
-            message: 'Your problem-solving skills are amazing!',
-            badge: '💡',
-            timestamp: '2025-07-23T08:20:00Z',
-            reactions: { like: 9, heart: 0, clap: 6 },
-            comments: [],
-        },
-        {
-            id: 'p7',
-             sender: { id: '10', name: 'Jessica Clark' },
-              receiver: { id: '11', name: 'Kevin Lee' },
-               message: 'Thanks for your help with the project!',
-                badge: '🤝',
-                 timestamp: '2025-07-22T16:55:00Z',
-                  reactions: { like: 4, heart: 2, clap: 3 },
-                   comments: [],
-        },
-        {
-            id: 'p8',
-             sender: { id: '12', name: 'Laura Hall' },
-              receiver: { id: '13', name: 'Mike Davis' },
-               message: 'You are an excellent communicator.',
-                badge: '🏅',
-                 timestamp: '2025-07-21T12:30:00Z',
-                  reactions: { like: 7, heart: 4, clap: 1 },
-                   comments: [],
-        },
-        {
-            id: 'p9',
-             sender: { id: '14', name: 'Nancy Wilson' },
-              receiver: { id: '15', name: 'Oliver Brown' },
-               message: 'Thank you for being a team hero!',
-                badge: '⭐',
-                 timestamp: '2025-07-20T10:00:00Z',
-                  reactions: { like: 1, heart: 1, clap: 9 },
-                   comments: [],
-        },
-        {
-            id: 'p10',
-             sender: { id: '16', name: 'Patricia Garcia' },
-              receiver: { id: '17', name: 'Quincy Adams' },
-               message: 'Your dedication is much appreciated.',
-                badge: '💖',
-                 timestamp: '2025-07-19T14:10:00Z',
-                  reactions: { like: 5, heart: 3, clap: 2 },
-                   comments: [],
-        },
-         {
-            id: 'p11',
-            sender: { id: '18', name: 'Rachel Young' },
-            receiver: { id: '19', name: 'Samuel Jackson' },
-            message: 'You are a valuable team member.',
-            badge: '🤝',
-            timestamp: '2025-07-18T09:25:00Z',
-            reactions: { like: 8, heart: 2, clap: 5 },
-            comments: [],
-        },
-        {
-            id: 'p12',
-            sender: { id: '20', name: 'Tina Turner' },
-            receiver: { id: '1', name: 'Alice Smith' },
-            message: 'Thanks for your leadership on this project!',
-            badge: '🏅',
-            timestamp: '2025-07-17T11:50:00Z',
-            reactions: { like: 6, heart: 4, clap: 3 },
-            comments: [],
-        },
-    ];
+    return sortedEmployeeIds.slice(0, 5).map((id) => {
+        const employee = employees.find((e) => e.id === id);
+        return {
+            id: employee.id,
+            name: employee.name,
+            count: employeeRecognitionCount[id],
+        };
+    });
+}
 
+function renderLeaderboard() {
+    leaderboardList.innerHTML = '';
+    const topEmployees = getTopRecognizedEmployees();
+    topEmployees.forEach((employee) => {
+        const listItem = document.createElement('li');
+        listItem.className = 'flex items-center justify-between text-gray-800 text-sm rounded-md bg-gray-50 pt-2 border-t border-gray-200';
+        listItem.innerHTML = `<span class="font-bold">${employee.name}</span> <span class="text-gray-500 text-xs">${employee.count} Kudos</span>`;
+        leaderboardList.appendChild(listItem);
+    });
+}
 
-    function updateLeaderboard() {
-        const sortedEmployees = [...employees].sort((a, b) => b.kudosCount - a.kudosCount);
-        leaderboardList.innerHTML = '';
-        sortedEmployees.slice(0, 5).forEach(employee => {
-            const li = document.createElement('li');
-            li.className = "flex items-center justify-between p-2 rounded-md bg-gray-50";
-            li.innerHTML = `<span class="font-medium text-gray-800">${employee.name}</span><span class="text-sm text-gray-600">${employee.kudosCount} Kudos</span>`;
-            leaderboardList.appendChild(li);
+function renderRecognitionFeed(posts = recognitionPosts) {
+    recognitionFeed.innerHTML = '';
+    posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    posts.forEach((post) => {
+        const postElement = document.createElement('div');
+        postElement.className =
+            'bg-white rounded-lg shadow-md p-4 md:p-6 space-y-4';
+
+        const senderName = post.sender.name;
+        const receiverName = post.receiver.name;
+
+        const postHeader = document.createElement('div');
+        postHeader.className = 'flex items-center justify-between text-sm text-gray-600';
+        postHeader.innerHTML = `
+          <span class="font-semibold">From: ${senderName}</span>
+          <span>To: ${receiverName}</span>
+          <span class="text-gray-500">${new Date(post.timestamp).toLocaleDateString()}</span>
+        `;
+
+        const messageElement = document.createElement('p');
+        messageElement.className = 'text-gray-800';
+        messageElement.textContent = `${post.message}`;
+
+        const badgeElement = document.createElement('div');
+        badgeElement.className = 'text-2xl';
+        badgeElement.textContent = post.badge;
+
+        const reactionsElement = document.createElement('div');
+        reactionsElement.className = 'flex items-center justify-start gap-4 pt-2 border-t border-gray-200';
+
+      const reactionTypes = ['like', 'love', 'celebrate'];
+        reactionTypes.forEach(type => {
+            const count = post.reactions[type]?.length || 0;
+            const userHasReacted = post.reactions[type]?.some(user => user.id === loggedInUser.id);
+            const button = document.createElement('button');
+            button.className = `reaction-button ${userHasReacted ? `text-${
+                type === 'like' ? 'blue' :
+                type === 'love' ? 'red' : 'yellow'
+            }-500` : ''}`;
+            button.textContent = `${
+                type === 'like' ? '👍' :
+                type === 'love' ? '❤️' : '🎉'
+            } ${count}`;
+            button.addEventListener('click', () => {
+                handleReaction(post.id, type);
+            });
+            reactionsElement.appendChild(button);
         });
-    }
-
-    function renderRecognitionFeed(filteredPosts = recognitionPosts) {
-        recognitionFeed.innerHTML = '';
-        filteredPosts.forEach(post => {
-            const postCard = createPostCard(post);
-            recognitionFeed.appendChild(postCard);
-        });
-        updateLeaderboard();
-    }
-
-    function createPostCard(post) {
-      const card = document.createElement('div');
-      card.className = 'bg-white rounded-lg shadow-md p-4 md:p-6';
-
-      const header = document.createElement('div');
-      header.className = 'flex items-center justify-between mb-4';
-
-      const senderInfo = document.createElement('div');
-      senderInfo.className = 'flex items-center gap-2';
-      const senderAvatar = document.createElement('div');
-      senderAvatar.className = 'rounded-full h-8 w-8 bg-blue-500 text-white flex items-center justify-center';
-      senderAvatar.textContent = post.sender.name[0];
-      const senderName = document.createElement('span');
-      senderName.className = 'text-sm font-semibold text-gray-700';
-      senderName.textContent = post.sender.name;
-      senderInfo.appendChild(senderAvatar);
-      senderInfo.appendChild(senderName);
-
-      const receiverInfo = document.createElement('div');
-      receiverInfo.className = 'flex items-center gap-2';
-      const receiverAvatar = document.createElement('div');
-      receiverAvatar.className = 'rounded-full h-8 w-8 bg-green-500 text-white flex items-center justify-center';
-      receiverAvatar.textContent = post.receiver.name[0];
-      const receiverName = document.createElement('span');
-      receiverName.className = 'text-sm font-semibold text-gray-700';
-      receiverName.textContent = `to ${post.receiver.name}`;
-      receiverInfo.appendChild(receiverAvatar);
-      receiverInfo.appendChild(receiverName);
-
-      const timestamp = document.createElement('span');
-      timestamp.className = 'text-xs text-gray-500';
-      timestamp.textContent = new Date(post.timestamp).toLocaleDateString() + " " + new Date(post.timestamp).toLocaleTimeString();
-
-      header.appendChild(senderInfo);
-      header.appendChild(receiverInfo);
-      header.appendChild(timestamp);
-
-      const message = document.createElement('p');
-      message.className = 'text-gray-800 mb-2';
-      message.textContent = post.message;
-
-      const badge = document.createElement('span');
-      badge.className = 'text-lg mr-2';
-      badge.textContent = post.badge;
-
-      const reactions = document.createElement('div');
-      reactions.className = 'flex items-center gap-4 mt-2 pt-2 border-t border-gray-200';
-
-        const likeButton = document.createElement('button');
-        likeButton.className = 'reaction-button text-gray-600 hover:text-blue-500 rounded-md p-1';
-        likeButton.innerHTML = `<span class="material-icons">thumb_up</span> <span class="text-xs">${post.reactions.like}</span>`;
-        likeButton.addEventListener('click', () => {
-            post.reactions.like++;
-            updatePostReactions(post.id);
-            renderRecognitionFeed(); /
-        });
-
-        const heartButton = document.createElement('button');
-        heartButton.className = 'reaction-button text-gray-600 hover:text-red-500 rounded-md p-1';
-        heartButton.innerHTML = `<span class="material-icons">favorite</span> <span class="text-xs">${post.reactions.heart}</span>`;
-        heartButton.addEventListener('click',() => {
-            post.reactions.heart++;
-             updatePostReactions(post.id);
-            renderRecognitionFeed();
-        });
-
-        const clapButton = document.createElement('button');
-        clapButton.className = 'reaction-button text-gray-600 hover:text-yellow-500 rounded-md p-1';
-        clapButton.innerHTML = `<span class="material-icons">applause</span> <span class="text-xs">${post.reactions.clap}</span>`;
-        clapButton.addEventListener('click', () => {
-            post.reactions.clap++;
-            updatePostReactions(post.id);
-            renderRecognitionFeed();
-        });
-
-        const commentButton = document.createElement('button');
-        commentButton.className = 'reaction-button text-gray-600 hover:text-gray-700 rounded-md p-1';
-        commentButton.innerHTML = `<span class="material-icons">comment</span> <span class="text-xs">${post.comments.length}</span>`;
-        commentButton.addEventListener('click', () => {
-            const commentSection = card.querySelector('.comment-section');
-            commentSection.classList.toggle('show');
-        });
-
-
-        reactions.appendChild(likeButton);
-        reactions.appendChild(heartButton);
-        reactions.appendChild(clapButton);
-        reactions.appendChild(commentButton);
 
         const commentSection = document.createElement('div');
-        commentSection.className = 'comment-section mt-4 space-y-2';
+        commentSection.className = 'comment-section';
+
+        const commentHeader = document.createElement('h4');
+        commentHeader.textContent = 'Comments';
+        commentSection.appendChild(commentHeader);
 
         post.comments.forEach(comment => {
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
-
-            const commentSenderAvatar = document.createElement('div');
-            commentSenderAvatar.className = 'rounded-full h-6 w-6 bg-purple-500 text-white flex items-center justify-center text-xs';
-            commentSenderAvatar.textContent = comment.sender.name[0];
-
-            const commentContent = document.createElement('div');
-            commentContent.className = 'flex-1';
-            const commentSenderName = document.createElement('span');
-            commentSenderName.className = 'font-semibold text-gray-700 text-sm';
-            commentSenderName.textContent = comment.sender.name;
-            const commentText = document.createElement('span');
-            commentText.className = 'text-gray-600 text-sm';
-            commentText.textContent = ` ${comment.text}`;
-            const commentTimestamp = document.createElement('div');
-            commentTimestamp.className = 'text-xs text-gray-500';
-            commentTimestamp.textContent = new Date(comment.timestamp).toLocaleTimeString();
-
-            commentContent.appendChild(commentSenderName);
-            commentContent.appendChild(commentText);
-            commentContent.appendChild(commentTimestamp);
-
-            commentDiv.appendChild(commentSenderAvatar);
-            commentDiv.appendChild(commentContent);
+            commentDiv.innerHTML = `<span class="font-semibold">${comment.sender.name}:</span> ${comment.text}`;
             commentSection.appendChild(commentDiv);
         });
 
-        const commentForm = document.createElement('form');
-        commentForm.className = 'comment-input-area';
-        const commentInput = document.createElement('textarea');
-        commentInput.placeholder = 'Write a comment...';
-        commentInput.className = 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm';
-        commentInput.rows = 1;
-        const commentSubmit = document.createElement('button');
-        commentSubmit.textContent = 'Post';
-        commentSubmit.className = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm self-start';
-        commentForm.appendChild(commentInput);
-        commentForm.appendChild(commentSubmit);
-        commentForm.addEventListener('submit', (event) => {
+        const addCommentForm = document.createElement('form');
+        addCommentForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            if (commentInput.value.trim()) {
+            const commentInput = event.target.querySelector('input');
+            const commentText = commentInput.value.trim();
+            if (commentText) {
                 const newComment = {
                     id: `c${post.comments.length + 1}`,
-                    sender: {id: '1', name: 'Current User'},
-                    text: commentInput.value,
-                    timestamp: new Date().toISOString(),
+                    sender: loggedInUser,
+                    text: commentText
                 };
                 post.comments.push(newComment);
                 renderRecognitionFeed();
                 commentInput.value = '';
+                commentSection.classList.add('show');
             }
         });
-        commentSection.appendChild(commentForm);
 
+        const commentInputGroup = document.createElement('div');
+        commentInputGroup.className = 'flex items-center gap-2';
+        const commentInput = document.createElement('input');
+        commentInput.type = 'text';
+        commentInput.placeholder = 'Add a comment...';
+        commentInput.className = 'flex-1 border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500';
+        const commentButton = document.createElement('button');
+        commentButton.type = 'submit';
+        commentButton.textContent = 'Post';
+        commentButton.className = 'bg-blue-500 hover:bg-blue-700 text-white rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500';
+        commentInputGroup.appendChild(commentInput);
+        commentInputGroup.appendChild(commentButton);
+        addCommentForm.appendChild(commentInputGroup);
+        commentSection.appendChild(addCommentForm);
 
-        card.appendChild(header);
-        card.appendChild(badge);
-        card.appendChild(message);
-        card.appendChild(reactions);
-        card.appendChild(commentSection);
-
-        return card;
-    }
-
-    function updatePostReactions(postId) {
-        const post = recognitionPosts.find(p => p.id === postId);
-        if (post) {
-          .
-        }
-    }
-
-    function populateRecipientDropdown() {
-        recipientDropdown.innerHTML = '<option value="">Select Recipient</option>';
-        employees.forEach(employee => {
-            const option = document.createElement('option');
-            option.value = employee.id;
-            option.textContent = employee.name;
-            recipientDropdown.appendChild(option);
+        const viewCommentsButton = document.createElement('button');
+        viewCommentsButton.textContent = post.comments.length > 0 ? `View ${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}`: 'View Comments';
+        viewCommentsButton.className = 'text-blue-600 text-sm cursor-pointer self-start';
+        viewCommentsButton.addEventListener('click', () => {
+            commentSection.classList.toggle('show');
         });
-    }
-
-    function openKudosModal() {
-        giveKudosModal.classList.remove('hidden');
-        populateRecipientDropdown();
-    }
-
-    function closeKudosModal() {
-        giveKudosModal.classList.add('hidden');
-        kudosForm.reset();
-        charCountDisplay.textContent = '0/500';
-    }
-
-    giveKudosButton.addEventListener('click', openKudosModal);
-    closeButtons.forEach(button => {
-        button.addEventListener('click', closeKudosModal);
+        postElement.appendChild(postHeader);
+        postElement.appendChild(badgeElement);
+        postElement.appendChild(messageElement);
+        postElement.appendChild(reactionsElement);
+        postElement.appendChild(viewCommentsButton);
+        postElement.appendChild(commentSection);
+        recognitionFeed.appendChild(postElement);
     });
+}
+function handleReaction(postId, reactionType) {
+    const post = recognitionPosts.find(p => p.id === postId);
+    if (!post) return;
 
-    window.addEventListener('click', (event) => {
-        if (event.target === giveKudosModal) {
-            closeKudosModal();
+    const existingReaction = post.reactions[reactionType]?.find(user => user.id === loggedInUser.id);
+
+    if (existingReaction) {
+        // Remove the user's reaction
+        post.reactions[reactionType] = post.reactions[reactionType].filter(user => user.id !== loggedInUser.id);
+    } else {
+        // Add the user's reaction
+        if (!post.reactions[reactionType]) {
+            post.reactions[reactionType] = [];
         }
-    })
-
-
-    messageInput.addEventListener('input', () => {
-        const textLength = messageInput.value.length;
-        charCountDisplay.textContent = `${textLength}/500`;
-        if (textLength > 500) {
-            messageInput.value = messageInput.value.substring(0, 500);
-            charCountDisplay.textContent = '500/500';
-        }
-    });
-
-    kudosForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const recipientId = document.getElementById('recipient').value;
-        const badge = document.getElementById('badge-emoji').value;
-        const message = document.getElementById('message').value;
-         const visibility = document.getElementById('visibility').value;
-
-
-        const sender = employees[0];
-        const recipient = employees.find(emp => emp.id === recipientId);
-
-        if (recipient && message) {
-            const newPost = {
-                id: `p${recognitionPosts.length + 1}`,
-                sender: { id: sender.id, name: sender.name },
-                receiver: { id: recipient.id, name: recipient.name },
-                message,
-                badge,
-                timestamp: new Date().toISOString(),
-                reactions: { like: 0, heart: 0, clap: 0 },
-                comments: [],
-            };
-
-            recognitionPosts.push(newPost);
-            recipient.kudosCount++;
-             updateLeaderboard();
-            renderRecognitionFeed();
-
-             if (visibility === 'private') {
-                console.log(`Sending private recognition email to ${recipient.name}: ${message}`);
-             }
-            closeKudosModal();
-        } else {
-            alert('Please select a recipient and enter a message.');
-        }
-    });
-
-    filterButton.addEventListener('click', () => {
-        const selectedTeam = teamFilter.value;
-        const selectedDepartment = departmentFilter.value;
-        const selectedDate = dateFilter.value;
-        const selectedBadge = badgeFilter.value;
-
-        const filteredPosts = recognitionPosts.filter(post => {
-            const postDate = new Date(post.timestamp).toISOString().split('T')[0];
-
-            const teamMatch = !selectedTeam || employees.find(e => e.id === post.sender.id).team === selectedTeam || employees.find(e => e.id === post.receiver.id).team === selectedTeam;
-            const departmentMatch = !selectedDepartment || employees.find(e => e.id === post.sender.id).department === selectedDepartment || employees.find(e => e.id === post.receiver.id).department === selectedDepartment;
-            const dateMatch = !selectedDate || postDate === selectedDate;
-            const badgeMatch = !selectedBadge || post.badge === selectedBadge;
-
-            return teamMatch && departmentMatch && dateMatch && badgeMatch;
-        });
-        renderRecognitionFeed(filteredPosts);
-    });
-
+        post.reactions[reactionType].push(loggedInUser);
+    }
     renderRecognitionFeed();
-    </script>
+}
+
+kudosButton.addEventListener('click', openKudosModal);
+closeModalButtons.forEach(button => {
+    button.addEventListener('click', closeKudosModal);
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === kudosModal) {
+        closeKudosModal();
+    }
+});
+
+messageInput.addEventListener('input', (event) => {
+    updateCharCount(event.target.value);
+});
+
+kudosForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const recipientId = recipientSelect.value;
+    const badge = document.getElementById('badge-emoji').value;
+    const message = messageInput.value.trim();
+    const visibility = document.getElementById('visibility').value;
+
+    if (recipientId && message) {
+        const recipient = employees.find((e) => e.id === recipientId);
+         const newPost = {
+            id: String(Date.now()),
+            sender: loggedInUser,
+            receiver: recipient,
+            badge,
+            message,
+            timestamp: new Date().toISOString(),
+            visibility,
+             comments: [],
+              reactions: {
+              'like': [],
+              'love': [],
+              'celebrate': []
+            },
+        };
+
+        recognitionPosts.push(newPost);
+        renderRecognitionFeed();
+
+        if (visibility === 'private') {
+            console.log(`Sending private recognition email to ${recipient.name}: ${message}`);
+        }
+        closeKudosModal();
+    } else {
+        alert('Please select a recipient and enter a message.');
+    }
+});
+
+filterButton.addEventListener('click', () => {
+    const selectedTeam = teamFilter.value;
+    const selectedDepartment = departmentFilter.value;
+    const selectedDate = dateFilter.value;
+    const selectedBadge = badgeFilter.value;
+
+    const filteredPosts = recognitionPosts.filter(post => {
+        const postDate = new Date(post.timestamp).toISOString().split('T')[0];
+
+        const teamMatch = !selectedTeam || employees.find(e => e.id === post.sender.id).team === selectedTeam || employees.find(e => e.id === post.receiver.id).team === selectedTeam;
+        const departmentMatch = !selectedDepartment || employees.find(e => e.id === post.sender.id).department === selectedDepartment || employees.find(e => e.id === post.receiver.id).department === selectedDepartment;
+        const dateMatch = !selectedDate || postDate === selectedDate;
+        const badgeMatch = !selectedBadge || post.badge === selectedBadge;
+
+        return teamMatch && departmentMatch && dateMatch && badgeMatch;
+    });
+    renderRecognitionFeed(filteredPosts);
+});
+
+populateRecipients();
+renderLeaderboard();
+renderRecognitionFeed();
+</script>
 </body>
 </html>
