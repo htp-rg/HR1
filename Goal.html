@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Goal Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- General Styles --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        button.primary {
+            background-color: #007bff;
+            color: white;
+        }
+        button.primary:hover {
+            background-color: #0056b3;
+        }
+        button.secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        button.secondary:hover {
+            background-color: #ccc;
+        }
+        button.danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        button.danger:hover {
+            background-color: #c82333;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2{
+          margin: 0;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        form input, form textarea, form select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        form textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        form button {
+            margin-top: 10px;
+        }
+        .progress-bar {
+            background-color: #ddd;
+            border-radius: 5px;
+            height: 10px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .progress-bar-fill {
+            background-color: #28a745;
+            height: 10px;
+            border-radius: 5px;
+            width: 0;
+            transition: width 0.5s ease;
+            position: relative; /* Make sure the fill is positioned correctly */
+        }
+        .progress-bar-fill::after {
+          content: ''; /* Create a pseudo-element for the stripe effect */
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent
+          );
+          background-size: 16px 16px; /* Adjust for stripe width */
+          animation: move 1s linear infinite;
+        }
+
+        @keyframes move {
+          0% { background-position: 0 0; }
+          100% { background-position: 16px 0; } /* Move the stripes */
+        }
+        .goal-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .goal-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .goal-list li .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .org-chart {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        .org-chart h2{
+          margin-bottom: 20px;
+        }
+        .org-chart ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .org-chart li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .org-chart li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            height: 1px;
+            width: 20px;
+            background-color: #ddd;
+        }
+        .org-chart li:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            bottom: -10px;
+            width: 1px;
+            background-color: #ddd;
+        }
+        .approval-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .approval-section h2{
+          margin-bottom: 20px;
+        }
+        .approval-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .approval-list li{
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .approval-list li:last-child{
+          border-bottom: none;
+        }
+        .approval-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .updates-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .updates-section h2{
+          margin-bottom: 20px;
+        }
+        .updates-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .updates-list li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .updates-list li small{
+          display: block;
+          color: #888;
+          margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a>
+                    <ul id="Recruitment" style="display:none;">
+                        <li><a href="Jobposting.html">Job Posting</a></li>
+                        <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                        <li><a href="Create.html">Create Job Posting</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a>
+                    <ul id="ApplicantManagement" style="display:none;">
+                        <li><a href="Application.html">Application Tracking</a></li>
+                        <li><a href="interviews.html">Interviews & Assessments</a></li>
+                        <li><a href="selection.html">Selection Offer</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a>
+                    <ul id="NewHiredOnBoard" style="display:none;">
+                        <li><a href="Documentation.html">Documentation</a></li>
+                        <li><a href="Orientation.html">Orientation & Training</a></li>
+                        <li><a href="Assignment.html">Role Assignment</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a>
+                    <ul id="SocialRecognitionProgram" style="display:none;">
+                        <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                        <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                        <li><a href="Employee.html">Employee engagement programs</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a>
+                    <ul id="Performancemanagement" style="display:none;">
+                        <li><a href="Goal.html">Goal setting</a></li>
+                        <li><a href="Feedback.html">Feedback cycles</a></li>
+                        <li><a href="Review.html">Performance reviews</a></li>
+                    </ul>
+                </li>
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+    </div>
+    <div class="main-content">
+        <a href="admin.html" class="back-button">Back</a>
+        <div class="container">
+            <h1>Goal Settings</h1>
+            <section>
+                <h2>My Goals</h2>
+                <ul class="goal-list" id="myGoalList">
+                    </ul>
+                <button class="primary" onclick="openAddGoalModal()">Add Goal</button>
+            </section>
+
+            <section>
+                <h2>Manager View</h2>
+                <div class="org-chart">
+                    <h2>Organization Chart</h2>
+                    <ul id="orgChart">
+                        </ul>
+                </div>
+                <div class="approval-section">
+                  <h2>Goal Approvals</h2>
+                  <ul class="approval-list" id="approvalList">
+                    </ul>
+                </div>
+            </section>
+
+            <section class="updates-section">
+                <h2>Goal Updates</h2>
+                <ul class="updates-list" id="goalUpdatesList">
+                  </ul>
+            </section>
+
+            <div class="modal" id="addGoalModal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddGoalModal()">&times;</span>
+                    <h2>Add New Goal</h2>
+                    <form id="addGoalForm">
+                        <label for="goalTitle">Title:</label>
+                        <input type="text" id="goalTitle" required>
+                        <label for="goalDescription">Description:</label>
+                        <textarea id="goalDescription" required></textarea>
+                        <label for="goalDeadline">Deadline:</label>
+                        <input type="date" id="goalDeadline" required>
+                        <label for="goalAlignment">Alignment:</label>
+                        <select id="goalAlignment">
+                            <option value="company">Company Goal</option>
+                            <option value="team">Team Goal</option>
+                            <option value="individual">Individual Goal</option>
+                        </select>
+                        <button type="submit">Add Goal</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal" id="editGoalModal">
+              <div class="modal-content">
+                <span class="close-button" onclick="closeEditGoalModal()">&times;</span>
+                <h2>Edit Goal</h2>
+                <form id="editGoalForm">
+                    <label for="editGoalTitle">Title:</label>
+                    <input type="text" id="editGoalTitle" required>
+                    <label for="editGoalDescription">Description:</label>
+                    <textarea id="editGoalDescription" required></textarea>
+                    <label for="editGoalDeadline">Deadline:</label>
+                    <input type="date" id="editGoalDeadline" required>
+                     <label for="editGoalAlignment">Alignment:</label>
+                    <select id="editGoalAlignment">
+                        <option value="company">Company Goal</option>
+                        <option value="team">Team Goal</option>
+                        <option value="individual">Individual Goal</option>
+                    </select>
+                    <input type="hidden" id="editGoalId">
+                    <button type="submit">Save Changes</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="modal" id="deleteGoalModal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeDeleteGoalModal()">&times;</span>
+                    <h2>Delete Goal</h2>
+                    <p>Are you sure you want to delete this goal?</p>
+                    <div style="text-align: right;">
+                      <button class="secondary" onclick="closeDeleteGoalModal()">Cancel</button>
+                      <button class="danger" onclick="deleteGoal()">Delete</button>
+                    </div>
+                    <input type="hidden" id="deleteGoalId">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      let goals = [
+          { id: '1', title: 'Increase Sales', description: 'Increase sales by 20%', progress: 60, deadline: '2024-12-31', alignment: 'company', updates: [{date: '2024-07-15', text: 'On track'}] },
+          { id: '2', title: 'Launch New Product', description: 'Launch new product by Q4', progress: 25, deadline: '2024-10-01', alignment: 'team', updates: [{date: '2024-06-01', text: 'Planning phase'}] },
+          { id: '3', title: 'Improve Customer Satisfaction', description: 'Increase CSAT score to 90%', progress: 80, deadline: '2024-09-30', alignment: 'individual', updates: [{date: '2024-05-20', text: 'Survey in progress'}]  },
+      ];
+
+      let nextGoalId = 4;
+
+      const myGoalList = document.getElementById('myGoalList');
+      const addGoalForm = document.getElementById('addGoalForm');
+      const addGoalModal = document.getElementById('addGoalModal');
+      const closeAddGoalModalBtn = document.querySelector('#addGoalModal .close-button');
+
+      const editGoalForm = document.getElementById('editGoalForm');
+      const editGoalModal = document.getElementById('editGoalModal');
+      const closeEditGoalModalBtn = document.querySelector('#editGoalModal .close-button');
+
+      const deleteGoalModal = document.getElementById('deleteGoalModal');
+      const closeDeleteGoalModalBtn = document.querySelector('#deleteGoalModal .close-button');
+      const deleteGoalIdInput = document.getElementById('deleteGoalId');
+      const deleteGoalTitleDisplay = document.getElementById('deleteGoalTitle');
+
+      const orgChartList = document.getElementById('orgChart');
+      const approvalList = document.getElementById('approvalList');
+      const goalUpdatesList = document.getElementById('goalUpdatesList');
+
+      const userRole = 'manager';
+      const directReports = [
+          { id: '4', name: 'Alice Smith', goals: [2] },
+          { id: '5', name: 'Bob Johnson', goals: [3] },
+      ];
+
+      function confirmLogout() {
+          return confirm("Are you sure you want to log out?");
+      }
+      function toggleSubMenu(id) {
+          const submenu = document.getElementById(id);
+          if (submenu.style.display === 'none') {
+              submenu.style.display = 'block';
+          } else {
+              submenu.style.display = 'none';
+          }
+      }
+
+      function renderMyGoals() {
+          myGoalList.innerHTML = '';
+          goals.forEach(goal => {
+              myGoalList.innerHTML += `
+                  <li>
+                      <div>
+                          <h3>${goal.title}</h3>
+                          <p>${goal.description}</p>
+                          <div class="progress-bar">
+                              <div class="progress-bar-fill" style="width: ${goal.progress}%"></div>
+                          </div>
+                          <p>Deadline: ${goal.deadline}</p>
+                      </div>
+                      <div class="actions">
+                          <button onclick="openEditGoalModal('${goal.id}')">Edit</button>
+                          <button class="danger" onclick="openDeleteGoalModal('${goal.id}', '${goal.title}')">Delete</button>
+                          <button onclick="addProgress('${goal.id}')">Add Progress</button>
+                      </div>
+                  </li>
+              `;
+          });
+      }
+
+      function openAddGoalModal() {
+          addGoalModal.style.display = 'block';
+      }
+
+      function closeAddGoalModal() {
+          addGoalModal.style.display = 'none';
+          addGoalForm.reset();
+      }
+
+      function openEditGoalModal(goalId) {
+          const goal = goals.find(g => g.id === goalId);
+          if (goal) {
+              document.getElementById('editGoalId').value = goal.id;
+              document.getElementById('editGoalTitle').value = goal.title;
+              document.getElementById('editGoalDescription').value = goal.description;
+              document.getElementById('editGoalDeadline').value = goal.deadline;
+              document.getElementById('editGoalAlignment').value = goal.alignment;
+              editGoalModal.style.display = 'block';
+          }
+      }
+
+      function closeEditGoalModal() {
+          editGoalModal.style.display = 'none';
+          editGoalForm.reset();
+      }
+
+      function openDeleteGoalModal(goalId, goalTitle) {
+          deleteGoalIdInput.value = goalId;
+          document.getElementById('deleteGoalTitle').innerText = goalTitle;
+          deleteGoalModal.style.display = 'block';
+      }
+
+      function closeDeleteGoalModal() {
+          deleteGoalModal.style.display = 'none';
+      }
+
+      addGoalForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const newGoal = {
+              id: nextGoalId.toString(),
+              title: document.getElementById('goalTitle').value,
+              description: document.getElementById('goalDescription').value,
+              progress: 0,
+              deadline: document.getElementById('goalDeadline').value,
+              alignment: document.getElementById('goalAlignment').value,
+              updates: []
+          };
+          goals.push(newGoal);
+          nextGoalId++;
+          renderMyGoals();
+          closeAddGoalModal();
+      });
+
+      editGoalForm.addEv
