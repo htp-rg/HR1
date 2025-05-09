@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recognition Field Wall</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script> <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
@@ -26,7 +25,7 @@
         .container {
             max-width: 1000px;
             margin: 20px auto;
-            padding: 0; 
+            padding: 0;
         }
         h1 {
             text-align: center;
@@ -71,13 +70,13 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            padding: 15px; 
+            padding: 15px;
         }
         .post-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            padding-bottom: 10px; 
+            padding-bottom: 10px;
             border-bottom: 1px solid #ddd;
         }
         .post-header img {
@@ -122,8 +121,8 @@
         .post-actions {
             display: flex;
             justify-content: space-between;
-            align-items: center; 
-            padding-top: 10px; 
+            align-items: center;
+            padding-top: 10px;
             border-top: 1px solid #ddd;
         }
 
@@ -131,13 +130,13 @@
             background: none;
             border: none;
             cursor: pointer;
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            color: #666; 
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
             font-size: 14px;
-            transition: color 0.3s ease; 
-            padding: 5px 0; 
+            transition: color 0.3s ease;
+            padding: 5px 0;
         }
 
         .post-actions button:hover {
@@ -145,8 +144,8 @@
         }
 
         .post-actions button i {
-            margin-right: 0; 
-            font-size: 16px; 
+            margin-right: 0;
+            font-size: 16px;
         }
 
         .back-button {
@@ -182,73 +181,269 @@
                 align-items: flex-start;
                 gap: 10px;
             }
-             .post-actions button {
+            .post-actions button {
                 justify-content: center;
             }
         }
 
-      
         .post-actions button {
             display: inline-flex;
-            align-items: center; 
+            align-items: center;
             gap: 5px;
+        }
+
+        /* Comment Section Styles */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .comments-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .comments-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .comment-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #004080;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+        .comment-author span{
+          font-size: 12px;
+          color: #888;
+        }
+
+        .comment-text {
+            line-height: 1.6;
+            color: #444;
+            font-size: 14px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .comment-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 12px;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+
+        .comment-actions button:hover {
+            color: #007bff;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .comment-form img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: none;
+            min-height: 40px;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .comment-submit {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+            margin-top: 10px;
+        }
+
+        .comment-submit:hover {
+            background-color: #0056b3;
+        }
+        .replies-section {
+            margin-left: 50px; /* Indentation for replies */
+            margin-top: 10px;
+        }
+
+        .reply-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .reply-form img {
+            width: 30px; /* Smaller avatar for replies */
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .reply-input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reply-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 12px;
+            resize: none;
+            min-height: 30px;
+        }
+
+        .reply-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .reply-submit {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+            margin-top: 5px;
+        }
+
+        .reply-submit:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-  <body>
     <div class="sidebar">
-    <div class="sidebar-top">
-      <img src="admin-avatar.png" alt="admin" class="admin-image">
-      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                    <li><a href="Jobposting.html">Job Posting</a></li>
+                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                    <li><a href="Create.html">Create Job Posting</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                    <li><a href="Application.html">Application Tracking</a></li>
+                    <li><a href="interviews.html">Interviews & Assessments</a></li>
+                    <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                    <li><a href="Documentation.html">Documentation</a></li>
+                    <li><a href="Orientation.html">Orientation & Training</a></li>
+                    <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                    <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                    <li><a href="Goal.html">Goal setting</a></li>
+                    <li><a href="Feedback.html">Feedback cycles</a></li>
+                    <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
-    <div class="sidebar-content">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard.html">Dashboard</a></li>
 
-        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-        <ul id="Recruitment" style="display:none;">
-          <li><a href="Jobposting.html">Job Posting</a></li>
-          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-          <li><a href="Create.html">Create Job Posting</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-        <ul id="ApplicantManagement" style="display:none;">
-          <li><a href="Application.html">Application Tracking</a></li>
-          <li><a href="interviews.html">Interviews & Assessments</a></li>
-          <li><a href="selection.html">Selection Offer</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-        <ul id="NewHiredOnBoard" style="display:none;">
-          <li><a href="Documentation.html">Documentation</a></li>
-          <li><a href="Orientation.html">Orientation & Training</a></li>
-          <li><a href="Assignment.html">Role Assignment</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-        <ul id="SocialRecognitionProgram" style="display:none;">
-          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-          <li><a href="Employee.html">Employee engagement programs</a></li>
-        </ul>
-
-        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-        <ul id="Performancemanagement" style="display:none;">
-          <li><a href="Goal.html">Goal setting</a></li>
-          <li><a href="Feedback.html">Feedback cycles</a></li>
-          <li><a href="Review.html">Performance reviews</a></li>
-        </ul>
-
-        <li><a href="users.html">Users</a></li>
-        <li><a href="settings.html">Settings</a></li>
-      </ul>
-    </div>
-
-    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
-  </div>
-    
     <div class="main-content">
         <a href="admin.html" class="back-button">Back</a>
         <div class="container">
@@ -267,6 +462,7 @@
     <script>
         const postsContainer = document.getElementById('posts-container');
         const filterButtons = document.querySelectorAll('.filter-bar .filter-options button');
+        const adminAvatar = 'admin-avatar.png'; // Use the filename
 
         let posts = [
             {
@@ -278,7 +474,29 @@
                 emojis: '🎉🙌',
                 tags: '#teamwork #marketing #success',
                 likes: 15,
-                comments: 5,
+                comments: [
+                  {
+                    id: 101,
+                    user: { name: 'Jane Smith', avatar: 'https://randomuser.me/api/portraits/women/2.jpg' },
+                    date: '2025-07-24',
+                    text: 'Great job, team!',
+                    replies: [
+                        {
+                            id: 1001,
+                            user: {name: 'John Doe', avatar: 'https://randomuser.me/api/portraits/men/1.jpg'},
+                            date: '2025-07-24',
+                            text: '@JaneSmith Thank you!',
+                        }
+                    ]
+                  },
+                  {
+                    id: 102,
+                    user: { name: 'Michael Brown', avatar: 'https://randomuser.me/api/portraits/men/3.jpg' },
+                    date: '2025-07-25',
+                    text: 'Well done!',
+                    replies: []
+                  }
+                ],
                 shares: 2
             },
             {
@@ -290,7 +508,15 @@
                 emojis: '👏🌟',
                 tags: '#presentation #leadership #excellence',
                 likes: 22,
-                comments: 8,
+                comments: [
+                  {
+                    id: 201,
+                    user: { name: 'Michael Brown', avatar: 'https://randomuser.me/api/portraits/men/3.jpg' },
+                    date: '2025-07-23',
+                    text: 'Thank you, Jane!',
+                    replies: []
+                  }
+                ],
                 shares: 3
             },
             {
@@ -302,7 +528,7 @@
                 emojis: '🙏💪',
                 tags: '#engineering #upgrade #teamwork',
                 likes: 30,
-                comments: 12,
+                comments: [],
                 shares: 7
             },
             {
@@ -314,7 +540,7 @@
                 emojis: '🎉🥳',
                 tags: '#hr #teambuilding #fun',
                 likes: 28,
-                comments: 10,
+                comments: [],
                 shares: 5
             },
             {
@@ -326,19 +552,19 @@
                 emojis: '💯👏',
                 tags: '#projectmanagement #dedication #hardwork',
                 likes: 40,
-                comments: 15,
+                comments: [],
                 shares: 9
             },
-             {
+            {
                 id: 6,
                 user: { name: 'Linda Miller', avatar: 'https://randomuser.me/api/portraits/women/6.jpg' },
-                date: '2024-07-19',
+                date: '2025-07-19',
                 content: 'Thank you to the entire sales team for exceeding our quarterly goals! 💰',
                 images: [],
                 emojis: '🎉🏆',
                 tags: '#sales #teamwork #goals',
                 likes: 35,
-                comments: 11,
+                comments: [],
                 shares: 6
             },
             {
@@ -350,7 +576,7 @@
                 emojis: '🎨👏',
                 tags: '#design #creativity #inspiration',
                 likes: 27,
-                comments: 9,
+                comments: [],
                 shares: 4
             },
             {
@@ -362,7 +588,7 @@
                 emojis: '🙌🚀',
                 tags: '#it #teamwork #problemSolving',
                 likes: 29,
-                comments: 7,
+                comments: [],
                 shares: 5
             },
             {
@@ -374,7 +600,7 @@
                 emojis: '🙏💯',
                 tags: '#finance #audit # دقت',
                 likes: 33,
-                comments: 13,
+                comments: [],
                 shares: 8
             },
             {
@@ -386,7 +612,7 @@
                 emojis: '🌟👏',
                 tags: '#leadership #guidance #mentorship',
                 likes: 38,
-                comments: 14,
+                comments: [],
                 shares: 10
             }
         ];
@@ -464,10 +690,16 @@
             });
 
             const commentButton = document.createElement('button');
-            commentButton.innerHTML = `<i class="far fa-comment"></i> Comment (${post.comments})`;
+            commentButton.innerHTML = `<i class="far fa-comment"></i> Comment (${post.comments.length})`;
             commentButton.addEventListener('click', () => {
-                post.comments++;
-                renderPosts();
+                
+                const commentsSection = card.querySelector('.comments-section');
+                if (commentsSection) {
+                    commentsSection.classList.toggle('expanded'); // Toggle a class
+                } else {
+                  const newCommentsSection = createCommentsSection(post);
+                  card.appendChild(newCommentsSection);
+                }
             });
 
             const shareButton = document.createElement('button');
@@ -487,6 +719,207 @@
 
             return card;
         }
+
+      function createCommentsSection(post) {
+          const section = document.createElement('div');
+          section.className = 'comments-section';
+
+          const header = document.createElement('div');
+          header.className = 'comments-header';
+          const h3 = document.createElement('h3');
+          h3.textContent = 'Comments';
+          header.appendChild(h3);
+
+          const commentsList = document.createElement('ul');
+          commentsList.className = 'comments-list';
+
+        post.comments.forEach(comment => {
+            const commentItem = createCommentItem(comment);
+            commentsList.appendChild(commentItem);
+        });
+
+          const commentForm = createCommentForm(post);
+
+          section.appendChild(header);
+          section.appendChild(commentsList);
+          section.appendChild(commentForm);
+          return section
+      }
+
+      function createCommentItem(comment) {
+            const commentItem = document.createElement('li');
+            commentItem.className = 'comment-item';
+
+            const avatar = document.createElement('img');
+            avatar.src = comment.user.avatar;
+            avatar.alt = comment.user.name + "'s Avatar";
+
+            const commentContent = document.createElement('div');
+            commentContent.className = 'comment-content';
+
+            const author = document.createElement('div');
+            author.className = 'comment-author';
+            author.textContent = comment.user.name;
+            const dateSpan = document.createElement('span');
+            dateSpan.textContent = comment.date;
+            author.appendChild(dateSpan)
+
+            const text = document.createElement('p');
+            text.className = 'comment-text';
+            text.textContent = comment.text;
+
+            commentContent.appendChild(author);
+            commentContent.appendChild(text);
+
+            const actions = document.createElement('div');
+            actions.className = 'comment-actions';
+            const replyButton = document.createElement('button');
+            replyButton.textContent = 'Reply';
+            replyButton.addEventListener('click', (event) => {
+               
+                const replyForm = commentItem.querySelector('.reply-form');
+                if (replyForm) {
+                    replyForm.classList.toggle('expanded');
+                } else {
+                    const newReplyForm = createReplyForm(comment, commentItem);
+                    commentItem.appendChild(newReplyForm);
+                }
+            });
+            actions.appendChild(replyButton);
+
+            commentContent.appendChild(actions);
+            commentItem.appendChild(avatar);
+            commentItem.appendChild(commentContent);
+
+            // Render Replies
+            if(comment.replies && comment.replies.length > 0){
+                const repliesSection = document.createElement('div');
+                repliesSection.className = 'replies-section';
+                comment.replies.forEach(reply => {
+                    const replyItem = createReplyItem(reply);
+                    repliesSection.appendChild(replyItem);
+                })
+                commentItem.appendChild(repliesSection);
+            }
+
+            return commentItem;
+        }
+
+        function createReplyItem(reply){
+            const replyItem = document.createElement('div');
+            replyItem.className = 'comment-item';
+
+            const avatar = document.createElement('img');
+            avatar.src = reply.user.avatar;
+            avatar.alt = reply.user.name + "'s Avatar";
+
+            const replyContent = document.createElement('div');
+            replyContent.className = 'comment-content';
+
+            const author = document.createElement('div');
+            author.className = 'comment-author';
+            author.textContent = reply.user.name;
+            const dateSpan = document.createElement('span');
+            dateSpan.textContent = reply.date;
+            author.appendChild(dateSpan);
+
+            const text = document.createElement('p');
+            text.className = 'comment-text';
+            text.textContent = reply.text;
+
+            replyContent.appendChild(author);
+            replyContent.appendChild(text);
+
+            replyItem.appendChild(avatar);
+            replyItem.appendChild(replyContent);
+
+            return replyItem;
+        }
+
+      function createCommentForm(post) {
+          const form = document.createElement('div');
+          form.className = 'comment-form';
+
+          const avatar = document.createElement('img');
+          avatar.src = adminAvatar; // Use admin's avatar or a default
+          avatar.alt = "Your Avatar";
+
+          const inputWrapper = document.createElement('div');
+          inputWrapper.className = 'comment-input-wrapper';
+
+          const input = document.createElement('textarea');
+          input.className = 'comment-input';
+          input.placeholder = 'Write a comment...';
+
+          const submit = document.createElement('button');
+          submit.className = 'comment-submit';
+          submit.textContent = 'Post';
+          submit.addEventListener('click', () => {
+              if (input.value.trim()) {
+                  const newComment = {
+                      id: Date.now(),
+                      user: { name: 'Admin User', avatar: adminAvatar }, 
+                      date: new Date().toISOString().split('T')[0],
+                      text: input.value,
+                      replies: []
+                  };
+                  post.comments.push(newComment);
+                  renderPosts(); 
+                  input.value = '';
+              }
+          });
+
+          inputWrapper.appendChild(input);
+          inputWrapper.appendChild(submit);
+
+          form.appendChild(avatar);
+          form.appendChild(inputWrapper);
+
+          return form;
+      }
+
+    function createReplyForm(comment, commentItem) {
+        const form = document.createElement('div');
+        form.className = 'reply-form';
+
+        const avatar = document.createElement('img');
+        avatar.src = adminAvatar;
+        avatar.alt = "Your Avatar";
+
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'reply-input-wrapper';
+        const input = document.createElement('textarea');
+        input.className = 'reply-input';
+        input.placeholder = 'Write a reply...';
+
+        const submit = document.createElement('button');
+        submit.className = 'reply-submit';
+        submit.textContent = 'Reply';
+        submit.addEventListener('click', () => {
+            if (input.value.trim()) {
+                const newReply = {
+                    id: Date.now(),
+                    user: { name: 'Admin User', avatar: adminAvatar },
+                    date: new Date().toISOString().split('T')[0],
+                    text: input.value,
+                };
+
+                if (!comment.replies) {
+                    comment.replies = [];
+                }
+                comment.replies.push(newReply);
+                renderPosts();  
+                input.value = ''; 
+            }
+        });
+
+        inputWrapper.appendChild(input);
+        inputWrapper.appendChild(submit);
+
+        form.appendChild(avatar);
+        form.appendChild(inputWrapper);
+        return form;
+    }
 
         function sortPosts(posts, filter) {
             if (filter === 'recent') {
@@ -510,4 +943,3 @@
     </script>
 </body>
 </html>
-
