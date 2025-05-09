@@ -9,6 +9,11 @@
         body {
             display: flex; 
         }
+        .container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
         .kudos-button {
             background-color: #fcd34d; 
             color: #1e293b; 
@@ -480,7 +485,7 @@
         likeButton.addEventListener('click', () => {
             post.reactions.like++;
             updatePostReactions(post.id);
-            renderRecognitionFeed(); // Re-render to update the display
+            renderRecognitionFeed(); /
         });
 
         const heartButton = document.createElement('button');
@@ -587,7 +592,7 @@
     function updatePostReactions(postId) {
         const post = recognitionPosts.find(p => p.id === postId);
         if (post) {
-           // Reactions are updated in place.
+          .
         }
     }
 
