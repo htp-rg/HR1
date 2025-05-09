@@ -504,7 +504,7 @@
             flex: 1 1 0%;
         }
         .main-content {
-            margin-left: 0px; 
+            margin-left: 0px;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -512,7 +512,7 @@
             box-sizing: border-box;
             position: relative;
         }
-       
+
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -532,6 +532,143 @@
             background-color: #d1d5db;
         }
 
+        .post-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            padding: 16px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .post-sender {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .post-receiver {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .post-message {
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .post-badge {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .post-reactions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .comment-section {
+            margin-top: 1rem;
+        }
+
+        .comment-header {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .comment {
+            background-color: #f0f0f0;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .comment-sender {
+            font-weight: 600;
+            color: #1f2937;
+            margin-right: 0.25rem;
+        }
+
+        .add-comment-form {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db;
+            font-size: 0.875rem;
+            color: #4b5563;
+            focus:outline-none;
+            focus:ring-2;
+            focus:ring-blue-500;
+        }
+
+        .comment-button {
+            padding: 0.5rem 1rem;
+            background-color: #3b82f6;
+            color: #fff;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-button:hover {
+            background-color: #2563eb;
+        }
+
+        .view-comments-button {
+            margin-top: 0.5rem;
+            color: #3b82f6;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: underline;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .employee-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .kudos-count {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
@@ -586,7 +723,7 @@
 
     <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
   </div>
-  
+
    <div class="main-content">
         <a href="admin.html" class="back-button">Back</a>
         <div class="container">
@@ -898,8 +1035,8 @@ function renderLeaderboard() {
     const topEmployees = getTopRecognizedEmployees();
     topEmployees.forEach((employee) => {
         const listItem = document.createElement('li');
-        listItem.className = 'flex items-center justify-between text-gray-800 text-sm rounded-md bg-gray-50 pt-2 border-t border-gray-200';
-        listItem.innerHTML = `<span class="font-bold">${employee.name}</span> <span class="text-gray-500 text-xs">${employee.count} Kudos</span>`;
+        listItem.className = 'leaderboard-item';
+        listItem.innerHTML = `<span class="employee-name">${employee.name}</span> <span class="kudos-count">${employee.count} Kudos</span>`;
         leaderboardList.appendChild(listItem);
     });
 }
@@ -909,30 +1046,29 @@ function renderRecognitionFeed(posts = recognitionPosts) {
     posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     posts.forEach((post) => {
         const postElement = document.createElement('div');
-        postElement.className =
-            'bg-white rounded-lg shadow-md p-4 md:p-6 space-y-4';
+        postElement.className = 'post-card';
 
         const senderName = post.sender.name;
         const receiverName = post.receiver.name;
 
         const postHeader = document.createElement('div');
-        postHeader.className = 'flex items-center justify-between text-sm text-gray-600';
+        postHeader.className = 'post-header';
         postHeader.innerHTML = `
-          <span class="font-semibold">From: ${senderName}</span>
-          <span>To: ${receiverName}</span>
+          <span class="post-sender">From: ${senderName}</span>
+          <span class="post-receiver">To: ${receiverName}</span>
           <span class="text-gray-500">${new Date(post.timestamp).toLocaleDateString()}</span>
         `;
 
         const messageElement = document.createElement('p');
-        messageElement.className = 'text-gray-800';
+        messageElement.className = 'post-message';
         messageElement.textContent = `${post.message}`;
 
         const badgeElement = document.createElement('div');
-        badgeElement.className = 'text-2xl';
+        badgeElement.className = 'post-badge';
         badgeElement.textContent = post.badge;
 
         const reactionsElement = document.createElement('div');
-        reactionsElement.className = 'flex items-center justify-start gap-4 pt-2 border-t border-gray-200';
+        reactionsElement.className = 'post-reactions';
 
       const reactionTypes = ['like', 'love', 'celebrate'];
         reactionTypes.forEach(type => {
@@ -957,17 +1093,19 @@ function renderRecognitionFeed(posts = recognitionPosts) {
         commentSection.className = 'comment-section';
 
         const commentHeader = document.createElement('h4');
+        commentHeader.className = 'comment-header';
         commentHeader.textContent = 'Comments';
         commentSection.appendChild(commentHeader);
 
         post.comments.forEach(comment => {
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
-            commentDiv.innerHTML = `<span class="font-semibold">${comment.sender.name}:</span> ${comment.text}`;
+            commentDiv.innerHTML = `<span class="comment-sender">${comment.sender.name}:</span> ${comment.text}`;
             commentSection.appendChild(commentDiv);
         });
 
         const addCommentForm = document.createElement('form');
+        addCommentForm.className = 'add-comment-form';
         addCommentForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const commentInput = event.target.querySelector('input');
@@ -985,24 +1123,21 @@ function renderRecognitionFeed(posts = recognitionPosts) {
             }
         });
 
-        const commentInputGroup = document.createElement('div');
-        commentInputGroup.className = 'flex items-center gap-2';
         const commentInput = document.createElement('input');
         commentInput.type = 'text';
         commentInput.placeholder = 'Add a comment...';
-        commentInput.className = 'flex-1 border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500';
+        commentInput.className = 'comment-input';
         const commentButton = document.createElement('button');
         commentButton.type = 'submit';
         commentButton.textContent = 'Post';
-        commentButton.className = 'bg-blue-500 hover:bg-blue-700 text-white rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500';
-        commentInputGroup.appendChild(commentInput);
-        commentInputGroup.appendChild(commentButton);
-        addCommentForm.appendChild(commentInputGroup);
+        commentButton.className = 'comment-button';
+        addCommentForm.appendChild(commentInput);
+        addCommentForm.appendChild(commentButton);
         commentSection.appendChild(addCommentForm);
 
         const viewCommentsButton = document.createElement('button');
         viewCommentsButton.textContent = post.comments.length > 0 ? `View ${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}`: 'View Comments';
-        viewCommentsButton.className = 'text-blue-600 text-sm cursor-pointer self-start';
+        viewCommentsButton.className = 'view-comments-button';
         viewCommentsButton.addEventListener('click', () => {
             commentSection.classList.toggle('show');
         });
@@ -1022,16 +1157,17 @@ function handleReaction(postId, reactionType) {
     const existingReaction = post.reactions[reactionType]?.find(user => user.id === loggedInUser.id);
 
     if (existingReaction) {
-        // Remove the user's reaction
+       
         post.reactions[reactionType] = post.reactions[reactionType].filter(user => user.id !== loggedInUser.id);
     } else {
-        // Add the user's reaction
+       
         if (!post.reactions[reactionType]) {
             post.reactions[reactionType] = [];
         }
         post.reactions[reactionType].push(loggedInUser);
     }
     renderRecognitionFeed();
+    renderLeaderboard(); // Update leaderboard to reflect changes
 }
 
 kudosButton.addEventListener('click', openKudosModal);
@@ -1077,6 +1213,7 @@ kudosForm.addEventListener('submit', (event) => {
 
         recognitionPosts.push(newPost);
         renderRecognitionFeed();
+        renderLeaderboard(); // Update leaderboard
 
         if (visibility === 'private') {
             console.log(`Sending private recognition email to ${recipient.name}: ${message}`);
