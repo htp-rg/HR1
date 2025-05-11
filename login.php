@@ -5,7 +5,7 @@ session_start();
 $host = "localhost";
 $db = "HR1";
 $user = "root";
-$pass = "admin12345";
+$pass = "";
 
 $error = "";
 
