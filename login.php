@@ -3,7 +3,7 @@ session_start();
 
 
 $host = "localhost";
-$db = "your_database_name";
+$db = "HR1";
 $user = "your_db_user";
 $pass = "your_db_password";
 
