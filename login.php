@@ -1,8 +1,58 @@
+<?php
+session_start();
+
+
+$host = "localhost";
+$db = "your_database_name";
+$user = "your_db_user";
+$pass = "your_db_password";
+
+$error = "";
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+   
+    $conn = new mysqli($host, $user, $pass, $db);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+   
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+
+     
+        if ($password === $row['password']) {
+            $_SESSION['user'] = $row;
+            header("Location: verification.html");
+            exit();
+        } else {
+            $error = "Invalid password.";
+        }
+    } else {
+        $error = "Email not found.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Administrative System</title>
     <style>
         body {
@@ -116,41 +166,40 @@
             font-size: 14px;
             cursor: pointer;
         }
+
+        .error-message {
+            text-align: center;
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        
-        <div class="form-section">
-            <h1 style="color: #2c3e50; text-align: center; font-size: 24px;">HUMAN RESOURCES 1</h1>
-            <form id="loginForm" action="login.php" method="post" autocomplete="off">
-                <div class="input-group">
-                    <div class="label-box">Email</div>
-                    <input type="email" id="email" name="email" value="admin@gmail.com" required>
-                </div>
-                <div class="input-group">
-                    <div class="label-box">Password</div>
-                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <a href="login1.php" class="employee-link">Login as an Employee</a>
-             <?php
-                if (isset($_GET['error'])) {
-                    echo '<p style="color: red; text-align: center;">' . $_GET['error'] . '</p>';
-                }
-                ?>
-        </div>
-
-        <div class="description-section">
-            <h2>HUMAN RESOURCES 1</h2>
-            <p>Secure access to your dashboard. Enter your login credentials to continue.</p>
-        </div>
+<div class="login-container">
+    <div class="form-section">
+        <h1 style="color: #2c3e50; text-align: center; font-size: 24px;">HUMAN RESOURCES 1</h1>
+        <form method="post" autocomplete="off">
+            <div class="input-group">
+                <div class="label-box">Email</div>
+                <input type="email" name="email" value="admin@gmail.com" required>
+            </div>
+            <div class="input-group">
+                <div class="label-box">Password</div>
+                <input type="password" name="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <a href="login1.php" class="employee-link">Login as an Employee</a>
+        <?php if (!empty($error)) echo '<div class="error-message">' . $error . '</div>'; ?>
     </div>
 
-    <script>
-    </script>
+    <div class="description-section">
+        <h2>HUMAN RESOURCES 1</h2>
+        <p>Secure access to your dashboard. Enter your login credentials to continue.</p>
+    </div>
+</div>
 
 </body>
 </html>
