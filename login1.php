@@ -4,24 +4,24 @@ session_start();
 
 $host = "localhost";
 $db = "HR1";
-$user = "your_db_user";      
-$pass = "your_db_password"; 
+$user = "root";          
+$pass = "employee12345";               
 
 $error = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
 
- 
+
     $conn = new mysqli($host, $user, $pass, $db);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-  
+   
     $stmt = $conn->prepare("SELECT * FROM employees WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
