@@ -1,543 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peer To Peer Recognition</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <style>
-        body {
-        }
-.admin-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border: 2px solid #fff;
-}
-        .main-content {
-            margin-left: 0px;
-            padding: 20px;
-        }
-        .top-employees {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .top-employees h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #1e293b;
-        }
-        .top-employee-card {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f7fafc; 
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .top-employee-card img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover; 
-        }
-        .top-employee-card-info {
-            flex: 1;
-        }
-        .top-employee-card-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-        .top-employee-card-designation {
-            font-size: 14px;
-            color: #4b5563;
-        }
-        .recognition-posts {
-            /* Styles for Recognition Posts section */
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-        .recognition-posts h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #1e293b;
-        }
-        .post-card {
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f7fafc;
-            margin-bottom: 15px;
-            border: 1px solid #e2e8f0;
-        }
-        .post-card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .post-card-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
-        .post-card-header-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-        .post-card-header-date {
-            font-size: 12px;
-            color: #6b7280;
-        }
-        .post-card-content {
-            font-size: 14px;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-        .post-card-actions {
-            display: flex;
-            align-items: center;
-        }
-        .post-card-actions button {
-            background: none;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px; 
-        }
-        .post-card-actions button:hover {
-            background-color: #e2e8f0;
-        }
-
-        .post-card-actions button i {
-            margin-right: 4px; 
-            font-size: 16px;
-        }
-
-        .post-card-actions .like-button {
-            color: #e53e3e;
-        }
-        .post-card-actions .comment-button {
-            color: #3182ce; 
-        }
-        .comment-section {
-            margin-top: 15px;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 10px;
-        }
-        .comment {
-            display: flex;
-            margin-bottom: 10px;
-        }
-        .comment img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
-        .comment-content {
-            flex: 1;
-        }
-        .comment-author {
-            font-size: 12px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-        .comment-text {
-            font-size: 12px;
-            color: #374151;
-        }
-        .comment-input-container {
-            display: flex;
-            margin-top: 10px;
-            gap: 10px;
-        }
-
-        .comment-input-container input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #e2e8f0;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        .comment-input-container button {
-            padding: 8px 12px;
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .comment-input-container button:hover {
-            background-color: #2563eb;
-        }
-
-        .post-card-actions button i.fas
-            margin-right: 4px;
-        }
-        .post-card-actions button i.far 
-            margin-right: 4px;
-        }
-
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Peer To Peer Recognition</title>
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-top">
-            <img src="admin-avatar.png" alt="admin" class="admin-image">
-            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
+  <div class="sidebar">
+    <div class="sidebar-top">
+      <img src="admin-avatar.png" alt="admin" class="admin-image">
+      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+    </div>
+    <div class="sidebar-content">
+      <ul class="sidebar-menu">
+        <li><a href="dashboard.html">Dashboard</a></li>
 
-                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-                <ul id="Recruitment" style="display:none;">
-                    <li><a href="Jobposting.html">Job Posting</a></li>
-                    <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-                    <li><a href="Create.html">Create Job Posting</a></li>
-                </ul>
+         <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+        <ul id="ApplicantManagement" style="display:none;">
+          <li><a href="Application.html">Application Tracking</a></li>
+          <li><a href="interviews.html">Interviews & Assessments</a></li>
+          <li><a href="selection.html">Selection Offer</a></li>
+        </ul>
 
-                <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-                <ul id="ApplicantManagement" style="display:none;">
-                    <li><a href="Application.html">Application Tracking</a></li>
-                    <li><a href="interviews.html">Interviews & Assessments</a></li>
-                    <li><a href="selection.html">Selection Offer</a></li>
-                </ul>
+        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+        <ul id="Recruitment" style="display:none;">
+          <li><a href="Jobposting.html">Job Posting</a></li>
+          <li><a href="Create.html">Recruitment Planning</a></li>
+          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+        </ul>
 
-                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-                <ul id="NewHiredOnBoard" style="display:none;">
-                    <li><a href="Documentation.html">Documentation</a></li>
-                    <li><a href="Orientation.html">Orientation & Training</a></li>
-                    <li><a href="Assignment.html">Role Assignment</a></li>
-                </ul>
+        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+        <ul id="NewHiredOnBoard" style="display:none;">
+          <li><a href="Documentation.html">Documentation</a></li>
+          <li><a href="Orientation.html">Orientation & Training</a></li>
+          <li><a href="Assignment.html">Role Assignment</a></li>
+        </ul>
 
-                <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-                <ul id="SocialRecognitionProgram" style="display:none;">
-                    <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-                    <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-                    <li><a href="Employee.html">Employee engagement programs</a></li>
-                </ul>
+        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+        <ul id="Performancemanagement" style="display:none;">
+          <li><a href="Goal.html">Goal setting</a></li>
+          <li><a href="Feedback.html">Feedback cycles</a></li>
+          <li><a href="Review.html">Performance reviews</a></li>
+        </ul>
+        
+ <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+        <ul id="SocialRecognitionProgram" style="display:none;">
+          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+          <li><a href="Employee.html">Employee engagement programs</a></li>
+        </ul>
 
-                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-                <ul id="Performancemanagement" style="display:none;">
-                    <li><a href="Goal.html">Goal setting</a></li>
-                    <li><a href="Feedback.html">Feedback cycles</a></li>
-                    <li><a href="Review.html">Performance reviews</a></li>
-                </ul>
-
-                <li><a href="users.html">Users</a></li>
-                <li><a href="settings.html">Settings</a></li>
-            </ul>
-        </div>
-
-        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+        <li><a href="users.html">Users</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
     </div>
 
-    <div class="main-content">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Peer-to-peer recognition</h1>
-        <p class="text-gray-600 mb-6">Recognize and appreciate your colleagues' contributions.</p>
+    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
+  </div>
 
-        <div class="top-employees">
-            <h2>Top Employees (2025)</h2>
-            <div class="flex flex-wrap justify-between">
-                <div class="top-employee-card">
-                    <img src="employee1.png" alt="Employee 1">
-                    <div class="top-employee-card-info">
-                        <div class="top-employee-card-name">Alice Johnson</div>
-                        <div class="top-employee-card-designation">Software Engineer</div>
-                    </div>
-                </div>
-                <div class="top-employee-card">
-                    <img src="employee2.png" alt="Employee 2">
-                    <div class="top-employee-card-info">
-                        <div class="top-employee-card-name">Bob Smith</div>
-                        <div class="top-employee-card-designation">Marketing Manager</div>
-                    </div>
-                </div>
-                <div class="top-employee-card">
-                    <img src="employee3.png" alt="Employee 3">
-                    <div class="top-employee-card-info">
-                        <div class="top-employee-card-name">Charlie Brown</div>
-                        <div class="top-employee-card-designation">Sales Representative</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="main-content">
+     <div class="content-box">
+      <h1>Peer To Peer Recognition</h1>
+   
+  <script>
+    function confirmLogout() {
+      return confirm("Are you sure you want to log out?");
+    }
 
-        <div class="recognition-posts">
-            <h2>Recognition Posts (2025)</h2>
-            <div id="recognition-posts-container">
-                </div>
-        </div>
-    </div>
-
-    <script>
-        function confirmLogout() {
-            return confirm("Are you sure you want to log out?");
-        }
-
-        function toggleSubMenu(id) {
-            const submenu = document.getElementById(id);
-            if (submenu.style.display === 'none') {
-                submenu.style.display = 'block';
-            } else {
-                submenu.style.display = 'none';
-            }
-        }
-
-        let recognitionPosts = [
-            {
-                id: '1',
-                author: 'Alice Johnson',
-                authorPic: 'employee1.png',
-                date: '2025-01-15',
-                content: 'I want to thank Bob for his incredible work on the recent marketing campaign. His creativity and dedication were instrumental to our success!',
-                likes: 10,
-                likedBy: [],
-                comments: [
-                    { author: 'Bob Smith', authorPic: 'employee2.jpg', text: 'Thank you, Alice! It was a team effort.' },
-                    { author: 'Charlie Brown', authorPic: 'employee3.jpg', text: 'Great job, both of you!' }
-                ]
-            },
-            {
-                id: '2',
-                author: 'Bob Smith',
-                authorPic: 'employee2.png',
-                date: '2025-02-20',
-                content: 'Shoutout to Charlie for closing that big deal last week. Your persistence and negotiation skills are truly impressive.',
-                likes: 5,
-                likedBy: [],
-                comments: [
-                    { author: 'Alice Johnson', authorPic: 'employee1.jpg', text: 'Well deserved, Charlie!' },
-                ]
-            },
-            {
-                id: '3',
-                author: 'Charlie Brown',
-                authorPic: 'employee3.png',
-                date: '2025-03-01',
-                content: 'I want to thank Alice for her help with the new software.  Her patience and expertise were invaluable.',
-                likes: 7,
-                likedBy: [],
-                comments: [
-                    { author: 'Bob Smith', authorPic: 'employee2.jpg', text: 'I agree!' },
-                ]
-            },
-            {
-                id: '4',
-                author: 'David Garcia',
-                authorPic: 'employee4.jpg',
-                date: '2025-03-10',
-                content: 'Kudos to Emily for her outstanding presentation at the conference.  You represented us so well!',
-                likes: 12,
-                likedBy: [],
-                comments: [
-                    { author: 'Felicia Adams', authorPic: 'employee5.jpg', text: 'You were amazing, Emily!' },
-                ]
-            },
-            {
-                id: '5',
-                author: 'Emily White',
-                authorPic: 'employee5.png',
-                date: '2025-03-15',
-                content: 'I appreciate Frank\'s help in getting the project back on track. Your problem-solving skills saved the day.',
-                likes: 8,
-                likedBy: [],
-                comments: [
-                    { author: 'David Garcia', authorPic: 'employee4.jpg', text: 'Glad I could help!' },
-                ]
-            },
-            {
-                id: '6',
-                author: 'Frank Miller',
-                authorPic: 'employee6.png',
-                date: '2025-03-22',
-                content: 'Special thanks to Gina for always being willing to lend a hand.  Your positive attitude is contagious.',
-                likes: 15,
-                likedBy: [],
-                comments: [
-                    { author: 'Harold Green', authorPic: 'employee7.jpg', text: 'You are so right, Frank!' },
-                ]
-            },
-            {
-                id: '7',
-                author: 'Gina Rodriguez',
-                authorPic: 'employee7.png',
-                date: '2025-04-01',
-                content: 'I want to recognize Harold for his dedication to mentoring new team members.  You make a big difference.',
-                likes: 9,
-                likedBy: [],
-                comments: [
-                    { author: 'Frank Miller', authorPic: 'employee6.jpg', text: 'He is a great mentor!' },
-                ]
-            },
-            {
-                id: '8',
-                author: 'Harold Green',
-                authorPic: 'employee8.png',
-                date: '2025-04-05',
-                content: 'Thanks to Irene for her hard work on the new client proposal.  It was a team effort, but your attention to detail was key.',
-                likes: 11,
-                likedBy: [],
-                comments: [
-                    { author: 'Gina Rodriguez', authorPic: 'employee7.jpg', text: 'Yes, great job Irene!' },
-                ]
-            },
-             {
-                id: '9',
-                author: 'Irene Martinez',
-                authorPic: 'employee9.png',
-                date: '2025-04-12',
-                content: 'I want to thank Jack for his leadership on the project. He kept us motivated and on track.',
-                likes: 14,
-                likedBy: [],
-                comments: [
-                    { author: 'David Garcia', authorPic: 'employee4.jpg', text: 'He is a great leader' },
-                ]
-            },
-            {
-                id: '10',
-                author: 'Jack Williams',
-                authorPic: 'employee10.png',
-                date: '2025-04-20',
-                content: 'Shoutout to David for his innovative ideas in the last meeting. You always bring fresh perspectives.',
-                likes: 6,
-                likedBy: [],
-                comments: [
-                     { author: 'Irene Martinez', authorPic: 'employee9.jpg', text: 'So true!' },
-                ]
-            },
-             {
-                id: '11',
-                author: 'Felicia Adams',
-                authorPic: 'employee11.png',
-                date: '2025-04-25',
-                content: 'Thanks to Gina for organizing the team-building event. It was a great success!',
-                likes: 13,
-                likedBy: [],
-                comments: [
-                    { author: 'Frank Miller', authorPic: 'employee6.jpg', text: 'It was a lot of fun!' },
-                ]
-            },
-            {
-                id: '12',
-                author: 'Ella mike',
-                authorPic: 'employee12.png',
-                date: '2025-05-01',
-                content: 'I want to recognize Harold for his positive attitude and willingness to help everyone. You make the workplace better.',
-                likes: 10,
-                likedBy: [],
-                comments: [
-                    { author: 'Felicia Adams', authorPic: 'employee5.jpg', text: 'I agree 100%!' },
-                ]
-            }
-        ];
-
-        function renderRecognitionPosts() {
-            const postsContainer = document.getElementById('recognition-posts-container');
-            postsContainer.innerHTML = '';
-
-            recognitionPosts.forEach(post => {
-                const postCard = document.createElement('div');
-                postCard.classList.add('post-card');
-                postCard.innerHTML = `
-                    <div class="post-card-header">
-                        <img src="${post.authorPic}" alt="${post.author}">
-                        <div class="post-card-header-info">
-                            <div class="post-card-header-name">${post.author}</div>
-                            <div class="post-card-header-date">${post.date}</div>
-                        </div>
-                    </div>
-                    <div class="post-card-content">${post.content}</div>
-                    <div class="post-card-actions">
-                        <button class="like-button" data-post-id="${post.id}" onclick="handleLike(event)">
-                            <i class="${post.likedBy.includes('currentUser') ? 'fas' : 'far'} fa-heart"></i> <span>${post.likes}</span>
-                        </button>
-                        <button class="comment-button" data-post-id="${post.id}" onclick="toggleCommentSection(event)">
-                            <i class="far fa-comment"></i> <span>${post.comments.length}</span>
-                        </button>
-                    </div>
-                    <div class="comment-section" id="comment-section-${post.id}" style="display: none;">
-                        ${post.comments.map(comment => `
-                            <div class="comment">
-                                <img src="${comment.authorPic}" alt="${comment.author}">
-                                <div class="comment-content">
-                                    <div class="comment-author">${comment.author}</div>
-                                    <div class="comment-text">${comment.text}</div>
-                                </div>
-                            </div>
-                        `).join('')}
-                        <div class="comment-input-container">
-                            <input type="text" id="comment-input-${post.id}" placeholder="Write a comment...">
-                            <button onclick="addComment('${post.id}')">Post</button>
-                        </div>
-                    </div>
-                `;
-                postsContainer.appendChild(postCard);
-            });
-        }
-
-        function handleLike(event) {
-            const postId = event.currentTarget.dataset.postId;
-            const post = recognitionPosts.find(p => p.id === postId);
-            const currentUser = 'currentUser'; // Replace with actual user data
-
-            if (post.likedBy.includes(currentUser)) {
-                post.likes--;
-                post.likedBy.splice(post.likedBy.indexOf(currentUser), 1);
-            } else {
-                post.likes++;
-                post.likedBy.push(currentUser);
-            }
-             renderRecognitionPosts();
-        }
-
-        function toggleCommentSection(event) {
-            const postId = event.currentTarget.dataset.postId;
-            const commentSection = document.getElementById(`comment-section-${postId}`);
-            commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
-        }
-
-       function addComment(postId) {
-            const commentInput = document.getElementById(`comment-input-${postId}`);
-            const commentText = commentInput.value;
-            if (commentText.trim() !== '') {
-                const newComment = {
-                    author: 'Current User',  // Replace with actual user data
-                    authorPic: 'admin-avatar.png', // Replace with actual user image
-                    text: commentText
-                };
-                const post = recognitionPosts.find(p => p.id === postId);
-                post.comments.push(newComment);
-                renderRecognitionPosts();
-                commentInput.value = ''; // Clear the input
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            renderRecognitionPosts();
-        });
-    </script>
+    function toggleSubMenu(id) {
+      const submenu = document.getElementById(id);
+      if (submenu.style.display === 'none') {
+        submenu.style.display = 'block';
+      } else {
+        submenu.style.display = 'none';
+      }
+    }
+  </script>
 </body>
 </html>
