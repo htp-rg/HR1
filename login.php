@@ -4,8 +4,8 @@ session_start();
 
 $host = "localhost";
 $db = "HR1";
-$user = "your_db_user";
-$pass = "your_db_password";
+$user = "root";
+$pass = "admin12345";
 
 $error = "";
 
