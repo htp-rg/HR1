@@ -308,53 +308,6 @@
 
     <div class="main-content ml-64 p-8">
         <a href="admin.html" class="back-button">Back</a>
-        <div class="container bg-white rounded-lg shadow-md p-6">
-            <h1 class="text-2xl font-semibold text-blue-800 mb-6 text-center">New Hired Documentation</h1>
-            <form id="documentationForm" class="mb-8">
-                <div class="form-group">
-                    <label for="lastName" class="block text-gray-700 text-sm font-bold mb-2">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="form-group">
-                    <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="form-group">
-                    <label for="middleName" class="block text-gray-700 text-sm font-bold mb-2">Middle Name:</label>
-                    <input type="text" id="middleName" name="middleName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="form-group">
-                    <label for="age" class="block text-gray-700 text-sm font-bold mb-2">Age:</label>
-                    <input type="number" id="age" name="age" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="form-group">
-                    <label for="birthDate" class="block text-gray-700 text-sm font-bold mb-2">Birth Date:</label>
-                    <input type="date" id="birthDate" name="birthDate" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="form-group">
-                    <label for="idUpload" class="block text-gray-700 text-sm font-bold mb-2">Upload ID:</label>
-                    <div class="file-upload-group">
-                        <div class="file-upload-wrapper">
-                            <span class="file-upload-text">Choose File</span>
-                            <span class="file-upload-button">Browse</span>
-                        </div>
-                        <input type="file" id="idUpload" name="idUpload" accept="image/*,.pdf" required>
-                        <span id="idStatus" class="status pending">Pending</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="certificatesUpload" class="block text-gray-700 text-sm font-bold mb-2">Upload Certificates:</label>
-                    <div class="file-upload-group">
-                        <div class="file-upload-wrapper">
-                            <span class="file-upload-text">Choose File</span>
-                            <span class="file-upload-button">Browse</span>
-                        </div>
-                        <input type="file" id="certificatesUpload" name="certificatesUpload" accept="image/*,.pdf" multiple>
-                        <span id="certificatesStatus" class="status pending">Pending</span>
-                    </div>
-                </div>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Documents</button>
-            </form>
 
             <table id="trainingScheduleTable" class="training-schedule">
                 <caption>Training Schedule and Deployment Location</caption>
