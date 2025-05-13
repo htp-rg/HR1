@@ -308,6 +308,55 @@
 
     <div class="main-content ml-64 p-8">
         <a href="admin.html" class="back-button">Back</a>
+ <div class="container">
+            <h1>New Hired Documentation</h1>
+            <form id="documentationForm">
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="middleName">Middle Name:</label>
+                    <input type="text" id="middleName" name="middleName">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthDate">Birth Date:</label>
+                    <input type="date" id="birthDate" name="birthDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="idUpload">Upload ID:</label>
+                    <div class="file-upload-group">
+                        <div class="file-upload-wrapper">
+                            <span class="file-upload-text">Choose File</span>
+                            <span class="file-upload-button">Browse</span>
+                        </div>
+                        <input type="file" id="idUpload" name="idUpload" accept="image/*,.pdf" required>
+                        <span id="idStatus" class="status pending">Pending</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="certificatesUpload">Upload Certificates:</label>
+                     <div class="file-upload-group">
+                        <div class="file-upload-wrapper">
+                            <span class="file-upload-text">Choose File</span>
+                            <span class="file-upload-button">Browse</span>
+                        </div>
+                        <input type="file" id="certificatesUpload" name="certificatesUpload" accept="image/*,.pdf" multiple>
+                         <span id="certificatesStatus" class="status pending">Pending</span>
+                    </div>
+                </div>
+                <button type="submit">Submit Documents</button>
+            </form>
+        </div>
+    </div>
 
             <table id="trainingScheduleTable" class="training-schedule">
                 <caption>Training Schedule and Deployment Location</caption>
