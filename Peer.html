@@ -25,6 +25,7 @@
             font-weight: bold;
             color: #555;
         }
+        form input[type="text"],
         form textarea {
             width: calc(100% - 22px);
             padding: 10px;
@@ -32,6 +33,8 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+        form textarea {
             min-height: 80px;
         }
         form button[type="submit"] {
@@ -53,9 +56,6 @@
             font-weight: normal;
             margin-right: 10px;
         }
-        .recognition-type input[type="radio"] {
-            margin-right: 5px;
-        }
     </style>
 </head>
 <body>
@@ -68,14 +68,14 @@
             <ul class="sidebar-menu">
                 <li><a href="dashboard.html">Dashboard</a></li>
 
-                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                  <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
                 <ul id="Recruitment" style="display:none;">
                   <li><a href="Jobposting.html">Job Posting</a></li>
                   <li><a href="Create.html">Recruitment Planning</a></li>
                   <li><a href="Sourcing.html">Sourcing Candidates</a></li>
                 </ul>
 
-                 <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                  <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
                 <ul id="ApplicantManagement" style="display:none;">
                   <li><a href="Application.html">Application Tracking</a></li>
                   <li><a href="interviews.html">Interviews & Assessments</a></li>
@@ -122,33 +122,28 @@
                 <textarea id="reason" name="reason" rows="4" required></textarea>
 
                 <div class="recognition-type">
-                    <label>Acknowledge:</label>
-                    <input type="radio" id="acknowledge" name="recognitionType" value="Acknowledge">
-                    <label for="acknowledge">Acknowledge</label>
+                    <label for="acknowledge">Acknowledge:</label>
+                    <input type="text" id="acknowledge" name="recognitionType" value="">
                 </div>
 
                 <div class="recognition-type">
-                    <label>Appreciate:</label>
-                    <input type="radio" id="appreciate" name="recognitionType" value="Appreciate">
-                    <label for="appreciate">Appreciate</label>
+                    <label for="appreciate">Appreciate:</label>
+                    <input type="text" id="appreciate" name="recognitionType" value="">
                 </div>
 
                 <div class="recognition-type">
-                    <label>Contributions:</label>
-                    <input type="radio" id="contributions" name="recognitionType" value="Contributions">
-                    <label for="contributions">Contributions</label>
+                    <label for="contributions">Contributions:</label>
+                    <input type="text" id="contributions" name="recognitionType" value="">
                 </div>
 
                 <div class="recognition-type">
-                    <label>Efforts:</label>
-                    <input type="radio" id="efforts" name="recognitionType" value="Efforts">
-                    <label for="efforts">Efforts</label>
+                    <label for="efforts">Efforts:</label>
+                    <input type="text" id="efforts" name="recognitionType" value="">
                 </div>
 
                 <div class="recognition-type">
-                    <label>Achievements:</label>
-                    <input type="radio" id="achievements" name="recognitionType" value="Achievements">
-                    <label for="achievements">Achievements</label>
+                    <label for="achievements">Achievements:</label>
+                    <input type="text" id="achievements" name="recognitionType" value="">
                 </div>
 
                 <button type="submit">Submit Recognition</button>
