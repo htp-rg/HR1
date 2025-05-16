@@ -1,81 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Acknowledging Achievement</title>
-   <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acknowledging Achievement</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .main-content {
+            margin-left: 280px; 
+            padding: 20px;
+        }
+        .content-box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        form input[type="text"],
+        form input[type="date"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="sidebar-top">
-      <img src="admin-avatar.png" alt="admin" class="admin-image">
-      <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <img src="admin-avatar.png" alt="admin" class="admin-image">
+            <p style="font-size: 18px; font-weight: bold;">HUMAN RESOURCES 1</p>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+
+                <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
+                <ul id="Recruitment" style="display:none;">
+                  <li><a href="Jobposting.html">Job Posting</a></li>
+                  <li><a href="Create.html">Recruitment Planning</a></li>
+                  <li><a href="Sourcing.html">Sourcing Candidates</a></li>
+                </ul>
+
+               <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
+                <ul id="ApplicantManagement" style="display:none;">
+                  <li><a href="Application.html">Application Tracking</a></li>
+                  <li><a href="interviews.html">Interviews & Assessments</a></li>
+                  <li><a href="selection.html">Selection Offer</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
+                <ul id="NewHiredOnBoard" style="display:none;">
+                  <li><a href="Documentation.html">Documentation</a></li>
+                  <li><a href="Orientation.html">Orientation & Training</a></li>
+                  <li><a href="Assignment.html">Role Assignment</a></li>
+                </ul>
+
+                <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
+                <ul id="Performancemanagement" style="display:none;">
+                  <li><a href="Goal.html">Goal setting</a></li>
+                  <li><a href="Feedback.html">Feedback cycles</a></li>
+                  <li><a href="Review.html">Performance reviews</a></li>
+                </ul>
+
+           <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
+                <ul id="SocialRecognitionProgram" style="display:none;">
+                  <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
+                  <li><a href="Peer.html">Peer-to-peer recognition</a></li>
+                  <li><a href="Employee.html">Employee engagement programs</a></li>
+                </ul>
+
+                <li><a href="users.html">Users</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+
+        <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
     </div>
-    <div class="sidebar-content">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard.html">Dashboard</a></li>
 
-         <li><a href="#" onclick="toggleSubMenu('ApplicantManagement')">Applicant Management</a></li>
-        <ul id="ApplicantManagement" style="display:none;">
-          <li><a href="Application.html">Application Tracking</a></li>
-          <li><a href="interviews.html">Interviews & Assessments</a></li>
-          <li><a href="selection.html">Selection Offer</a></li>
-        </ul>
+    <div class="main-content">
+        <div class="content-box">
+            <h1>Acknowledging Achievement</h1>
+            <form>
+                <label for="employeeId">Employee ID:</label>
+                <input type="text" id="employeeId" name="employeeId" required>
 
-        <li><a href="#" onclick="toggleSubMenu('Recruitment')">Recruitment</a></li>
-        <ul id="Recruitment" style="display:none;">
-          <li><a href="Jobposting.html">Job Posting</a></li>
-          <li><a href="Create.html">Recruitment Planning</a></li>
-          <li><a href="Sourcing.html">Sourcing Candidates</a></li>
-        </ul>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
-        <li><a href="#" onclick="toggleSubMenu('NewHiredOnBoard')">New Hired On Board</a></li>
-        <ul id="NewHiredOnBoard" style="display:none;">
-          <li><a href="Documentation.html">Documentation</a></li>
-          <li><a href="Orientation.html">Orientation & Training</a></li>
-          <li><a href="Assignment.html">Role Assignment</a></li>
-        </ul>
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address">
 
-        <li><a href="#" onclick="toggleSubMenu('Performancemanagement')">Performance management</a></li>
-        <ul id="Performancemanagement" style="display:none;">
-          <li><a href="Goal.html">Goal setting</a></li>
-          <li><a href="Feedback.html">Feedback cycles</a></li>
-          <li><a href="Review.html">Performance reviews</a></li>
-        </ul>
-        
- <li><a href="#" onclick="toggleSubMenu('SocialRecognitionProgram')">Social Recognition Program</a></li>
-        <ul id="SocialRecognitionProgram" style="display:none;">
-          <li><a href="Acknowledgement.html">Acknowledging Achievements</a></li>
-          <li><a href="Peer.html">Peer-to-peer recognition</a></li>
-          <li><a href="Employee.html">Employee engagement programs</a></li>
-        </ul>
+                <label for="number">Number:</label>
+                <input type="text" id="number" name="number">
 
-        <li><a href="users.html">Users</a></li>
-        <li><a href="settings.html">Settings</a></li>
-      </ul>
+                <label for="jobPosition">Job Position:</label>
+                <input type="text" id="jobPosition" name="jobPosition">
+
+                <label for="dateHired">Date of Hired:</label>
+                <input type="date" id="dateHired" name="dateHired">
+
+                <label for="dateEnd">Date of End:</label>
+                <input type="date" id="dateEnd" name="dateEnd">
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 
-    <a href="login1.html" class="logout-link" onclick="return confirmLogout();">Log out</a>
-  </div>
+    <script>
+        function confirmLogout() {
+            return confirm("Are you sure you want to log out?");
+        }
 
-  <div class="main-content">
-     <div class="content-box">
-      <h1>Acknowledging Achievement</h1>
-   
-  <script>
-    function confirmLogout() {
-      return confirm("Are you sure you want to log out?");
-    }
-
-    function toggleSubMenu(id) {
-      const submenu = document.getElementById(id);
-      if (submenu.style.display === 'none') {
-        submenu.style.display = 'block';
-      } else {
-        submenu.style.display = 'none';
-      }
-    }
-  </script>
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
